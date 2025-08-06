@@ -1,46 +1,47 @@
-"use client"
+"use client";
+export const dynamic = "force-dynamic";
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
-import { Shield } from "lucide-react"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth"
-import { auth } from "../../../../lib/firebase"
-
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { Shield } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../../../lib/firebase";
 
 export default function AdminLoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
+  // Make sure auth is defined before using it
   const [signInWithEmailAndPassword, user, loading, firebaseError] =
-    useSignInWithEmailAndPassword(auth)
+    useSignInWithEmailAndPassword(auth!); // `auth!` is safe here because this is a client component
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
+    e.preventDefault();
+    setError("");
 
     try {
-      const res = await signInWithEmailAndPassword(email, password)
+      const res = await signInWithEmailAndPassword(email, password);
       if (res) {
-        setEmail("")
-        setPassword("")
-        router.push("/admin")
+        setEmail("");
+        setPassword("");
+        router.push("/admin");
       }
     } catch (err: any) {
-      setError(err?.message || "Login failed.")
+      setError(err?.message || "Login failed.");
     }
-  }
+  };
 
   useEffect(() => {
     if (firebaseError) {
-      setError(firebaseError.message)
+      setError(firebaseError.message);
     }
-  }, [firebaseError])
+  }, [firebaseError]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
@@ -93,5 +94,5 @@ export default function AdminLoginPage() {
         </Card>
       </motion.div>
     </div>
-  )
+  );
 }
