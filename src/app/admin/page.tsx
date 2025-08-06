@@ -1,25 +1,28 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
-import { Shield } from "lucide-react"
-import { Card } from "@/components/ui/card"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "../../../lib/firebase"
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { Shield } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../lib/firebase";
 
 export default function AdminLoginPage() {
-  const router = useRouter()
-  const [user, loading, error] = useAuthState(auth)
+  const router = useRouter();
+  const [user, loading] = useAuthState(auth!); // Safe if `auth` is client-only
 
   useEffect(() => {
-    if (loading) return // Still checking auth status
-    if (user) {
-      router.replace("/admin/overview")
-    } else {
-      router.replace("/admin/login")
+    if (loading) return;
+
+    const currentPath = window.location.pathname;
+
+    if (user && currentPath !== "/admin/overview") {
+      router.replace("/admin/overview");
+    } else if (!user && currentPath !== "/admin/login") {
+      router.replace("/admin/login");
     }
-  }, [user, loading, router])
+  }, [user, loading]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
@@ -49,5 +52,5 @@ export default function AdminLoginPage() {
         </Card>
       </motion.div>
     </div>
-  )
+  );
 }
