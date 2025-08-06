@@ -14,6 +14,8 @@ import {
   LogOut,
   Menu,
   X,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { onAuthStateChanged, signOut } from "firebase/auth"
@@ -23,20 +25,32 @@ interface AdminLayoutProps {
   children: React.ReactNode
 }
 
+const navigation = [
+  { name: "Overview", href: "/admin", icon: BarChart3 },
+  { name: "Librarians", href: "/admin/librarians", icon: Users },
+  { name: "Libraries", href: "/admin/libraries", icon: Building2 },
+  { name: "Gallery", href: "/admin/gallery", icon: Camera },
+  { name: "E-Resources", href: "/admin/resources", icon: Database },
+]
+
 export default function Sidebar({ children }: AdminLayoutProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [collapsed, setCollapsed] = useState(false) // collapse sidebar desktop
+  const [collapsed, setCollapsed] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
+    if (!auth) return // Prevent error if auth is undefined
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsAuthenticated(true)
       } else {
         setIsAuthenticated(false)
-        router.push("/admin/login")
+        if (pathname !== "/admin/login") {
+          router.push("/admin/login")
+        }
       }
     })
 
@@ -56,7 +70,7 @@ export default function Sidebar({ children }: AdminLayoutProps) {
       window.removeEventListener("beforeunload", handleBeforeUnload)
       window.removeEventListener("pagehide", handleBeforeUnload)
     }
-  }, [router])
+  }, [router, pathname])
 
   const handleLogout = async () => {
     try {
@@ -71,22 +85,16 @@ export default function Sidebar({ children }: AdminLayoutProps) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
           <p className="text-gray-600">Checking authentication...</p>
         </div>
       </div>
     )
   }
 
-  const navigation = [
-    { name: "Overview", href: "/admin", icon: BarChart3 },
-    { name: "Librarians", href: "/admin/librarians", icon: Users },
-    { name: "Libraries", href: "/admin/libraries", icon: Building2 },
-    { name: "Gallery", href: "/admin/gallery", icon: Camera },
-    { name: "E-Resources", href: "/admin/resources", icon: Database },
-  ]
+  if (!isAuthenticated) return null // prevent flash on redirect
 
-  const currentNavItem = navigation.find((item) => item.href === pathname)
+  const currentNavItem = navigation.find((item) => pathname?.startsWith(item.href))
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -97,6 +105,7 @@ export default function Sidebar({ children }: AdminLayoutProps) {
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              aria-label="Toggle sidebar"
             >
               {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -107,7 +116,7 @@ export default function Sidebar({ children }: AdminLayoutProps) {
             </div>
           </div>
 
-          {/* Topbar: Active Page Icon */}
+          {/* Active Page */}
           {currentNavItem && (
             <div className="hidden lg:flex items-center gap-2 text-sm text-gray-600">
               <currentNavItem.icon className="w-5 h-5 text-blue-500" />
@@ -138,12 +147,17 @@ export default function Sidebar({ children }: AdminLayoutProps) {
             <button
               onClick={() => setCollapsed(!collapsed)}
               className="hidden lg:flex items-center justify-center w-full py-2 px-3 rounded-md text-sm bg-gray-100 hover:bg-gray-200 text-gray-700"
+              aria-label="Toggle collapse"
             >
-              {collapsed ? "→ Expand" : "← Collapse"}
+              {collapsed ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <ChevronLeft className="h-4 w-4" />
+              )}
             </button>
 
             {navigation.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = pathname?.startsWith(item.href)
               return (
                 <Link
                   key={item.name}
