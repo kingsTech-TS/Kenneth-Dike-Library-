@@ -291,7 +291,7 @@ const databases = [
             "Digital library of over 60,000 free eBooks, primarily consisting of classic literature, historical texts, and philosophy.",
         features: ["Free eBooks", "Classic literature", "Downloadable formats", "Public domain works"],
         subjects: ["Literature", "History", "Philosophy", "Religion", "Classic Texts"],
-        logo: "project.png",
+        logo: "Project.png",
         url: "https://www.gutenberg.org",
         color: "from-yellow-700 to-orange-700",
         stats: { books: "60,000+", languages: "60+", formats: "Kindle, Plain Text" }
@@ -454,7 +454,7 @@ export default function EResourcesPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 via-indigo-50 to-amber-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 via-indigo-50">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-600 origin-left z-50"
