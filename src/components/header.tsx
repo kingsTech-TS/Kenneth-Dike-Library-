@@ -86,15 +86,15 @@ export default function Header() {
           <nav className="hidden lg:flex items-center space-x-8">
             {/* Home Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative group flex items-center gap-1">
+              <DropdownMenuTrigger className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200 relative group flex items-center gap-1">
                 Home
                 <ChevronDown className="h-4 w-4" />
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-200 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-200 group-hover:w-full"></span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48 bg-white border border-gray-200 shadow-md rounded-md animate-slideDown">
                 {homeDropdownItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
-                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-green-50 rounded-md">
+                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-indigo50 rounded-md">
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
@@ -104,15 +104,15 @@ export default function Header() {
 
             {/* E-resources Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative group flex items-center gap-1">
+              <DropdownMenuTrigger className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200 relative group flex items-center gap-1">
                 Resources
                 <ChevronDown className="h-4 w-4" />
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-200 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-200 group-hover:w-full"></span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48 bg-white border border-gray-200 shadow-md rounded-md animate-slideDown">
                 {eResourcesItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
-                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-green-50 rounded-md">
+                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-indigo-50 rounded-md">
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
@@ -122,9 +122,9 @@ export default function Header() {
 
             {/* Static Links */}
             {navItems.map((item) => (
-              <Link key={item.name} href={item.href} className="text-gray-700 hover:text-green-600 font-medium transition-colors duration-200 relative group">
+              <Link key={item.name} href={item.href} className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200 relative group">
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-200 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-200 group-hover:w-full"></span>
               </Link>
             ))}
 
@@ -139,7 +139,7 @@ export default function Header() {
               <DropdownMenuContent align="end" className="w-56 bg-white border border-gray-200 shadow-md rounded-md animate-slideDown">
                 {getStartedItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
-                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-green-50 rounded-md">
+                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-indigo-50 rounded-md">
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
@@ -156,7 +156,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-green-600 hover:bg-gray-100 transition-colors duration-200"
+            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-100 transition-colors duration-200"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -178,7 +178,7 @@ export default function Header() {
                   <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Home</p>
                   {homeDropdownItems.map((item, index) => (
                     <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: index * 0.1 }}>
-                      <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 pl-4 text-gray-700 hover:text-green-600 font-medium">
+                      <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 pl-4 text-gray-700 hover:text-indigo-600 font-medium">
                         {item.name}
                       </Link>
                     </motion.div>
@@ -190,7 +190,7 @@ export default function Header() {
                   <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">E-resources</p>
                   {eResourcesItems.map((item, index) => (
                     <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: (homeDropdownItems.length + index) * 0.1 }}>
-                      <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 pl-4 text-gray-700 hover:text-green-600 font-medium">
+                      <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 pl-4 text-gray-700 hover:text-indigo-600 font-medium">
                         {item.name}
                       </Link>
                     </motion.div>
@@ -200,7 +200,7 @@ export default function Header() {
                 {/* Main Navigation */}
                 {navItems.map((item, index) => (
                   <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: (homeDropdownItems.length + eResourcesItems.length + index) * 0.1 }}>
-                    <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 text-gray-700 hover:text-green-600 font-medium">
+                    <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 text-gray-700 hover:text-indigo-600 font-medium">
                       {item.name}
                     </Link>
                   </motion.div>
@@ -211,7 +211,7 @@ export default function Header() {
                   <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Get Started</p>
                   {getStartedItems.map((item, index) => (
                     <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: (homeDropdownItems.length + eResourcesItems.length + navItems.length + index) * 0.1 }}>
-                      <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 pl-4 text-gray-700 hover:text-green-600 font-medium">
+                      <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 pl-4 text-gray-700 hover:text-indigo-600 font-medium">
                         {item.name}
                       </Link>
                     </motion.div>

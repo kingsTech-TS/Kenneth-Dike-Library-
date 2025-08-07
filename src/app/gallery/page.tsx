@@ -230,7 +230,7 @@ export default function GalleryPage() {
   }, [selectedImage])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 via-indigo-50 to-amber-50 relative overflow-hidden">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 origin-left z-50"

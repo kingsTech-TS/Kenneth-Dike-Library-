@@ -328,12 +328,69 @@ export default function LibrariesPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50">
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-600 to-orange-600 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-600 origin-left z-50"
         style={{ scaleX }}
       />
+
+       {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-4 h-4 rounded-full ${
+              i % 4 === 0
+                ? "bg-purple-300/20"
+                : i % 4 === 1
+                  ? "bg-pink-300/20"
+                  : i % 4 === 2
+                    ? "bg-orange-300/20"
+                    : "bg-blue-300/20"
+            }`}
+            initial={{
+              x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1920),
+              y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 1080),
+            }}
+            animate={{
+              x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1920),
+              y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 1080),
+            }}
+            transition={{
+              duration: Math.random() * 25 + 20,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+          />
+        ))}
+
+        {/* Large floating shapes */}
+        <motion.div
+          className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-orange-200/30 to-purple-200/30 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            rotate: [360, 180, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
 
       {/* Header */}
       <motion.header
@@ -360,7 +417,7 @@ export default function LibrariesPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             Faculty{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-orange-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
               Libraries
             </span>
           </motion.h1>
@@ -382,19 +439,19 @@ export default function LibrariesPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-green-600">19</div>
+              <div className="text-2xl sm:text-3xl font-bold text-indigo-600">19</div>
               <div className="text-xs sm:text-sm text-gray-600">Faculty Libraries</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-orange-600">500K+</div>
+              <div className="text-2xl sm:text-3xl font-bold text-blue-600">500K+</div>
               <div className="text-xs sm:text-sm text-gray-600">Total Books</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-blue-600">3,000+</div>
+              <div className="text-2xl sm:text-3xl font-bold text-amber-600">3,000+</div>
               <div className="text-xs sm:text-sm text-gray-600">Journals</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-purple-600">1,500+</div>
+              <div className="text-2xl sm:text-3xl font-bold text-indigo-500">1,500+</div>
               <div className="text-xs sm:text-sm text-gray-600">Seating Capacity</div>
             </div>
           </motion.div>
@@ -402,7 +459,7 @@ export default function LibrariesPage() {
 
         {/* Search and Filter */}
         <motion.div
-          className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 mb-8 sm:mb-12"
+          className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-indigo-100 mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -416,7 +473,7 @@ export default function LibrariesPage() {
                 placeholder="Search libraries by name or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12 text-base sm:text-lg border-gray-200 focus:border-green-500 focus:ring-green-500"
+                className="pl-10 h-12 text-base sm:text-lg border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
 
@@ -426,7 +483,7 @@ export default function LibrariesPage() {
               <select
                 value={selectedFaculty}
                 onChange={(e) => setSelectedFaculty(e.target.value)}
-                className="h-12 px-4 border border-gray-200 rounded-lg focus:border-green-500 focus:ring-green-500 bg-white w-full lg:w-auto min-w-[200px]"
+                className="h-12 px-4 border border-gray-200 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 bg-white w-full lg:w-auto min-w-[200px]"
               >
                 {faculties.map((faculty) => (
                   <option key={faculty} value={faculty}>
@@ -440,7 +497,7 @@ export default function LibrariesPage() {
           {/* Results count */}
           <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-100">
             <p className="text-gray-600 text-center text-sm sm:text-base">
-              Showing <span className="font-semibold text-green-600">{filteredLibraries.length}</span> libraries
+              Showing <span className="font-semibold text-indigo-600">{filteredLibraries.length}</span> libraries
               {selectedFaculty !== "All" && (
                 <span>
                   {" "}
@@ -485,7 +542,7 @@ export default function LibrariesPage() {
                 setSearchTerm("")
                 setSelectedFaculty("All")
               }}
-              className="bg-green-600 hover:bg-green-700"
+              className="bg-indigo-600 hover:bg-green-700"
             >
               Clear Filters
             </Button>
@@ -535,8 +592,8 @@ function LibraryCard({ library, index }: { library: any; index: number }) {
 
         {/* Stats */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
-          <div className="text-center p-2 sm:p-3 bg-green-50 rounded-lg">
-            <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 mx-auto mb-1" />
+          <div className="text-center p-2 sm:p-3 bg-indigo-50 rounded-lg">
+            <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 mx-auto mb-1" />
             <div className="text-sm sm:text-base font-bold text-gray-900">{library.books}</div>
             <div className="text-xs text-gray-500">Books</div>
           </div>
@@ -555,7 +612,7 @@ function LibraryCard({ library, index }: { library: any; index: number }) {
 
         {/* Learn More Button */}
         <Link href={`/library/${library.slug}`}>
-          <Button className="w-full bg-gradient-to-r from-green-600 to-orange-600 hover:from-green-700 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 group/btn cursor-pointer">
+          <Button className="w-full  bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 group/btn cursor-pointer">
             <span>Learn More</span>
             <ExternalLink className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
           </Button>
@@ -563,7 +620,7 @@ function LibraryCard({ library, index }: { library: any; index: number }) {
       </div>
 
       {/* Hover Border */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-green-200 transition-colors duration-300 pointer-events-none" />
+      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-indigo-200 transition-colors duration-300 pointer-events-none" />
     </motion.div>
   )
 }

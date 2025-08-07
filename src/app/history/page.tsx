@@ -152,7 +152,7 @@ export default function HistoryPage() {
     <div className="min-h-screen bg-[#f8f9fa] font-serif">
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-600 to-orange-600 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-amber-600 origin-left z-50"
         style={{ scaleX }}
       />
 
@@ -175,7 +175,7 @@ export default function HistoryPage() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight leading-tight">
-            The <span className="text-green-600">Chronicle</span> of Kenneth Dike Library
+            The <span className="text-indigo-600">Chronicle</span> of Kenneth Dike Library
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light italic px-4">
             Seven and a half decades of academic excellence at the University of Ibadan
@@ -206,7 +206,7 @@ export default function HistoryPage() {
               From "Librarian's Nightmare" to Digital Excellence: The Remarkable Journey of Kenneth Dike Library
             </h2>
             <div className="text-sm sm:text-base lg:text-lg leading-relaxed space-y-3 sm:space-y-4">
-              <p className="first-letter:text-3xl sm:first-letter:text-4xl lg:first-letter:text-5xl first-letter:font-bold first-letter:text-green-600 first-letter:mr-1 sm:first-letter:mr-2 first-letter:float-left">
+              <p className="first-letter:text-3xl sm:first-letter:text-4xl lg:first-letter:text-5xl first-letter:font-bold first-letter:text-indigo-600 first-letter:mr-1 sm:first-letter:mr-2 first-letter:float-left">
                 When John Harris, a New Zealander, arrived at the University of Ibadan in 1948 to serve as the Pioneer
                 Librarian, he described what he found as "a librarian's nightmare and a scene of book chaos."
               </p>
@@ -268,11 +268,11 @@ export default function HistoryPage() {
                 >
                   {/* Year Label */}
                   <div className="w-full sm:w-20 lg:w-24 text-left sm:text-right sm:mr-4 lg:mr-6">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-green-600">{milestone.year}</span>
+                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-600">{milestone.year}</span>
                   </div>
 
                   {/* Icon */}
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 rounded-full flex items-center justify-center sm:mr-4 lg:mr-6 flex-shrink-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-full flex items-center justify-center sm:mr-4 lg:mr-6 flex-shrink-0">
                     <milestone.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
 
@@ -299,7 +299,7 @@ export default function HistoryPage() {
 
         {/* Current Services Section */}
         <motion.section
-          className="mb-16 sm:mb-20 py-12 sm:py-16 bg-gradient-to-br from-green-50 to-orange-50 rounded-xl sm:rounded-2xl"
+          className="mb-16 sm:mb-20 py-12 sm:py-16 bg-gradient-to-br from-indigo-50 to-amber-50 rounded-xl sm:rounded-2xl"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -316,7 +316,7 @@ export default function HistoryPage() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <Link href="/e-resources" className="block">
-                  <Database className="h-10 w-10 sm:h-12 sm:w-12 text-green-600 mb-3 sm:mb-4" />
+                  <Database className="h-10 w-10 sm:h-12 sm:w-12 text-indigo-600 mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Electronic Databases</h3>
                   <p className="text-gray-600 text-sm sm:text-base">
                     Access to JSTOR, RESEARCH4LIFE, PROQUEST/Ebrary and over 10 million electronic volumes
@@ -330,7 +330,7 @@ export default function HistoryPage() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <a href="http://41.184.122.87:8080/" target="_blank" rel="noopener noreferrer" className="block">
-                  <Globe className="h-10 w-10 sm:h-12 sm:w-12 text-orange-600 mb-3 sm:mb-4" />
+                  <Globe className="h-10 w-10 sm:h-12 sm:w-12 text-amber-600 mb-3 sm:mb-4" />
                   <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">UI-ILS System</h3>
                   <p className="text-gray-600 text-sm sm:text-base">
                     University of Ibadan Integrated Library Software with web interface and OPAC access
@@ -363,7 +363,7 @@ export default function HistoryPage() {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <div className="text-4xl sm:text-5xl lg:text-6xl text-green-600 mb-4 sm:mb-6">"</div>
+          <div className="text-4xl sm:text-5xl lg:text-6xl text-indigo-600 mb-4 sm:mb-6">"</div>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl italic text-gray-700 mb-4 sm:mb-6 leading-relaxed">
             The Kenneth Dike Library stands as a testament to our enduring commitment to providing timely, current and
             accurate information in support of the teaching, learning, and research mandate of the University of Ibadan.
@@ -403,7 +403,7 @@ function EraArticle({ era, index }: { era: any; index: number }) {
         <div className={`space-y-4 sm:space-y-6 ${index % 2 === 1 ? "lg:pl-8 xl:pl-12" : "lg:pr-8 xl:pr-12"}`}>
           <div>
             <motion.div
-              className="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs sm:text-sm font-medium rounded-full mb-3 sm:mb-4"
+              className="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 text-xs sm:text-sm font-medium rounded-full mb-3 sm:mb-4"
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -432,7 +432,7 @@ function EraArticle({ era, index }: { era: any; index: number }) {
           </motion.div>
 
           <motion.div
-            className="bg-gray-100 p-4 sm:p-6 rounded-xl italic text-gray-700 border-l-4 border-green-600 my-6 sm:my-8"
+            className="bg-gray-100 p-4 sm:p-6 rounded-xl italic text-gray-700 border-l-4 border-indigo-600 my-6 sm:my-8"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -449,7 +449,7 @@ function EraArticle({ era, index }: { era: any; index: number }) {
           >
             {era.stats.map((stat: any, i: number) => (
               <div key={i} className="text-center p-3 sm:p-4 bg-white rounded-lg shadow-sm">
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-green-600">{stat.value}</div>
+                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-600">{stat.value}</div>
                 <div className="text-xs text-gray-600 uppercase tracking-wider">{stat.label}</div>
               </div>
             ))}
@@ -478,7 +478,7 @@ function EraArticle({ era, index }: { era: any; index: number }) {
           </div>
 
           <motion.div
-            className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-green-600 rounded-full flex items-center justify-center text-white shadow-lg"
+            className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-indigo-600 rounded-full flex items-center justify-center text-white shadow-lg"
             animate={{
               rotate: [0, 10, 0],
               scale: [1, 1.1, 1],
@@ -522,7 +522,7 @@ function LibrarianCard({ librarian, index }: { librarian: any; index: number }) 
       >
         <div className="flex flex-col items-center text-center">
           <motion.div
-            className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden mb-3 sm:mb-4 border-4 border-green-100 group-hover:border-green-400 transition-colors duration-300"
+            className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden mb-3 sm:mb-4 border-4 border-indigo-100 group-hover:border-indigo-400 transition-colors duration-300"
             whileHover={{
               scale: 1.1,
               rotate: [0, -5, 5, 0],
@@ -535,17 +535,17 @@ function LibrarianCard({ librarian, index }: { librarian: any; index: number }) 
               className="w-full h-full object-cover"
             />
           </motion.div>
-          <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-1 group-hover:text-green-600 transition-colors duration-300 leading-tight">
+          <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300 leading-tight">
             {librarian.name}
           </h3>
-          <p className="text-green-600 font-semibold mb-1 text-xs sm:text-sm">{librarian.title}</p>
+          <p className="text-indigo-600 font-semibold mb-1 text-xs sm:text-sm">{librarian.title}</p>
           {librarian.section && <p className="text-xs text-gray-500 mb-2">{librarian.section}</p>}
           <p className="text-xs text-gray-500 mb-2 font-medium">{librarian.period}</p>
           <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">{librarian.achievement}</p>
 
           {/* Floating badge */}
           <motion.div
-            className="absolute top-3 right-3 sm:top-4 sm:right-4 px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 px-2 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             animate={{
               y: [0, -3, 0],
             }}

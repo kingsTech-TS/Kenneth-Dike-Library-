@@ -297,7 +297,7 @@ export default function LibraryDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-600 to-orange-600 origin-left z-50"
@@ -407,21 +407,21 @@ export default function LibraryDetailPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <Award className="h-6 w-6 text-green-600" />
+                <Award className="h-6 w-6 text-indigo-600" />
                 Special Collections
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {library.specialCollections.map((collection, index) => (
                   <motion.div
                     key={index}
-                    className="p-4 bg-gray-50 rounded-xl border-l-4 border-green-600"
+                    className="p-4 bg-gray-50 rounded-xl border-l-4 border-indigo-600"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                   >
                     <h3 className="font-semibold text-gray-900 mb-2">{collection.name}</h3>
                     <p className="text-gray-600 text-sm mb-2">{collection.description}</p>
-                    <span className="text-green-600 font-medium text-sm">{collection.items}</span>
+                    <span className="text-indigo-600 font-medium text-sm">{collection.items}</span>
                   </motion.div>
                 ))}
               </div>
@@ -463,12 +463,12 @@ export default function LibraryDetailPage() {
                 {library.facilities.map((facility, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center gap-3 p-3 bg-orange-50 rounded-lg"
+                    className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 1.2 + index * 0.05 }}
                   >
-                    <div className="w-2 h-2 bg-orange-600 rounded-full flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-amber-600 rounded-full flex-shrink-0"></div>
                     <span className="text-gray-700 text-sm">{facility}</span>
                   </motion.div>
                 ))}
@@ -488,14 +488,14 @@ export default function LibraryDetailPage() {
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-green-600" />
+                  <Phone className="h-5 w-5 text-indigo-600" />
                   <div>
                     <p className="text-sm text-gray-500">Phone</p>
                     <p className="text-gray-900">{library.contact.phone}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="h-5 w-5 text-green-600" />
+                  <Mail className="h-5 w-5 text-indigo-600" />
                   <div>
                     <p className="text-sm text-gray-500">Email</p>
                     <a href={`mailto:${library.contact.email}`} className="text-blue-600 hover:underline">
@@ -504,7 +504,7 @@ export default function LibraryDetailPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Users className="h-5 w-5 text-green-600" />
+                  <Users className="h-5 w-5 text-indigo-600" />
                   <div>
                     <p className="text-sm text-gray-500">Head Librarian</p>
                     <p className="text-gray-900">{library.contact.librarian}</p>
@@ -521,7 +521,7 @@ export default function LibraryDetailPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-green-600" />
+                <Clock className="h-5 w-5 text-indigo-600" />
                 Opening Hours
               </h3>
               <p className="text-gray-700 leading-relaxed">{library.openingHours}</p>
@@ -529,7 +529,7 @@ export default function LibraryDetailPage() {
 
             {/* Quick Stats */}
             <motion.div
-              className="bg-gradient-to-br from-green-600 to-orange-600 rounded-2xl shadow-lg p-6 text-white"
+              className="bg-gradient-to-br from-indigo-600 to-blue-600 rounded-2xl shadow-lg p-6 text-white"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
@@ -595,7 +595,7 @@ export default function LibraryDetailPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 1.4 + index * 0.1 }}
                   >
-                    <div className="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 flex-shrink-0"></div>
                     <span className="text-gray-700 text-sm">{acquisition}</span>
                   </motion.div>
                 ))}

@@ -454,13 +454,71 @@ export default function EResourcesPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 via-indigo-50 to-amber-50">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-blue-600 origin-left z-50"
         style={{ scaleX }}
       />
 
+
+
+ {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-4 h-4 rounded-full ${
+              i % 4 === 0
+                ? "bg-purple-300/20"
+                : i % 4 === 1
+                  ? "bg-pink-300/20"
+                  : i % 4 === 2
+                    ? "bg-orange-300/20"
+                    : "bg-blue-300/20"
+            }`}
+            initial={{
+              x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1920),
+              y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 1080),
+            }}
+            animate={{
+              x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1920),
+              y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 1080),
+            }}
+            transition={{
+              duration: Math.random() * 25 + 20,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+          />
+        ))}
+
+        {/* Large floating shapes */}
+        <motion.div
+          className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-orange-200/30 to-purple-200/30 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            rotate: [360, 180, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
       {/* Header */}
      <motion.header
             className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40"

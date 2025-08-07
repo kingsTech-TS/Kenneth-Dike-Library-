@@ -210,7 +210,7 @@ export default function LibrarianPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-600 to-orange-600 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-amber-600 origin-left z-50"
         style={{ scaleX }}
       />
 
@@ -241,7 +241,7 @@ export default function LibrarianPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="relative h-48 sm:h-64 bg-gradient-to-r from-green-600 to-orange-600">
+          <div className="relative h-48 sm:h-64 bg-gradient-to-r from-indigo-600 to-amber-600">
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="absolute bottom-6 left-6 right-6 text-white">
               <motion.h1
@@ -275,7 +275,7 @@ export default function LibrarianPage() {
                 <img
                   src={librarian.image || "/placeholder.svg"}
                   alt={librarian.name}
-                  className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full object-cover border-4 border-green-100 shadow-lg"
+                  className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full object-cover border-4 border-indigo-100 shadow-lg"
                 />
               </motion.div>
 
@@ -288,7 +288,7 @@ export default function LibrarianPage() {
                   transition={{ duration: 0.8, delay: 0.8 }}
                 >
                   <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-green-600" />
+                    <Mail className="h-5 w-5 text-indigo-600" />
                     <div>
                       <p className="text-sm text-gray-500">Email</p>
                       <a href={`mailto:${librarian.email}`} className="text-blue-600 hover:underline">
@@ -297,21 +297,21 @@ export default function LibrarianPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-green-600" />
+                    <Phone className="h-5 w-5 text-indigo-600" />
                     <div>
                       <p className="text-sm text-gray-500">Phone</p>
                       <p className="text-gray-900">{librarian.phone}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <MapPin className="h-5 w-5 text-green-600" />
+                    <MapPin className="h-5 w-5 text-indigo-600" />
                     <div>
                       <p className="text-sm text-gray-500">Office</p>
                       <p className="text-gray-900">{librarian.office}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-green-600" />
+                    <Calendar className="h-5 w-5 text-indigo-600" />
                     <div>
                       <p className="text-sm text-gray-500">Tenure</p>
                       <p className="text-gray-900">{librarian.period}</p>
@@ -341,7 +341,7 @@ export default function LibrarianPage() {
                       href={librarian.socials.twitter}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 transition-colors"
+                      className="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center hover:bg-amber-600 transition-colors"
                     >
                       <Twitter className="h-5 w-5" />
                     </a>
@@ -351,7 +351,7 @@ export default function LibrarianPage() {
                       href={librarian.socials.orcid}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition-colors"
+                      className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center hover:bg-indigo-700 transition-colors"
                     >
                       <ExternalLink className="h-5 w-5" />
                     </a>
@@ -370,7 +370,7 @@ export default function LibrarianPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Users className="h-6 w-6 text-green-600" />
+            <Users className="h-6 w-6 text-indigo-600" />
             Biography
           </h2>
           <p className="text-gray-700 leading-relaxed text-lg">{librarian.bio}</p>
@@ -384,7 +384,7 @@ export default function LibrarianPage() {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <BookOpen className="h-6 w-6 text-green-600" />
+            <BookOpen className="h-6 w-6 text-indigo-600" />
             Education
           </h2>
           <ul className="space-y-3">
@@ -396,7 +396,7 @@ export default function LibrarianPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
               >
-                <Award className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                <Award className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-700">{edu}</span>
               </motion.li>
             ))}
@@ -411,14 +411,14 @@ export default function LibrarianPage() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Calendar className="h-6 w-6 text-green-600" />
+            <Calendar className="h-6 w-6 text-indigo-600" />
             Professional Experience
           </h2>
           <div className="space-y-4">
             {librarian.experience.map((exp, index) => (
               <motion.div
                 key={index}
-                className="border-l-4 border-green-600 pl-4 py-2"
+                className="border-l-4 border-indigo-600 pl-4 py-2"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
@@ -437,19 +437,19 @@ export default function LibrarianPage() {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Award className="h-6 w-6 text-green-600" />
+            <Award className="h-6 w-6 text-indigo-600" />
             Key Achievements
           </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {librarian.achievements.map((achievement, index) => (
               <motion.li
                 key={index}
-                className="flex items-start gap-3 p-4 bg-green-50 rounded-lg"
+                className="flex items-start gap-3 p-4 bg-indigo-50 rounded-lg"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
               >
-                <div className="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 flex-shrink-0"></div>
                 <span className="text-gray-700">{achievement}</span>
               </motion.li>
             ))}
@@ -464,7 +464,7 @@ export default function LibrarianPage() {
           transition={{ duration: 0.8, delay: 1 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Globe className="h-6 w-6 text-green-600" />
+            <Globe className="h-6 w-6 text-indigo-600" />
             Research Interests
           </h2>
           <div className="flex flex-wrap gap-3">
@@ -490,14 +490,14 @@ export default function LibrarianPage() {
           transition={{ duration: 0.8, delay: 1.2 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <BookOpen className="h-6 w-6 text-green-600" />
+            <BookOpen className="h-6 w-6 text-indigo-600" />
             Selected Publications
           </h2>
           <div className="space-y-4">
             {librarian.publications.map((publication, index) => (
               <motion.div
                 key={index}
-                className="p-4 bg-gray-50 rounded-lg border-l-4 border-orange-600"
+                className="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-600"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 1.4 + index * 0.1 }}
