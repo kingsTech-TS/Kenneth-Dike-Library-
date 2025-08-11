@@ -16,7 +16,7 @@ const databases = [
         name: "JSTOR",
         category: "Multidisciplinary",
         description:
-            "Digital library with thousands of academic journals, books, and primary sources across multiple disciplines including arts, sciences, and humanities.",
+            "Digital library with thousands of academic journs, books, and primary sources across multiple disciplines including arts, sciences, and humanits.",
         features: [
             "Full-text articles",
             "Historical archives",

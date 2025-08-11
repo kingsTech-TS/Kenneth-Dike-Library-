@@ -220,7 +220,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <Card className="p-6 sm:p-8">
+            <Card className="p-6 sm:p-8 border-none">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Send us a Message</h2>
                 <p className="text-gray-600">We'll get back to you as soon as possible.</p>
@@ -252,6 +252,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                         onChange={handleInputChange}
                         required
                         placeholder="Your full name"
+                        className="border-none"
                       />
                     </div>
                     <div>
@@ -290,7 +291,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       onChange={handleInputChange}
                       required
                       rows={5}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       placeholder="Please describe how we can help you..."
                     />
                   </div>
@@ -352,7 +353,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             transition={{ duration: 0.8, delay: 1 }}
           >
             {/* Departments */}
-            <Card className="p-6 sm:p-8">
+            <Card className="p-6 sm:p-8 border-none">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
                   <Building className="h-6 w-6 text-blue-600" />
@@ -384,7 +385,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             </Card>
 
             {/* Social Media & Links */}
-            <Card className="p-6 sm:p-8">
+            <Card className="p-6 sm:p-8 border-none">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
                   <Globe className="h-6 w-6 text-green-600" />
