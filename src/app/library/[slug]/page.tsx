@@ -2,194 +2,96 @@
 
 import { useParams } from "next/navigation"
 import { motion, useScroll, useSpring } from "framer-motion"
-import { ArrowLeft, MapPin, BookOpen, Users, Clock, Award, Database, Globe, Phone, Mail } from "lucide-react"
+import { ArrowLeft, MapPin, BookOpen, Users, Clock, Database, Globe, Phone, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 // Detailed library data
 const libraryData = {
-  arts: {
-    name: "Faculty of Arts Library",
-    faculty: "Arts",
-    image: "/placeholder.svg?height=500&width=800&text=Arts+Library+Interior",
+  social: {
+    name: "Faculty of the Social Science Library",
+    faculty: "Social Science",
+    image: "/Libraries/Social-science/social.jpg",
     description:
-      "The Faculty of Arts Library serves as the intellectual hub for humanities education and research at the University of Ibadan. Established in 1962, it houses one of the most comprehensive collections of humanities resources in West Africa.",
+      "The faculty of the social science Library was established in the year 1972. It caters for the reading, teaching and research interest of students, faculty members and researchers generally. It houses four departments, namely, Department of Geography, Political science, Psychology  and Sociology. It occupied a floor space of 256,412 square meters. The library is a conducive environment for reading as well as carrying out research activities  due to its ambiences and comfortable sitting arrangement.",
     location: "Arts Building, Ground Floor, University of Ibadan",
     coordinates: "7.3775° N, 3.9470° E",
-    books: "45,230",
-    journals: "267",
-    articles: "12,500+",
-    seatingCapacity: 150,
+    books: "8,918",
+    journals: "850",
+    articles: "850",
+    seatingCapacity: 112,
     studyRooms: 8,
     computerStations: 25,
-    openingHours: "Monday - Friday: 8:00 AM - 10:00 PM, Saturday: 9:00 AM - 6:00 PM, Sunday: 2:00 PM - 8:00 PM",
+    openingHours: "Monday - Friday: 8:00 AM - 4:00 PM",
     contact: {
-      phone: "+234 (0) 2 810 1150",
-      email: "artslibrary@ui.edu.ng",
+      phone: "+234 8054 063 921",
+      email: "olalekanadekunjo@gmail.com",
       librarian: "Dr. Adebayo Ogundimu",
+      librarianImage: "/facultylibrarians/Social-science/social.jpeg",
     },
-    specialCollections: [
-      {
-        name: "African Literature Collection",
-        description:
-          "Comprehensive collection of African literary works including novels, poetry, and drama from across the continent",
-        items: "3,500+ books",
-      },
-      {
-        name: "Historical Manuscripts",
-        description: "Rare manuscripts and historical documents relating to Nigerian and African history",
-        items: "1,200+ manuscripts",
-      },
-      {
-        name: "Philosophy Archives",
-        description: "Extensive collection of philosophical works from ancient to contemporary periods",
-        items: "2,800+ volumes",
-      },
-      {
-        name: "Language Resources",
-        description: "Materials in various Nigerian languages and linguistic research resources",
-        items: "1,900+ items",
-      },
-    ],
     services: [
-      "Reference and Information Services",
-      "Inter-library Loan",
-      "Document Delivery",
-      "Research Consultation",
-      "Digital Archive Access",
-      "Thesis and Dissertation Support",
-      "Citation and Bibliography Assistance",
-      "Group Study Room Booking",
+      "E- Library services",
+      "Consultation of books and other resources",
+      "Reference services",
+      "Referral services",
     ],
     facilities: [
-      "Silent Study Areas",
-      "Group Discussion Rooms",
-      "Computer Lab with Internet Access",
-      "Printing and Photocopying Services",
-      "Microfilm/Microfiche Readers",
-      "Audio-Visual Equipment",
-      "Rare Books Reading Room",
-      "Faculty Research Carrels",
+      "Computers",
+      "Air conditioners",
+      "Printer",
+      "Fan Steel shelves",
+      "Wooden tables and chairs",
     ],
     departments: [
-      "English Language and Literature",
-      "History",
-      "Philosophy",
-      "Linguistics and African Languages",
-      "Arabic and Islamic Studies",
-      "European Languages",
-      "Theatre Arts",
-      "Music",
-      "Fine Arts",
+      "Geography",
+      "Political science",
+      "Psychology",
+      "Sociilogy",
     ],
-    recentAcquisitions: [
-      "Digital Humanities Database Access (2024)",
-      "Contemporary African Literature Collection (2023)",
-      "Historical Archives Digitization Project (2023)",
-      "Philosophy E-Journal Subscriptions (2024)",
-    ],
-    stats: {
-      dailyVisitors: "200-300",
-      monthlyLoans: "1,500+",
-      digitalAccess: "24/7",
-      staffMembers: 12,
-    },
   },
-  science: {
-    name: "Faculty of Science Library",
-    faculty: "Science",
-    image: "/placeholder.svg?height=500&width=800&text=Science+Library+Interior",
+
+
+  multidisciplinary: {
+    name: "Wilson Olabode Aiyepeku Library",
+    faculty: "Multidisciplinary Studies",
+    image: "/libraries/Multidisciplinary/mult.jpg",
     description:
-      "The Faculty of Science Library is a modern research facility supporting scientific education and research across multiple disciplines. It features state-of-the-art resources and technology to support undergraduate and postgraduate studies in the sciences.",
-    location: "Science Complex, 2nd Floor, University of Ibadan",
+      "The department of Data and information Science (DDIS) Library was formerly an African Regional Center for Information Science (ARCIS) Library is now known as Wilson Olabode Aiyepeku (WOA) Library. It is located at the ground floor of the DDIS building. Library Resources: Currently Acquires and disseminates information resources relevant to the courses undertaking in the department.",
+    location: "Ground floor of the DDIS building",
     coordinates: "7.3780° N, 3.9465° E",
-    books: "38,450",
-    journals: "189",
-    articles: "15,200+",
-    seatingCapacity: 120,
+    books: "926",
+    journals: "57",
+    articles: "NA",
+    seatingCapacity: 20,
     studyRooms: 6,
     computerStations: 30,
-    openingHours: "Monday - Friday: 8:00 AM - 9:00 PM, Saturday: 9:00 AM - 5:00 PM, Sunday: Closed",
+    openingHours: "Monday - Friday: 8:00 AM - 4:00 PM",
     contact: {
-      phone: "+234 (0) 2 810 1151",
-      email: "sciencelibrary@ui.edu.ng",
+      phone: "+234 8038 604 108",
+      email: " ddiswoalibrarian@gmail.com",
       librarian: "Dr. Folake Adeyemi",
+      librarianImage: "/facultylibrarians/Multidisciplinary/multi.jpg",
     },
-    specialCollections: [
-      {
-        name: "Research Journals Collection",
-        description: "Current and back issues of major scientific journals and research publications",
-        items: "5,000+ journal volumes",
-      },
-      {
-        name: "Laboratory Manuals",
-        description: "Comprehensive collection of laboratory procedures and experimental guides",
-        items: "800+ manuals",
-      },
-      {
-        name: "Scientific Databases",
-        description: "Access to major scientific databases and electronic resources",
-        items: "25+ databases",
-      },
-      {
-        name: "Thesis Collection",
-        description: "Graduate theses and dissertations in various scientific disciplines",
-        items: "2,200+ theses",
-      },
-    ],
     services: [
-      "Scientific Literature Search",
-      "Database Training",
-      "Research Methodology Support",
-      "Statistical Software Access",
-      "Laboratory Information Services",
-      "Patent and Standards Information",
-      "Scientific Writing Support",
-      "Equipment Manuals Access",
+      "Library & Information services",
+      "Research consultations ",
     ],
     facilities: [
-      "Modern Computer Lab",
-      "Scientific Calculator Lending",
-      "Multimedia Presentation Room",
-      "Quiet Study Zones",
-      "Collaborative Learning Spaces",
-      "3D Printing Access",
-      "Scientific Software Stations",
-      "Research Data Storage",
+      "Normal",
     ],
     departments: [
-      "Mathematics",
-      "Physics",
-      "Chemistry",
-      "Biology",
-      "Computer Science",
-      "Statistics",
-      "Geology",
-      "Geography",
+      "All the departments in the Faculty of Multidisciplinary Studies",
     ],
-    recentAcquisitions: [
-      "Advanced Scientific Computing Software (2024)",
-      "Nature Digital Archive Access (2024)",
-      "Laboratory Equipment Manuals Database (2023)",
-      "Open Access Scientific Journals (2024)",
-    ],
-    stats: {
-      dailyVisitors: "150-250",
-      monthlyLoans: "1,200+",
-      digitalAccess: "24/7",
-      staffMembers: 10,
-    },
   },
+
+
   medicine: {
-    name: "E. Latunde Odeku Medical Library",
-    faculty: "College of Medicine",
-    image: "/libraries/college/odeku.jpg",
+    name: "Faculty of Medicine Library",
+    faculty: "Medicine",
+    image: "/placeholder.svg?height=500&width=800&text=Medicine+Library+Interior",
     description:
       "The Faculty of Medicine Library is a specialized medical library providing comprehensive resources for medical education, clinical practice, and biomedical research. It operates 24/7 to support the demanding schedules of medical students and healthcare professionals.",
-       location: `Queen Elisabeth Road,
-P.M.B. 5017, GPO,
-University College Hospital
-Ibadan`,
+    location: "College of Medicine Building, University of Ibadan",
     coordinates: "7.3785° N, 3.9460° E",
     books: "32,180",
     journals: "324",
@@ -197,34 +99,13 @@ Ibadan`,
     seatingCapacity: 100,
     studyRooms: 10,
     computerStations: 20,
-    openingHours: "Monday - Friday: 9:00 AM - 8:00 PM, Saturday: 9:00 AM - 12:00 PM",
+    openingHours: "24/7 Access Available",
     contact: {
-      phone: " 08091761085, 08117522327 ",
-      email: "medicallibrary@com.ui.edu.ng",
+      phone: "+234 (0) 2 810 1152",
+      email: "medlibrary@ui.edu.ng",
       librarian: "Dr. Grace A. Ajuwon",
+      librarianImage: "/placeholder.svg?height=200&width=200&text=Dr.+Grace+A.+Ajuwon",
     },
-    specialCollections: [
-      {
-        name: "Clinical Guidelines Collection",
-        description: "Current clinical practice guidelines and evidence-based medicine resources",
-        items: "1,500+ guidelines",
-      },
-      {
-        name: "Medical Databases",
-        description: "Access to PubMed, Cochrane Library, and other medical databases",
-        items: "15+ databases",
-      },
-      {
-        name: "Anatomy Models",
-        description: "3D anatomical models and medical simulation resources",
-        items: "200+ models",
-      },
-      {
-        name: "Medical Imaging Collection",
-        description: "Radiological images and diagnostic imaging resources",
-        items: "5,000+ images",
-      },
-    ],
     services: [
       "Clinical Literature Search",
       "Evidence-Based Medicine Support",
@@ -255,20 +136,192 @@ Ibadan`,
       "Pathology",
       "Anesthesia",
     ],
-    recentAcquisitions: [
-      "Latest Medical Textbooks (2024)",
-      "Clinical Decision Support Tools (2024)",
-      "Medical Simulation Software (2023)",
-      "Telemedicine Resources (2024)",
-    ],
-    stats: {
-      dailyVisitors: "300-400",
-      monthlyLoans: "2,000+",
-      digitalAccess: "24/7",
-      staffMembers: 15,
-    },
   },
-  // Add more libraries as needed...
+
+
+  veterinanry: {
+    name: "Faculty Library of Veterinanry Medicine",
+    faculty: "Veterinanry Medicine",
+    image: "/libraries/Veterinanry/vet.jpg",
+    description:
+      "The Faculty Library of Veterinary Medicine is established to bring library and information services closer to the students and faculty members. Like other faculty libraries at the University of Ibadan, it houses a selective yet balanced collection of academic materials designed to support curricular offerings and foster an appreciation of the role of subject disciplines in students socio-cultural and intellectual development. This collection also aims to prepare students to apply knowledge productively in their future careers, in line with the faculty mission, goals, and objectives. Resources include veterinary textbooks, dictionaries, encyclopedias, biographies, journals, and other periodicals in various formats, both print and electronic. Beyond the scope and content of the collection, other factors such as usability and currency also determine material acquisition priorities.",
+    location: "Faculty of Veterinary Medicine Building, University of Ibadan",
+    coordinates: "7.3770° N, 3.9475° E",
+    books: "620",
+    journals: "20",
+    articles: "200+",
+    seatingCapacity: 85,
+    studyRooms: 5,
+    computerStations: 15,
+    openingHours: "Monday - Friday: 8:00 AM - 8:00 PM",
+    contact: {
+      phone: "+234 '8020 637 589",
+      email: "osagiezion@gmail.com",
+      librarian: "Dr. Osagie Oseghale",
+      librarianImage: "/facultylibrarians/Veterinanry/vet.jpg",
+    },
+    services: [
+      "Provision of reading spaces",
+      "Organisation of information materials",
+      "Guidance in the use of electronic materials",
+      "Literature search",
+      "Information literacy",
+      "Students and staff clearance",
+    ],
+    facilities: [
+      "Inverter (3.5 KVA)  supported by four solar batteries and eight solar panels.",
+      "Two laserjet printers",
+      "Sharp photocopy machine",
+      "Four ceiling fans",
+      "One window air conditioner",
+      "Four split air conditioners",
+      "Eleven carrel-style tables",
+      "Sixty six steel chairs",
+      "Three laptops computer",
+      "One Samsung fridge",
+    ],
+    departments: ["Veterinary Medicine", "Veterinary Anatomy", "Veterinary Microbiology and Virology", "Veterinary Physiology and Biochemistry", "Veterinary Pharmacology and Toxicology", "Veterinary Pathology", "Veterinary Public Health and Preventive Medicine", "Veterinary Surgery and Production", "Veterinary Theriogenology", "Veterinary of Parasitology and Entomology"],
+  },
+
+    art: {
+    name: "Faculty of Arts Library ",
+    faculty: "Art",
+    image: "/libraries/Art/art.jpeg",
+    description:
+      "Faculty of Arts Library is a 2009 ETF Special Intervention project meant to centralise and harmonise the resources in the various departmental libraries in a centralized location. On completion and handling over of the structure, the Faculty of Arts Management allocated the facility to the newest department - Department of Music for temporary use. Faculty of Arts Library stands as a gate-way between users and information resources. In the year 2023, the University library management took over the structure as music department were relocated elsewhere. Abomoge Solomon Oluwatise (a pioneer librarian) was posted to the faculty of Arts Library on the 23rd of July, 2023 towards the tail ends tenure of professor Oyesiji (the then Dean of Faculty of Arts). Faculty of Arts Library play a vital role in the University system since its establishment, users has been using the library continuously. Efforts are still on-going to organize the facility to facilitate effective usage.",
+    location: "At the entrance of Faculty of Arts ",
+    coordinates: "7.3785° N, 3.9460° E",
+    books: "499",
+    journals: "35",
+    articles: "525",
+    seatingCapacity: 60,
+    studyRooms: 10,
+    computerStations: 20,
+    openingHours: " Monday-Friday 8:00am - 4:00pm",
+    contact: {
+      phone: "+234 7012 007 197",
+      email: "oluwatisesolomon@gmail.com",
+      librarian: "Mr S. O. Abomoge ",
+      librarianImage: "/facultylibrarians/Art/art.jpeg",
+    },
+    services: [
+      "Dissemination of information",
+      "Answers to users queries",
+      "Reference services",
+    ],
+    facilities: [
+      "Chairs",
+      "Tables",
+      "Shelves",
+      "Fans and malfunctioning internet facilities",
+    ],
+    departments: [
+      "English and literary studies",
+      "History",
+      "Communication and Language Arts",
+      "Classics",
+      "Linguistic and African Studies",
+      "Philosophy",
+      "Religious Studies",
+      "Arabic and Islamic Studies",
+      "Theatre Arts",
+      "European Studies",
+      "Archaeology and Anthropology",
+      "Music",
+    ],
+  },
+
+   law: {
+    name: "Adéọlá Odùtọ́lá Law Library",
+    faculty: "Law",
+    image: "/Libraries/Law/law.jpg",
+    description:
+      "Adéọlá Odùtọ́lá Law Library is the knowledge hub of the Faculty of Law, University of Ibadan. It was established to provide adequate information Services in support of teaching, learning and research in the Faculty of Law. The Library which is a branch of the Kenneth Dike Library was moved from the main library to it's present location in 1994 to ensure prompt, effective and efficient library and information are made available to students, lecturers, researchers and external users. The movement of the library was very much facilitated by late Chief Adéọlá Odùtọ́lá , the philanthropist who donated the physical structure of the library. Hence it was named after him.",
+    location: "Niger Road, along Vice Chancellor's Lodge, University of Ibadan. ",
+    coordinates: "7.3785° N, 3.9460° E",
+    books: "8,923",
+    journals: "4,688",
+    articles: "17,511",
+    seatingCapacity: 153,
+    studyRooms: 10,
+    computerStations: 20,
+    openingHours: " Monday-Friday 8:00am - 4:00pm",
+    contact: {
+      phone: "+234 8033 825 558",
+      email: "susanyinka@yahoo.com",
+      librarian: "Tomomowo-Ayodele, Susanah Oluyinka ",
+      librarianImage: "/facultylibrarians/Law/law.jpg",
+    },
+    services: [
+      "Circulation Services",
+      "Reference Services information",
+      "Database Access such as providing access to online databases",
+      "Computer and Internet Access",
+      "Wi-Fi",
+    ],
+    facilities: [
+      "Circulation desk",
+      "Reading rooms",
+      "Private Study area",
+      "electronic resources section",
+      "Furniture such as study tables, chairs, book shelves, trolley.",
+      "Ceiling and standing fan",
+      "Air conditioner",
+      "Fridge",
+      "Computers and Printer",
+      "Photocopier",
+    ],
+    departments: [
+      "Commercial and Industrial Law",
+      "Jurisprudence and International Law",
+      "Private and Property Law",
+      "Public Law",
+    ],
+  },
+
+  agriculture: {
+    name: "Faculty of Agriculture and Renewable Natural Resources Library",
+    faculty: "Agriculture",
+    image: "/Libraries/Agriculture/agric.jpg",
+    description:
+      "The Faculty of Agriculture library is a modern, well-equipped facility offering students and researchers a conducive study environment. Key features include: Internet access for seamless research and academic pursuits 24-hour electricity supply, ensuring uninterrupted study sessions. A comfortable seating capacity of 68 users, providing ample space for focused learning and collaboration. This library serves as a vital resource hub for the Faculty of Agriculture, supporting academic excellence and innovative research in agriculture and related fields.",
+    location: "Faculty of Agriculturen. ",
+    coordinates: "7.3785° N, 3.9460° E",
+    books: "8,748",
+    journals: "856",
+    articles: "856",
+    seatingCapacity: 68,
+    studyRooms: 10,
+    computerStations: 20,
+    openingHours: " Monday-Friday 8:00am - 4:00pm",
+    contact: {
+      phone: "+234 8033 981 513",
+      email: "kutujacob82@gmail.com",
+      librarian: "Dr J. O. Kutu ",
+      librarianImage: "/facultylibrarians/Agricultre/agric.jpg",
+    },
+    services: [
+      "Internet access",
+      "Reference assistance",
+      "Document delivery",
+      "Borrowing services",
+      "Research support",
+      "Study spaces",
+    ],
+    facilities: [
+      "Solar Equipment",
+      "Air conditioners",
+      "Ceiling fan",
+      "Standing fan",
+      "Furniture such as study tables, chairs, book shelves, cloakroom shelf.",
+    ],
+    departments: [
+      "Commercial and Industrial Law",
+      "Jurisprudence and International Law",
+      "Private and Property Law",
+      "Public Law",
+    ],
+  },
 }
 
 export default function LibraryDetailPage() {
@@ -297,10 +350,10 @@ export default function LibraryDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-600 to-orange-600 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-600 to-indigo-600 origin-left z-50"
         style={{ scaleX }}
       />
 
@@ -364,7 +417,7 @@ export default function LibraryDetailPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg text-center">
-            <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-green-600 mx-auto mb-2" />
+            <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-amber-600 mx-auto mb-2" />
             <div className="text-xl sm:text-2xl font-bold text-gray-900">{library.books}</div>
             <div className="text-xs sm:text-sm text-gray-600">Books</div>
           </div>
@@ -374,12 +427,12 @@ export default function LibraryDetailPage() {
             <div className="text-xs sm:text-sm text-gray-600">Journals</div>
           </div>
           <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg text-center">
-            <Users className="h-8 w-8 sm:h-10 sm:w-10 text-orange-600 mx-auto mb-2" />
+            <Users className="h-8 w-8 sm:h-10 sm:w-10 text-indigo-600 mx-auto mb-2" />
             <div className="text-xl sm:text-2xl font-bold text-gray-900">{library.seatingCapacity}</div>
             <div className="text-xs sm:text-sm text-gray-600">Seats</div>
           </div>
           <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg text-center">
-            <Globe className="h-8 w-8 sm:h-10 sm:w-10 text-purple-600 mx-auto mb-2" />
+            <Globe className="h-8 w-8 sm:h-10 sm:w-10 text-amber-600 mx-auto mb-2" />
             <div className="text-xl sm:text-2xl font-bold text-gray-900">{library.articles}</div>
             <div className="text-xs sm:text-sm text-gray-600">Articles</div>
           </div>
@@ -399,40 +452,12 @@ export default function LibraryDetailPage() {
               <p className="text-gray-700 leading-relaxed text-base sm:text-lg">{library.description}</p>
             </motion.section>
 
-            {/* Special Collections */}
-            <motion.section
-              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <Award className="h-6 w-6 text-indigo-600" />
-                Special Collections
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {library.specialCollections.map((collection, index) => (
-                  <motion.div
-                    key={index}
-                    className="p-4 bg-gray-50 rounded-xl border-l-4 border-indigo-600"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-                  >
-                    <h3 className="font-semibold text-gray-900 mb-2">{collection.name}</h3>
-                    <p className="text-gray-600 text-sm mb-2">{collection.description}</p>
-                    <span className="text-indigo-600 font-medium text-sm">{collection.items}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.section>
-
             {/* Services */}
             <motion.section
               className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
             >
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Services Offered</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -442,7 +467,7 @@ export default function LibraryDetailPage() {
                     className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 1 + index * 0.05 }}
+                    transition={{ duration: 0.6, delay: 0.8 + index * 0.05 }}
                   >
                     <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
                     <span className="text-gray-700 text-sm">{service}</span>
@@ -456,19 +481,19 @@ export default function LibraryDetailPage() {
               className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
             >
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Facilities & Equipment</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {library.facilities.map((facility, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg"
+                    className="flex items-center gap-3 p-3 bg-indigo-50 rounded-lg"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 1.2 + index * 0.05 }}
+                    transition={{ duration: 0.6, delay: 1 + index * 0.05 }}
                   >
-                    <div className="w-2 h-2 bg-amber-600 rounded-full flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-indigo-600 rounded-full flex-shrink-0"></div>
                     <span className="text-gray-700 text-sm">{facility}</span>
                   </motion.div>
                 ))}
@@ -478,36 +503,48 @@ export default function LibraryDetailPage() {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Contact Information */}
+            {/* Head Librarian */}
             <motion.div
               className="bg-white rounded-2xl shadow-lg p-6"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Head Librarian</h3>
+              <div className="text-center">
+                <img
+                  src={library.contact.librarianImage || "/placeholder.svg"}
+                  alt={library.contact.librarian}
+                  className="w-24 h-24 rounded-full mx-auto mb-3 object-cover border-4 border-amber-200"
+                />
+                <h4 className="font-semibold text-gray-900 mb-1">{library.contact.librarian}</h4>
+                <p className="text-sm text-gray-600">Head Librarian</p>
+              </div>
+            </motion.div>
+
+            {/* Contact Information */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-lg p-6"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-indigo-600" />
+                  <Phone className="h-5 w-5 text-amber-600" />
                   <div>
                     <p className="text-sm text-gray-500">Phone</p>
                     <p className="text-gray-900">{library.contact.phone}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="h-5 w-5 text-indigo-600" />
+                  <Mail className="h-5 w-5 text-amber-600" />
                   <div>
                     <p className="text-sm text-gray-500">Email</p>
                     <a href={`mailto:${library.contact.email}`} className="text-blue-600 hover:underline">
                       {library.contact.email}
                     </a>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Users className="h-5 w-5 text-indigo-600" />
-                  <div>
-                    <p className="text-sm text-gray-500">Head Librarian</p>
-                    <p className="text-gray-900">{library.contact.librarian}</p>
                   </div>
                 </div>
               </div>
@@ -518,41 +555,13 @@ export default function LibraryDetailPage() {
               className="bg-white rounded-2xl shadow-lg p-6"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
             >
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-indigo-600" />
+                <Clock className="h-5 w-5 text-amber-600" />
                 Opening Hours
               </h3>
               <p className="text-gray-700 leading-relaxed">{library.openingHours}</p>
-            </motion.div>
-
-            {/* Quick Stats */}
-            <motion.div
-              className="bg-gradient-to-br from-indigo-600 to-blue-600 rounded-2xl shadow-lg p-6 text-white"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <h3 className="text-xl font-bold mb-4">Library Statistics</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span>Daily Visitors:</span>
-                  <span className="font-semibold">{library.stats.dailyVisitors}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Monthly Loans:</span>
-                  <span className="font-semibold">{library.stats.monthlyLoans}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Digital Access:</span>
-                  <span className="font-semibold">{library.stats.digitalAccess}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Staff Members:</span>
-                  <span className="font-semibold">{library.stats.staffMembers}</span>
-                </div>
-              </div>
             </motion.div>
 
             {/* Departments Served */}
@@ -573,30 +582,6 @@ export default function LibraryDetailPage() {
                     transition={{ duration: 0.6, delay: 1.2 + index * 0.05 }}
                   >
                     {dept}
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Recent Acquisitions */}
-            <motion.div
-              className="bg-white rounded-2xl shadow-lg p-6"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-            >
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Recent Acquisitions</h3>
-              <div className="space-y-3">
-                {library.recentAcquisitions.map((acquisition, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 1.4 + index * 0.1 }}
-                  >
-                    <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-gray-700 text-sm">{acquisition}</span>
                   </motion.div>
                 ))}
               </div>

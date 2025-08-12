@@ -22,33 +22,33 @@ import Footer from "@/components/footer"
 const facultyLibraries = [
   {
     id: 1,
-    name: "Faculty of Arts Library",
-    faculty: "Arts",
-    image: "/placeholder.svg?height=300&width=400&text=Arts+Library",
+    name: "Faculty of the social science Library",
+    faculty: "Social Science",
+    image: "/Libraries/Social-science/social.jpg",
     description:
-      "Comprehensive collection of humanities resources including literature, history, philosophy, and cultural studies materials.",
+      "The faculty of the social science Library was established in the year 1972. It caters for the reading, teaching and research interest of students...",
     location: "Arts Building, Ground Floor",
-    books: "45,000+",
-    journals: "250+",
-    seatingCapacity: 150,
-    openingHours: "8:00 AM - 10:00 PM",
-    specialCollections: ["African Literature", "Historical Manuscripts", "Philosophy Archives"],
-    slug: "arts",
+    books: "8,918",
+    journals: "850",
+    seatingCapacity: 112,
+    openingHours: "8:00AM - 4:00PM",
+    specialCollections: ["Faculty Prospectus", "Faculty Lectures", "Order proceedings"],
+    slug: "social",
   },
   {
     id: 2,
-    name: "Faculty of Science Library",
-    faculty: "Science",
-    image: "/placeholder.svg?height=300&width=400&text=Science+Library",
+    name: "Wilson Olabode Aiyepeku Library",
+    faculty: "Multidisciplinary Studies",
+    image: "/libraries/Multidisciplinary/mult.jpg",
     description:
-      "Extensive scientific resources covering biology, chemistry, physics, mathematics, and computer science.",
-    location: "Science Complex, 2nd Floor",
-    books: "38,000+",
-    journals: "180+",
-    seatingCapacity: 120,
-    openingHours: "8:00 AM - 9:00 PM",
+      "The department of Data and information Science (DDIS) Library was formerly an African Regional Center for Information Science (ARCIS) Library is...",
+    location: "Ground floor of the DDIS building",
+    books: "926",
+    journals: "57",
+    seatingCapacity: 20,
+    openingHours: "8:00 AM - 4:00 PM",
     specialCollections: ["Research Journals", "Laboratory Manuals", "Scientific Databases"],
-    slug: "science",
+    slug: "multidisciplinary",
   },
   {
     id: 3,
@@ -70,62 +70,62 @@ Ibadan`,
   },
   {
     id: 4,
-    name: "Adeola Odutola Law Library",
-    faculty: "Law",
-    image: "/placeholder.svg?height=300&width=400&text=Law+Library",
-    description: "Legal resources including case law, statutes, legal journals, and international law materials.",
-    location: "Faculty of Law Building",
-    books: "28,000+",
-    journals: "150+",
-    seatingCapacity: 80,
-    openingHours: "8:00 AM - 8:00 PM",
+    name: "Faculty Library of Veterinanry Medicine",
+    faculty: "Veterinanry Medicine",
+    image: "/libraries/Veterinanry/vet.jpg",
+    description: "The Faculty Library of Veterinary Medicine is established to bring library and information services closer to the students and...",
+    location: "Faculty of Veterinary Medicine Buliding",
+    books: "620",
+    journals: "20",
+    seatingCapacity: 85,
+    openingHours: "8:00 AM - 4:00 PM",
     specialCollections: ["Nigerian Law Reports", "International Law", "Legal Databases"],
-    slug: "law",
+    slug: "veterinanry",
   },
   {
     id: 5,
-    name: "Faculty of Education Library",
-    faculty: "Education",
-    image: "/placeholder.svg?height=300&width=400&text=Education+Library",
+    name: "Faculty of Arts Library",
+    faculty: "Arts",
+    image: "/Libraries/Art/art.jpeg",
     description:
-      "Educational resources covering pedagogy, curriculum development, educational psychology, and teaching materials.",
-    location: "Education Building, 1st Floor",
-    books: "35,000+",
-    journals: "200+",
-    seatingCapacity: 90,
-    openingHours: "8:00 AM - 9:00 PM",
+      "Faculty of Arts Library is a 2009 ETF Special Intervention project meant to centralise and harmonise the resources in the various departmental...",
+    location: "At the entrance of Faculty of Arts ",
+    books: "499",
+    journals: "35",
+    seatingCapacity: 60,
+    openingHours: "8:00 AM - 4:00 PM",
     specialCollections: ["Curriculum Materials", "Educational Psychology", "Teaching Resources"],
-    slug: "education",
+    slug: "art",
   },
   {
     id: 6,
-    name: "Faculty of Agriculture Library",
-    faculty: "Agriculture",
-    image: "/placeholder.svg?height=300&width=400&text=Agriculture+Library",
+    name: "Adéọlá Odùtọ́lá Law Library",
+    faculty: "Law",
+    image: "/Libraries/Law/law.jpg",
     description:
-      "Agricultural sciences collection including crop science, animal husbandry, soil science, and agricultural economics.",
-    location: "Agriculture Faculty Building",
-    books: "30,000+",
-    journals: "160+",
-    seatingCapacity: 70,
-    openingHours: "8:00 AM - 6:00 PM",
+      "Adéọlá Odùtọ́lá Law Library is the knowledge hub of the Faculty of Law, University of Ibadan. It was established to provide adequate information...",
+    location: "Niger Road, along Vice Chancellor's Lodge, University of Ibadan",
+    books: "8,923",
+    journals: "4,688",
+    seatingCapacity: 153,
+    openingHours: "8:00 AM - 4:00 PM",
     specialCollections: ["Agricultural Research", "Crop Science", "Animal Husbandry"],
-    slug: "agriculture",
+    slug: "law",
   },
   {
     id: 7,
-    name: "Faculty of Social Sciences Library",
-    faculty: "Social Sciences",
-    image: "/placeholder.svg?height=300&width=400&text=Social+Sciences+Library",
+    name: "Faculty of Agriculture and Renewable Natural Resources Library",
+    faculty: "Agriculture",
+    image: "/Libraries/Agriculture/agric.jpg",
     description:
-      "Social sciences resources covering sociology, psychology, political science, economics, and anthropology.",
-    location: "Social Sciences Building",
-    books: "42,000+",
-    journals: "220+",
+      "The Faculty of Agriculture library is a modern, well-equipped facility offering students and researchers a conducive study environment...",
+    location: "Faculty of Agriculture",
+    books: "8,748",
+    journals: "856",
     seatingCapacity: 110,
-    openingHours: "8:00 AM - 9:00 PM",
+    openingHours: "8:00 AM - 4:00 PM",
     specialCollections: ["African Studies", "Development Studies", "Political Archives"],
-    slug: "social-sciences",
+    slug: "agriculture",
   },
   {
     id: 8,
@@ -335,20 +335,19 @@ export default function LibrariesPage() {
         style={{ scaleX }}
       />
 
-       {/* Animated Background Elements */}
+      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute w-4 h-4 rounded-full ${
-              i % 4 === 0
+            className={`absolute w-4 h-4 rounded-full ${i % 4 === 0
                 ? "bg-purple-300/20"
                 : i % 4 === 1
                   ? "bg-pink-300/20"
                   : i % 4 === 2
                     ? "bg-orange-300/20"
                     : "bg-blue-300/20"
-            }`}
+              }`}
             initial={{
               x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1920),
               y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 1080),
