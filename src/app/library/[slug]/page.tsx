@@ -54,7 +54,7 @@ const libraryData = {
   multidisciplinary: {
     name: "Wilson Olabode Aiyepeku Library",
     faculty: "Multidisciplinary Studies",
-    image: "/libraries/Multidisciplinary/mult.jpg",
+    image: "/Libraries/Multidisciplinary/mult.jpg",
     description:
       "The department of Data and information Science (DDIS) Library was formerly an African Regional Center for Information Science (ARCIS) Library is now known as Wilson Olabode Aiyepeku (WOA) Library. It is located at the ground floor of the DDIS building. Library Resources: Currently Acquires and disseminates information resources relevant to the courses undertaking in the department.",
     location: "Ground floor of the DDIS building",
@@ -142,7 +142,7 @@ const libraryData = {
   veterinanry: {
     name: "Faculty Library of Veterinanry Medicine",
     faculty: "Veterinanry Medicine",
-    image: "/libraries/Veterinanry/vet.jpg",
+    image: "/Libraries/Veterinanry/vet.jpg",
     description:
       "The Faculty Library of Veterinary Medicine is established to bring library and information services closer to the students and faculty members. Like other faculty libraries at the University of Ibadan, it houses a selective yet balanced collection of academic materials designed to support curricular offerings and foster an appreciation of the role of subject disciplines in students socio-cultural and intellectual development. This collection also aims to prepare students to apply knowledge productively in their future careers, in line with the faculty mission, goals, and objectives. Resources include veterinary textbooks, dictionaries, encyclopedias, biographies, journals, and other periodicals in various formats, both print and electronic. Beyond the scope and content of the collection, other factors such as usability and currency also determine material acquisition priorities.",
     location: "Faculty of Veterinary Medicine Building, University of Ibadan",
@@ -186,7 +186,7 @@ const libraryData = {
     art: {
     name: "Faculty of Arts Library ",
     faculty: "Art",
-    image: "/libraries/Art/art.jpeg",
+    image: "/Libraries/Art/art.jpeg",
     description:
       "Faculty of Arts Library is a 2009 ETF Special Intervention project meant to centralise and harmonise the resources in the various departmental libraries in a centralized location. On completion and handling over of the structure, the Faculty of Arts Management allocated the facility to the newest department - Department of Music for temporary use. Faculty of Arts Library stands as a gate-way between users and information resources. In the year 2023, the University library management took over the structure as music department were relocated elsewhere. Abomoge Solomon Oluwatise (a pioneer librarian) was posted to the faculty of Arts Library on the 23rd of July, 2023 towards the tail ends tenure of professor Oyesiji (the then Dean of Faculty of Arts). Faculty of Arts Library play a vital role in the University system since its establishment, users has been using the library continuously. Efforts are still on-going to organize the facility to facilitate effective usage.",
     location: "At the entrance of Faculty of Arts ",
