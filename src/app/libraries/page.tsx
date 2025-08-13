@@ -341,12 +341,12 @@ export default function LibrariesPage() {
           <motion.div
             key={i}
             className={`absolute w-4 h-4 rounded-full ${i % 4 === 0
-              ? "bg-purple-300/20"
-              : i % 4 === 1
-                ? "bg-pink-300/20"
-                : i % 4 === 2
-                  ? "bg-orange-300/20"
-                  : "bg-blue-300/20"
+                ? "bg-purple-300/20"
+                : i % 4 === 1
+                  ? "bg-pink-300/20"
+                  : i % 4 === 2
+                    ? "bg-orange-300/20"
+                    : "bg-blue-300/20"
               }`}
             initial={{
               x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1920),
@@ -401,8 +401,7 @@ export default function LibrariesPage() {
         <Header />
       </motion.header>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 py-8 sm:py-12 2xl:py-16 max-w-7xl 2xl:max-w-[1600px]">
-
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero Section */}
         <motion.div
           className="text-center mb-12 sm:mb-16"
@@ -516,12 +515,11 @@ export default function LibrariesPage() {
 
         {/* Libraries Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1 }}
         >
-
           {filteredLibraries.map((library, index) => (
             <LibraryCard key={library.id} library={library} index={index} />
           ))}
