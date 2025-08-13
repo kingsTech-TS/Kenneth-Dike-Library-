@@ -322,6 +322,92 @@ const libraryData = {
       "Public Law",
     ],
   },
+
+  women: {
+    name: "Women's Research and Documentation Centre (WORDOC)",
+    faculty: "Center Library",
+    image: "/Libraries/Womens/women.jpg",
+    description:
+      "Womens Research and Documentation Centre (WORDOC) Library is located within the Institute of African Studies, University of Ibadan, Ibadan.  It an international centre for research, training and dissemination of information on women, girls, men and boys who are interested in the analysis of gender issues in respect to scholarship, socio-economic policy and action.  The centre was established by the first female Professor of Institute of African Studies, Professor Bolanle Awe in the year 1987. One of the objectives of WORDOC is to operate a documentation centre for the use of scholars, researchers and other interested persons. The library operates between 8.00am to 4.00pm every working day excluding public holiday.",
+    location: "Institute of African Studies, U.I. ",
+    coordinates: "7.3785° N, 3.9460° E",
+    books: "3,000",
+    journals: "1,500",
+    articles: "10,500",
+    seatingCapacity: 25,
+    studyRooms: 10,
+    computerStations: 20,
+    openingHours: " Monday-Friday 8:00am - 4:00pm",
+    contact: {
+      phone: "+234 8100 079 047",
+      email: "wordocias@gmail.com",
+      librarian: "Mrs. Otolorin, Victoria Moriyeba ",
+      librarianImage: "/facultylibrarians/Women/women.jpg",
+    },
+    services: [
+      "Reference Services",
+      "Research Support and Users",
+      "Education (Orientation)",
+    ],
+    facilities: [
+       "Air conditioners",
+      "Ceiling fan",
+      "Standing fan",
+      "Reading tables and chairs.",
+      "Desktop Computers and Printer",
+      "Photocopy machine and Rest room",
+    ],
+    departments: [
+      "African History",
+      "African Law",
+      "African Music",
+      "African Visual Arts",
+      "Anthropology",
+      "Cultural and Media Studies",
+      "Diaspora and Transnational Studies",
+      "Gender Studies",
+      "Traditional African Medicine and Transformation Studies in Africa",
+    ],
+  },
+
+  education: {
+    name: "Institute of Education Library ",
+    faculty: "Education",
+    image: "/Libraries/Education/edu.jpg",
+    description:
+      "The Institute of Education Library is situated along Ajibode Sasa road, via University of Ibadan. The Institute is being controlled by the Director. It was located at the University of Ibadan campus beside the Faculty of Education until year 2020 when the Institute of Education Library was moved by the Constituted Authority to the new site. The IoE Library started Operation in the year 2021 to date. The library opens everyday between 8am and 4pm except on  public holidays and weekends. The library admits postgraduate, Ph.D students, academic and non teaching staff including referrals from other tertiary institutions. The Institute of Education Librarian in-charge is Mr. Sunday. A Oluwaniyi and his assistant is Miss. Glory. E Udiminue.",
+    location: "Ajibode/Sasa road. ",
+    coordinates: "7.3785° N, 3.9460° E",
+    books: "10,500",
+    journals: "120",
+    articles: "150",
+    seatingCapacity: 72,
+    studyRooms: 10,
+    computerStations: 20,
+    openingHours: " Monday-Friday 8:00am - 4:00pm",
+    contact: {
+      phone: "+234 8023 843 121",
+      email: "oluwaniyisundayabiodun@gmail.com",
+      librarian: "Mr S. A. Oluwaniyi",
+      librarianImage: "/facultylibrarians/Education/edu.jpg",
+    },
+    services: [
+      "Orientation to students",
+      "Industrial training",
+      "Selective dissemination of information ( SDI)",
+    ],
+    facilities: [
+      "Books",
+      "Journals",
+      "Recitations",
+      "Theses",
+      "Reading tables and chairs.",
+    ],
+ departments: [
+      "International Centre for Educational Evaluation (ICEE)",
+      "School and Outreach Department",
+    ],
+  },
 }
 
 export default function LibraryDetailPage() {
