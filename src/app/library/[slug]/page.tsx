@@ -426,9 +426,9 @@ export default function LibraryDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Library Not Found</h1>
+          <h1 className="text-3xl xl:text-4xl font-bold text-gray-900 mb-6">Library Not Found</h1>
           <Link href="/libraries">
-            <Button>Back to Libraries</Button>
+            <Button size="lg">Back to Libraries</Button>
           </Link>
         </div>
       </div>
@@ -450,19 +450,19 @@ export default function LibraryDetailPage() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 flex justify-between items-center max-w-[1800px]">
           <Link href="/libraries">
-            <Button variant="ghost" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
+            <Button variant="ghost" size="lg" className="flex items-center gap-2">
+              <ArrowLeft className="h-5 w-5 xl:h-6 xl:w-6" />
               <span className="hidden sm:inline">Back to Libraries</span>
               <span className="sm:hidden">Back</span>
             </Button>
           </Link>
-          <div className="text-xs sm:text-sm text-gray-500 italic">Library Details</div>
+          <div className="text-sm xl:text-base text-gray-500 italic">Library Details</div>
         </div>
       </motion.header>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-8 sm:py-12 max-w-[1800px]">
         {/* Hero Section */}
         <motion.div
           className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8 sm:mb-12"
@@ -470,12 +470,16 @@ export default function LibraryDetailPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="relative h-64 sm:h-80 lg:h-96">
-            <img src={library.image || "/placeholder.svg"} alt={library.name} className="w-full h-full object-cover" />
+          <div className="relative h-64 sm:h-80 lg:h-96 xl:h-[500px] 2xl:h-[600px]">
+            <img
+              src={library.image || "/placeholder.svg"}
+              alt={library.name}
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 text-white">
+            <div className="absolute bottom-8 left-8 right-8 text-white">
               <motion.h1
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2"
+                className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2"
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -483,12 +487,12 @@ export default function LibraryDetailPage() {
                 {library.name}
               </motion.h1>
               <motion.p
-                className="text-base sm:text-lg lg:text-xl opacity-90 flex items-center gap-2"
+                className="text-base sm:text-lg lg:text-xl xl:text-2xl opacity-90 flex items-center gap-2"
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <MapPin className="h-5 w-5" />
+                <MapPin className="h-5 w-5 xl:h-6 xl:w-6" />
                 {library.location}
               </motion.p>
             </div>
@@ -502,61 +506,59 @@ export default function LibraryDetailPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg text-center">
-            <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-amber-600 mx-auto mb-2" />
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">{library.books}</div>
-            <div className="text-xs sm:text-sm text-gray-600">Books</div>
-          </div>
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg text-center">
-            <Database className="h-8 w-8 sm:h-10 sm:w-10 text-blue-600 mx-auto mb-2" />
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">{library.journals}</div>
-            <div className="text-xs sm:text-sm text-gray-600">Journals</div>
-          </div>
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg text-center">
-            <Users className="h-8 w-8 sm:h-10 sm:w-10 text-indigo-600 mx-auto mb-2" />
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">{library.seatingCapacity}</div>
-            <div className="text-xs sm:text-sm text-gray-600">Seats</div>
-          </div>
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg text-center">
-            <Globe className="h-8 w-8 sm:h-10 sm:w-10 text-amber-600 mx-auto mb-2" />
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">{library.articles}</div>
-            <div className="text-xs sm:text-sm text-gray-600">Articles</div>
-          </div>
+          {[
+            { icon: BookOpen, value: library.books, label: "Books", color: "text-amber-600" },
+            { icon: Database, value: library.journals, label: "Journals", color: "text-blue-600" },
+            { icon: Users, value: library.seatingCapacity, label: "Seats", color: "text-indigo-600" },
+            { icon: Globe, value: library.articles, label: "Articles", color: "text-amber-600" },
+          ].map((stat, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-xl p-4 sm:p-6 xl:p-8 shadow-lg text-center"
+            >
+              <stat.icon className={`h-8 w-8 sm:h-10 sm:w-10 xl:h-12 xl:w-12 ${stat.color} mx-auto mb-3`} />
+              <div className="text-xl sm:text-2xl xl:text-3xl font-bold text-gray-900">{stat.value}</div>
+              <div className="text-xs sm:text-sm xl:text-base text-gray-600">{stat.label}</div>
+            </div>
+          ))}
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 xl:gap-12">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8 xl:space-y-10">
             {/* About */}
             <motion.section
-              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
+              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 xl:p-10"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">About the Library</h2>
-              <p className="text-gray-700 leading-relaxed text-base sm:text-lg">{library.description}</p>
+              <h2 className="text-2xl xl:text-3xl font-bold text-gray-900 mb-6">About the Library</h2>
+              <p className="text-gray-700 leading-relaxed text-base sm:text-lg xl:text-xl">
+                {library.description}
+              </p>
             </motion.section>
 
             {/* Services */}
             <motion.section
-              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
+              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 xl:p-10"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Services Offered</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <h2 className="text-2xl xl:text-3xl font-bold text-gray-900 mb-6">Services Offered</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 xl:gap-4">
                 {library.services.map((service, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg"
+                    className="flex items-center gap-3 p-3 xl:p-4 bg-blue-50 rounded-lg"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.8 + index * 0.05 }}
                   >
                     <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
-                    <span className="text-gray-700 text-sm">{service}</span>
+                    <span className="text-gray-700 text-sm xl:text-base">{service}</span>
                   </motion.div>
                 ))}
               </div>
@@ -564,23 +566,23 @@ export default function LibraryDetailPage() {
 
             {/* Facilities */}
             <motion.section
-              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
+              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 xl:p-10"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Facilities & Equipment</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <h2 className="text-2xl xl:text-3xl font-bold text-gray-900 mb-6">Facilities & Equipment</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 xl:gap-4">
                 {library.facilities.map((facility, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center gap-3 p-3 bg-indigo-50 rounded-lg"
+                    className="flex items-center gap-3 p-3 xl:p-4 bg-indigo-50 rounded-lg"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 1 + index * 0.05 }}
                   >
                     <div className="w-2 h-2 bg-indigo-600 rounded-full flex-shrink-0"></div>
-                    <span className="text-gray-700 text-sm">{facility}</span>
+                    <span className="text-gray-700 text-sm xl:text-base">{facility}</span>
                   </motion.div>
                 ))}
               </div>
@@ -588,46 +590,46 @@ export default function LibraryDetailPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-6 xl:space-y-8">
             {/* Head Librarian */}
             <motion.div
-              className="bg-white rounded-2xl shadow-lg p-6"
+              className="bg-white rounded-2xl shadow-lg p-6 xl:p-8"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Head Librarian</h3>
+              <h3 className="text-xl xl:text-2xl font-bold text-gray-900 mb-4">Head Librarian</h3>
               <div className="text-center">
                 <img
                   src={library.contact.librarianImage || "/placeholder.svg"}
                   alt={library.contact.librarian}
-                  className="w-24 h-24 rounded-full mx-auto mb-3 object-cover border-4 border-amber-200"
+                  className="w-24 h-24 xl:w-28 xl:h-28 rounded-full mx-auto mb-3 object-cover border-4 border-amber-200"
                 />
-                <h4 className="font-semibold text-gray-900 mb-1">{library.contact.librarian}</h4>
-                <p className="text-sm text-gray-600">Head Librarian</p>
+                <h4 className="font-semibold text-gray-900 mb-1 xl:text-lg">{library.contact.librarian}</h4>
+                <p className="text-sm xl:text-base text-gray-600">Head Librarian</p>
               </div>
             </motion.div>
 
             {/* Contact Information */}
             <motion.div
-              className="bg-white rounded-2xl shadow-lg p-6"
+              className="bg-white rounded-2xl shadow-lg p-6 xl:p-8"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
+              <h3 className="text-xl xl:text-2xl font-bold text-gray-900 mb-4">Contact Information</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-amber-600" />
+                  <Phone className="h-5 w-5 xl:h-6 xl:w-6 text-amber-600" />
                   <div>
-                    <p className="text-sm text-gray-500">Phone</p>
+                    <p className="text-sm xl:text-base text-gray-500">Phone</p>
                     <p className="text-gray-900">{library.contact.phone}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="h-5 w-5 text-amber-600" />
+                  <Mail className="h-5 w-5 xl:h-6 xl:w-6 text-amber-600" />
                   <div>
-                    <p className="text-sm text-gray-500">Email</p>
+                    <p className="text-sm xl:text-base text-gray-500">Email</p>
                     <a href={`mailto:${library.contact.email}`} className="text-blue-600 hover:underline">
                       {library.contact.email}
                     </a>
@@ -638,31 +640,31 @@ export default function LibraryDetailPage() {
 
             {/* Opening Hours */}
             <motion.div
-              className="bg-white rounded-2xl shadow-lg p-6"
+              className="bg-white rounded-2xl shadow-lg p-6 xl:p-8"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-amber-600" />
+              <h3 className="text-xl xl:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Clock className="h-5 w-5 xl:h-6 xl:w-6 text-amber-600" />
                 Opening Hours
               </h3>
-              <p className="text-gray-700 leading-relaxed">{library.openingHours}</p>
+              <p className="text-gray-700 leading-relaxed text-sm xl:text-base">{library.openingHours}</p>
             </motion.div>
 
             {/* Departments Served */}
             <motion.div
-              className="bg-white rounded-2xl shadow-lg p-6"
+              className="bg-white rounded-2xl shadow-lg p-6 xl:p-8"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Departments Served</h3>
+              <h3 className="text-xl xl:text-2xl font-bold text-gray-900 mb-4">Departments Served</h3>
               <div className="space-y-2">
                 {library.departments.map((dept, index) => (
                   <motion.div
                     key={index}
-                    className="px-3 py-2 bg-gray-100 rounded-lg text-sm text-gray-700"
+                    className="px-3 py-2 bg-gray-100 rounded-lg text-sm xl:text-base text-gray-700"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 1.2 + index * 0.05 }}
@@ -678,3 +680,4 @@ export default function LibraryDetailPage() {
     </div>
   )
 }
+
