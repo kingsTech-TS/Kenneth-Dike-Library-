@@ -9,7 +9,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-white via-indigo-50 to-blue-50">
       <Header />
       <main>
         <Hero />

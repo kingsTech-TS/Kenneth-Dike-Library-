@@ -523,7 +523,7 @@ export default function LibrariesPage() {
           {filteredLibraries.map((library, index) => (
             <LibraryCard key={library.id} library={library} index={index} />
           ))}
-        </motion.div>
+        </motion.div>   
 
         {/* No Results */}
         {filteredLibraries.length === 0 && (
@@ -544,7 +544,7 @@ export default function LibrariesPage() {
               className="bg-indigo-600 hover:bg-green-700"
             >
               Clear Filters
-            </Button>
+            </Button>   
           </motion.div>
         )}
       </div>

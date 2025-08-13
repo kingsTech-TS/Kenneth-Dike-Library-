@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Header from "@/components/header"
 import ScrollToTop from "@/components/scroll-to-top"
+import Footer from "@/components/footer"
 
 const galleryImages = [
   {
@@ -230,7 +231,7 @@ export default function GalleryPage() {
   }, [selectedImage])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 via-indigo-50 to-amber-50 relative overflow-hidden">
+   <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 origin-left z-50"
@@ -242,15 +243,14 @@ export default function GalleryPage() {
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className={`absolute w-4 h-4 rounded-full ${
-              i % 4 === 0
+            className={`absolute w-4 h-4 rounded-full ${i % 4 === 0
                 ? "bg-purple-300/20"
                 : i % 4 === 1
                   ? "bg-pink-300/20"
                   : i % 4 === 2
                     ? "bg-orange-300/20"
                     : "bg-blue-300/20"
-            }`}
+              }`}
             initial={{
               x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1920),
               y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 1080),
@@ -296,12 +296,12 @@ export default function GalleryPage() {
 
       {/* Header */}
       <motion.header
-        className="relative z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0"
+        className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-       <Header />
+        <Header />
       </motion.header>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -553,6 +553,10 @@ export default function GalleryPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Footer and ScrollToTop */}
+      <Footer />
+      <ScrollToTop />
     </div>
   )
 }
@@ -672,10 +676,7 @@ function GalleryCard({ image, index, onClick }: { image: any; index: number; onC
       </div>
     </motion.div>
 
-    <div>
-      <ScrollToTop />
-    </div>
-    
+
     </>
 
   )

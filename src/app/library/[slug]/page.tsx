@@ -26,7 +26,7 @@ const libraryData = {
     contact: {
       phone: "+234 8054 063 921",
       email: "olalekanadekunjo@gmail.com",
-      librarian: "Dr. Adebayo Ogundimu",
+      librarian: "Mr. Olalekan Adekunjo",
       librarianImage: "/facultylibrarians/Social-science/social.jpeg",
     },
     services: [
@@ -69,7 +69,7 @@ const libraryData = {
     contact: {
       phone: "+234 8038 604 108",
       email: " ddiswoalibrarian@gmail.com",
-      librarian: "Dr. Folake Adeyemi",
+      librarian: "Mr. Samuel Bello",
       librarianImage: "/facultylibrarians/Multidisciplinary/multi.jpg",
     },
     services: [

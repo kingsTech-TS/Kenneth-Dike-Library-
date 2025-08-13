@@ -221,7 +221,7 @@ export default function PrintResourcesPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 ">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -260,14 +260,14 @@ export default function PrintResourcesPage() {
 
 
        {/* Header */}
-            <motion.header
-              className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40"
-              initial={{ y: -100 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Header />
-            </motion.header>
+             <motion.header
+               className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40"
+               initial={{ y: -100 }}
+               animate={{ y: 0 }}
+               transition={{ duration: 0.5 }}
+             >
+                <Header />
+             </motion.header>
 
       {/* Hero Section */}
       <div className="relative z-10 min-h-screen flex items-center justify-center">
