@@ -476,8 +476,8 @@ export default function LibraryDetailPage() {
               alt={library.name}
               className="w-full h-full object-cover"
             />
-            {/* Lighter overlay for large screens */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent xl:from-black/40" />
+            {/* Darker overlay for all screen sizes to keep text readable */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8 text-white">
               <motion.h1
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2"
@@ -515,9 +515,11 @@ export default function LibraryDetailPage() {
           ].map((stat, i) => (
             <div
               key={i}
-              className="bg-white rounded-xl p-4 sm:p-6 xl:p-8 shadow-lg text-center !opacity-100"
+              className="bg-white/90 backdrop-blur-sm rounded-xl p-4 sm:p-6 xl:p-8 shadow-lg text-center"
             >
-              <stat.icon className={`h-8 w-8 sm:h-10 sm:w-10 xl:h-12 xl:w-12 ${stat.color} !opacity-100 mx-auto mb-3`} />
+              <stat.icon
+                className={`h-8 w-8 sm:h-10 sm:w-10 xl:h-12 xl:w-12 ${stat.color} !opacity-100 mx-auto mb-3`}
+              />
               <div className="text-xl sm:text-2xl xl:text-3xl font-bold text-gray-900">{stat.value}</div>
               <div className="text-xs sm:text-sm xl:text-base text-gray-600">{stat.label}</div>
             </div>
