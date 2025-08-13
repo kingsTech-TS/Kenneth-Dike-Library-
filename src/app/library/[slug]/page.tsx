@@ -410,6 +410,7 @@ const libraryData = {
   },
 }
 
+
 export default function LibraryDetailPage() {
   const params = useParams()
   const slug = params.slug as string
@@ -476,7 +477,7 @@ export default function LibraryDetailPage() {
               alt={library.name}
               className="w-full h-full object-cover"
             />
-            {/* Darker overlay for all screen sizes to keep text readable */}
+            {/* Keep dark overlay across all sizes */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8 text-white">
               <motion.h1
