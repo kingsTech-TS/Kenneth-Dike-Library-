@@ -445,7 +445,7 @@ export default function LibraryDetailPage() {
 
       {/* Header */}
       <motion.header
-        className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40"
+        className="bg-white/80 xl:bg-white backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -453,7 +453,7 @@ export default function LibraryDetailPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 flex justify-between items-center max-w-[1800px]">
           <Link href="/libraries">
             <Button variant="ghost" size="lg" className="flex items-center gap-2">
-              <ArrowLeft className="h-5 w-5 xl:h-6 xl:w-6" />
+              <ArrowLeft className="h-5 w-5 xl:h-6 xl:w-6 !opacity-100" />
               <span className="hidden sm:inline">Back to Libraries</span>
               <span className="sm:hidden">Back</span>
             </Button>
@@ -476,7 +476,8 @@ export default function LibraryDetailPage() {
               alt={library.name}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            {/* Lighter overlay for large screens */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent xl:from-black/40" />
             <div className="absolute bottom-8 left-8 right-8 text-white">
               <motion.h1
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2"
@@ -487,12 +488,12 @@ export default function LibraryDetailPage() {
                 {library.name}
               </motion.h1>
               <motion.p
-                className="text-base sm:text-lg lg:text-xl xl:text-2xl opacity-90 flex items-center gap-2"
+                className="text-base sm:text-lg lg:text-xl xl:text-2xl flex items-center gap-2 !opacity-100"
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <MapPin className="h-5 w-5 xl:h-6 xl:w-6" />
+                <MapPin className="h-5 w-5 xl:h-6 xl:w-6 !opacity-100 text-amber-500" />
                 {library.location}
               </motion.p>
             </div>
@@ -514,9 +515,9 @@ export default function LibraryDetailPage() {
           ].map((stat, i) => (
             <div
               key={i}
-              className="bg-white rounded-xl p-4 sm:p-6 xl:p-8 shadow-lg text-center"
+              className="bg-white rounded-xl p-4 sm:p-6 xl:p-8 shadow-lg text-center !opacity-100"
             >
-              <stat.icon className={`h-8 w-8 sm:h-10 sm:w-10 xl:h-12 xl:w-12 ${stat.color} mx-auto mb-3`} />
+              <stat.icon className={`h-8 w-8 sm:h-10 sm:w-10 xl:h-12 xl:w-12 ${stat.color} !opacity-100 mx-auto mb-3`} />
               <div className="text-xl sm:text-2xl xl:text-3xl font-bold text-gray-900">{stat.value}</div>
               <div className="text-xs sm:text-sm xl:text-base text-gray-600">{stat.label}</div>
             </div>
