@@ -63,7 +63,7 @@ export default function Header() {
 
   return (
     <header className="bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-50 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-gray-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
@@ -94,7 +94,7 @@ export default function Header() {
               <DropdownMenuContent align="start" className="w-48 bg-white border border-gray-200 shadow-md rounded-md animate-slideDown">
                 {homeDropdownItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
-                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-indigo50 rounded-md">
+                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-indigo-50 rounded-md">
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
@@ -166,13 +166,13 @@ export default function Header() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden border-t border-gray-100 py-4"
+              className="lg:hidden absolute left-0 right-0 top-full bg-white border-t border-gray-100 shadow-md z-40 max-h-[80vh] overflow-y-auto"
             >
-              <nav className="flex flex-col space-y-4">
+              <nav className="flex flex-col space-y-4 p-4">
                 {/* Home Section */}
                 <div className="space-y-2">
                   <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Home</p>

@@ -8,6 +8,7 @@ import Link from "next/link"
 import Header from "@/components/header"
 import Moving from "@/components/moving"
 import ScrollToTop from "@/components/scroll-to-top"
+import Footer from "@/components/footer"
 
 const librarians = [
   {
@@ -372,15 +373,9 @@ export default function HistoryPage() {
         </motion.div>
       </div>
 
-      {/* Footer */}
-      <div className="bg-gray-100 py-6 sm:py-8 border-t border-gray-200">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600 text-xs sm:text-sm">
-            © {new Date().getFullYear()} Kenneth Dike Library Historical Archives. University of Ibadan. All rights
-            reserved.
-          </p>
-        </div>
-      </div>
+       {/* Footer and ScrollToTop */}
+           <Footer />
+           <ScrollToTop />
     </div>
   )
 }
