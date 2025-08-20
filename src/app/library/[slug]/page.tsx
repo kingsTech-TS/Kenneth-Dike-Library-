@@ -517,6 +517,54 @@ const libraryData = {
       "Automotive Engineering",
     ],
   },
+
+  education_pro: {
+    name: "Faculty of Education Library",
+    faculty: "Technology",
+    image: "/Libraries/EducationPro/edu.jpg",
+    description:
+      "Faculty of Education Library serves the information need of users in the faculty. The library opens from 8am to 4pm except Saturdays and Sundays,  the library has 96 seating capacity with 12 reading tables and 8 chairs attached to each table. The library holds about 14,500 volume of books, reference materials and also 15,100 volume of Bachelor degree project as well as 8,220 volume of Masters dissertations.",
+      location: "Faculty of Education.",
+    coordinates: "7.3785° N, 3.9460° E",
+    books: "7,200",
+    journals: "7,300",
+    articles: "None",
+    seatingCapacity: 96,
+    studyRooms: 10,
+    computerStations: 20,
+    openingHours: " Monday-Friday 8:00am - 4:00pm",
+    contact: {
+      phone: "+234 7038 240 366",
+      email: "qudriseyi@yahoo.com ",
+      librarian: "Dr. Ganiyu O. Quadri ",
+      librarianImage: "/facultylibrarians/EducationPro/edu.jpg",
+    },
+    services: [
+      "Circulation services ",
+    ],
+    facilities: [
+      "Air conditioners",
+      "Ceiling fan",
+      "Standing fan",
+      "Reading tables and chairs.",
+      "Desktop Computers and Printer",
+      "Photocopy machine and Rest room",
+      "Rechargeable fans",
+      "Catalogue cabinet",
+    ],
+    departments: [
+      "Agricultural and Environmental Engineering",
+      "Civil Engineering",
+      "Electrical and Electronics Engineering ",
+      "Food Technology Engineering",
+      "Industrial and Production Engineering",
+      "Mechanical Engineering",
+      "Petroleum Engineering",
+      "Wood Products Engineering",
+      "Biomedical Engineering",
+      "Automotive Engineering",
+    ],
+  },
 }
 
 

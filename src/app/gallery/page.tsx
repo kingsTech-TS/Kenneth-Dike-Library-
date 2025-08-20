@@ -12,7 +12,7 @@ import Footer from "@/components/footer"
 const galleryImages = [
   {
     id: 1,
-    src: "/placeholder.svg?height=600&width=800&text=Kenneth+Dike+Library+Exterior",
+    src: "/gallery/id1.jpeg",
     title: "Kenneth Dike Library - Main Entrance",
     description:
       "The iconic main entrance of Kenneth Dike Library, showcasing modern architectural design blended with traditional Nigerian elements. This grand entrance welcomes thousands of students and researchers daily.",
@@ -21,7 +21,7 @@ const galleryImages = [
   },
   {
     id: 2,
-    src: "/placeholder.svg?height=600&width=800&text=Reading+Hall+Interior",
+    src: "/gallery/id2.jpeg",
     title: "Main Reading Hall",
     description:
       "The spacious main reading hall with its soaring ceilings and natural lighting provides an inspiring environment for study and research. The hall can accommodate over 500 students simultaneously.",
@@ -30,7 +30,7 @@ const galleryImages = [
   },
   {
     id: 3,
-    src: "/placeholder.svg?height=600&width=800&text=Digital+Resources+Center",
+    src: "/gallery/id3.jpeg",
     title: "Digital Resources Center",
     description:
       "State-of-the-art computer workstations providing 24/7 access to digital databases, e-journals, and online resources. The center features high-speed internet and modern computing facilities.",
@@ -39,7 +39,7 @@ const galleryImages = [
   },
   {
     id: 4,
-    src: "/placeholder.svg?height=600&width=800&text=Rare+Books+Collection",
+    src: "/gallery/id4.jpeg",
     title: "Rare Books and Manuscripts",
     description:
       "A glimpse into our precious rare books collection, featuring centuries-old manuscripts, first editions, and historical documents that preserve Nigeria's rich literary heritage.",
@@ -48,7 +48,7 @@ const galleryImages = [
   },
   {
     id: 5,
-    src: "/placeholder.svg?height=600&width=800&text=Group+Study+Rooms",
+    src: "/gallery/id5.jpeg",
     title: "Collaborative Study Spaces",
     description:
       "Modern group study rooms equipped with interactive whiteboards, comfortable seating, and multimedia capabilities, perfect for collaborative learning and team projects.",
@@ -57,7 +57,7 @@ const galleryImages = [
   },
   {
     id: 6,
-    src: "/placeholder.svg?height=600&width=800&text=Library+Staff+at+Work",
+    src: "/gallery/id6.jpeg",
     title: "Dedicated Library Staff",
     description:
       "Our professional librarians and staff members providing personalized assistance to students and researchers, embodying our commitment to excellent service.",
@@ -66,7 +66,7 @@ const galleryImages = [
   },
   {
     id: 7,
-    src: "/placeholder.svg?height=600&width=800&text=Medical+Library+Section",
+    src: "/gallery/id7.jpeg",
     title: "Medical Library Resources",
     description:
       "Specialized medical library section with anatomical models, medical journals, and clinical resources supporting the College of Medicine's academic programs.",
@@ -75,7 +75,7 @@ const galleryImages = [
   },
   {
     id: 8,
-    src: "/placeholder.svg?height=600&width=800&text=Students+Studying",
+    src: "/gallery/id8.jpeg",
     title: "Students in Deep Study",
     description:
       "Capturing the essence of academic dedication - students immersed in their studies, utilizing the library's peaceful environment for focused learning.",
@@ -84,7 +84,7 @@ const galleryImages = [
   },
   {
     id: 9,
-    src: "/placeholder.svg?height=600&width=800&text=African+Studies+Collection",
+    src: "/gallery/id9.jpeg",
     title: "African Studies Collection",
     description:
       "Our extensive African Studies collection featuring works by renowned African authors, historical documents, and cultural artifacts that celebrate African heritage.",
@@ -93,7 +93,7 @@ const galleryImages = [
   },
   {
     id: 10,
-    src: "/placeholder.svg?height=600&width=800&text=Library+Garden",
+    src: "/gallery/id10.jpeg",
     title: "Peaceful Library Gardens",
     description:
       "The serene outdoor reading spaces and gardens surrounding the library, providing a tranquil environment for reflection and outdoor study sessions.",
@@ -102,7 +102,7 @@ const galleryImages = [
   },
   {
     id: 11,
-    src: "/placeholder.svg?height=600&width=800&text=Research+Workshop",
+    src: "/gallery/id11.jpeg",
     title: "Research Skills Workshop",
     description:
       "Interactive workshop session where librarians teach students advanced research methodologies, database navigation, and citation techniques.",
@@ -111,7 +111,7 @@ const galleryImages = [
   },
   {
     id: 12,
-    src: "/placeholder.svg?height=600&width=800&text=Digital+Archive+System",
+    src: "/gallery/id12.jpeg",
     title: "Digital Archive Interface",
     description:
       "Screenshot of our advanced digital archive system, showcasing the user-friendly interface that provides access to thousands of digitized historical documents.",
@@ -120,7 +120,7 @@ const galleryImages = [
   },
   {
     id: 13,
-    src: "/placeholder.svg?height=600&width=800&text=Night+Study+Session",
+    src: "/gallery/id13.jpeg",
     title: "24/7 Study Environment",
     description:
       "The library's commitment to round-the-clock service, showing students taking advantage of late-night study hours in our well-lit, secure environment.",
@@ -129,7 +129,7 @@ const galleryImages = [
   },
   {
     id: 14,
-    src: "/placeholder.svg?height=600&width=800&text=Book+Restoration",
+    src: "/gallery/id14.jpeg",
     title: "Book Conservation Lab",
     description:
       "Behind-the-scenes look at our book conservation laboratory where skilled technicians restore and preserve valuable texts for future generations.",
@@ -138,7 +138,7 @@ const galleryImages = [
   },
   {
     id: 15,
-    src: "/placeholder.svg?height=600&width=800&text=Virtual+Reality+Station",
+    src: "/gallery/id15.jpeg",
     title: "VR Learning Station",
     description:
       "Cutting-edge virtual reality station allowing students to explore historical sites, conduct virtual experiments, and engage in immersive learning experiences.",
@@ -147,7 +147,7 @@ const galleryImages = [
   },
   {
     id: 16,
-    src: "/placeholder.svg?height=600&width=800&text=Cultural+Exhibition",
+    src: "/gallery/id16.jpeg",
     title: "Cultural Heritage Exhibition",
     description:
       "Annual cultural exhibition displaying artifacts, traditional crafts, and historical items that showcase Nigeria's rich cultural diversity and heritage.",
@@ -156,7 +156,7 @@ const galleryImages = [
   },
   {
     id: 17,
-    src: "/placeholder.svg?height=600&width=800&text=Thesis+Defense",
+    src: "/gallery/id17.jpeg",
     title: "Graduate Thesis Defense",
     description:
       "A proud moment captured during a graduate student's thesis defense, highlighting the library's role in supporting advanced research and academic achievement.",
@@ -165,7 +165,7 @@ const galleryImages = [
   },
   {
     id: 18,
-    src: "/placeholder.svg?height=600&width=800&text=International+Collaboration",
+    src: "/gallery/id18.jpeg",
     title: "International Partnership Meeting",
     description:
       "Historic meeting with international library partners, showcasing our global connections and collaborative efforts to enhance academic resources.",
@@ -174,7 +174,7 @@ const galleryImages = [
   },
   {
     id: 19,
-    src: "/placeholder.svg?height=600&width=800&text=Student+Innovation+Hub",
+    src: "/gallery/id19.jpeg",
     title: "Innovation and Maker Space",
     description:
       "The library's innovation hub where students can access 3D printers, design software, and collaborative tools to bring their creative ideas to life.",
@@ -183,7 +183,7 @@ const galleryImages = [
   },
   {
     id: 20,
-    src: "/placeholder.svg?height=600&width=800&text=Library+Anniversary",
+    src: "/gallery/id20.jpeg",
     title: "75th Anniversary Celebration",
     description:
       "Commemorating 75 years of academic excellence, this image captures the joyous celebration with students, faculty, and alumni gathered to honor the library's legacy.",
