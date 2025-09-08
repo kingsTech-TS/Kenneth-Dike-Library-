@@ -556,7 +556,7 @@ function LibrarianCard({ librarian, index }: { librarian: any; index: number }) 
       </motion.div>
 
       {/* Scroll to top added here — ideally not inside each card */}
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
     </>
   );
 }

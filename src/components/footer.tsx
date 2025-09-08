@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram } from "lucide-react"
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, type LucideIcon } from "lucide-react"
 import Image from "next/image"
 
 export default function Footer() {
@@ -28,6 +28,19 @@ export default function Footer() {
       { name: "Staff Directory", href: "#staff" },
     ],
   }
+
+  // ✅ Define a proper type for social links
+  type SocialLink = {
+    name: string
+    icon: LucideIcon
+    href: string
+  }
+
+  const socialLinks: SocialLink[] = [
+    { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/LibraryKDLUI" },
+    { name: "Twitter", icon: Twitter, href: "https://x.com/LibraryKDLUI" },
+    { name: "Instagram", icon: Instagram, href: "https://instagram.com/ui.library" },
+  ]
 
   return (
     <footer className="bg-gradient-to-br from-indigo-900 to-blue-900 text-white">
@@ -74,33 +87,6 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Social Media */}
-            <div className="flex space-x-4">
-              <motion.a
-                href="https://www.facebook.com/LibraryKDLUI"
-                className="text-white hover:text-blue-500 transition-colors duration-300"
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <Facebook className="h-6 w-6" />
-              </motion.a>
-              <motion.a
-                href="https://x.com/LibraryKDLUI"
-                className="text-white hover:text-amber-500 transition-colors duration-300"
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <Twitter className="h-6 w-6" />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="text-white hover:text-blue-500 transition-colors duration-300"
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <Instagram className="h-6 w-6" />
-              </motion.a>
-            </div>
           </motion.div>
 
           {/* Footer Links */}
@@ -131,15 +117,36 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom Bar */}
+        {/* Social Links */}
         <motion.div
-          className="border-t border-white/20 mt-12 pt-8 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           viewport={{ once: true }}
         >
-          <p className="text-gray-100">© {currentYear} Kenneth Dike Library. All rights reserved.</p>
+          <div className="flex space-x-6 mb-4 md:mb-0">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-green-400 transition-colors duration-200"
+                aria-label={social.name}
+              >
+                <social.icon className="h-5 w-5" />
+              </a>
+            ))}
+          </div>
+          <div className="text-center md:text-right">
+            <p className="text-gray-400 text-sm">
+              © {currentYear} University of Ibadan Library. All rights reserved.
+            </p>
+            <p className="text-gray-500 text-xs mt-1">
+              Empowering minds through knowledge since 1948
+            </p>
+          </div>
         </motion.div>
       </div>
     </footer>

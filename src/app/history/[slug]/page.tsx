@@ -2,95 +2,59 @@
 
 import { useParams } from "next/navigation"
 import { motion, useScroll, useSpring } from "framer-motion"
-import {
-  ArrowLeft,
-  Mail,
-  Phone,
-  MapPin,
-  Calendar,
-  Award,
-  BookOpen,
-  Users,
-  Globe,
-  Twitter,
-  Linkedin,
-  ExternalLink,
-} from "lucide-react"
+import { ArrowLeft, Mail, Phone, MapPin, BookOpen, Clock, Search, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-type SocialLinks = {
-  email: string
-  linkedin?: string
-  twitter?: string
-  orcid?: string
-}
-
-type LibrarianData = {
-  name: string
-  title: string
-  section: string
-  period: string
-  image: string
-  email: string
-  phone: string
-  office: string
-  education: string[]
-  experience: string[]
-  achievements: string[]
-  research: string[]
-  publications: string[]
-  socials: SocialLinks
-  bio: string
-}
-
-const librariansData: Record<string, LibrarianData> = {
- "dr-mercy-ariomerebi-iroaganachi": {
+// Librarian data with simplified structure
+const librariansData = {
+  "dr-mercy-ariomerebi-iroaganachi": {
     name: "DR. MERCY ARIOMEREBI IROAGANACHI",
     title: "University Librarian",
-    section: "Administration",
+    section: "",
     period: "2022-Present",
     image: "/librarians/Liba.jpg",
-    email: "mercy.iroaganachi@ui.edu.ng",
-    phone: "+234 (0) 2 810 1100",
+    email: "mercyari2001@gmail.com",
+    phone: "+234 7031 668 993",
     office: "University Librarian's Office, Kenneth Dike Library",
+    yearsOfExperience: 22,
     education: [
-      "Ph.D. in Library and Information Science, University of Ibadan (2018)",
-      "M.L.I.S., University of Ibadan (2008)",
-      "B.A. English Language, University of Benin (2003)",
-      "Postgraduate Diploma in Education, University of Benin (2004)",
+      "Ph.D. in Information Resources Management",
+      "M.L.I.S., University of Ibadan",
+      "B.A. in Communication and Language Arts and a Master of Library and Information Science",
     ],
-    experience: [
-      "University Librarian, University of Ibadan (2022-Present)",
-      "Deputy University Librarian, University of Ibadan (2019-2022)",
-      "Principal Librarian, University of Ibadan (2015-2019)",
-      "Senior Librarian, University of Ibadan (2010-2015)",
+    researchInterests: [
+      "Digital Library Services",
+      "Information Literacy",
+      "Library Leadership and Management",
+      "Open Access Publishing",
+      "Academic Library Innovation",
+      "Digital Transformation in Libraries",
     ],
-    achievements: [
-      "Led the digital transformation initiative of Kenneth Dike Library",
-      "Implemented modern library management systems across all faculty libraries",
-      "Established partnerships with international library consortiums",
-      "Increased electronic resource access by 300% during tenure",
-      "Pioneered the Library Innovation Hub for student entrepreneurs",
+    currentResearch: [
+      {
+        title: "AI Integration in Academic Library Services",
+        description:
+          "Exploring the implementation of artificial intelligence tools to enhance user experience and library operations in Nigerian universities.",
+        status: "Ongoing",
+        startDate: "2024",
+      },
+      {
+        title: "Digital Literacy Assessment Framework",
+        description:
+          "Developing a comprehensive framework for assessing digital literacy skills among undergraduate students in West African universities.",
+        status: "Data Collection Phase",
+        startDate: "2023",
+      },
+      {
+        title: "Sustainable Library Practices in Developing Countries",
+        description:
+          "Investigating environmentally sustainable practices and their implementation in academic libraries across sub-Saharan Africa.",
+        status: "Analysis Phase",
+        startDate: "2023",
+      },
     ],
-    research: [
-      "Digital Library Services in Nigerian Universities",
-      "Information Literacy in the Digital Age",
-      "Library Leadership and Management in Africa",
-      "Open Access Publishing in Developing Countries",
-    ],
-    publications: [
-      "Iroaganachi, M.A. (2023). 'Digital Transformation in Academic Libraries: The Nigerian Experience.' Journal of Academic Librarianship, 49(2), 102-115.",
-      "Iroaganachi, M.A. & Oyelude, A.A. (2022). 'Information Literacy Skills Among Undergraduate Students in Nigeria.' Library Review, 71(4), 234-248.",
-      "Iroaganachi, M.A. (2021). 'Leadership Challenges in Modern Academic Libraries.' International Journal of Library Science, 15(3), 45-58.",
-    ],
-    socials: {
-      email: "mercy.iroaganachi@ui.edu.ng",
-      linkedin: "https://linkedin.com/in/mercy-iroaganachi",
-      twitter: "https://twitter.com/mercyiroaganachi",
-      orcid: "https://orcid.org/0000-0002-1234-5678",
-    },
-    bio: "Dr. Mercy Ariomerebi Iroaganachi is a distinguished library professional with over two decades of experience in academic librarianship. As the current University Librarian of the University of Ibadan, she has been instrumental in modernizing library services and leading digital transformation initiatives across the institution. Her leadership has resulted in significant improvements in electronic resource access, user services, and library infrastructure. Dr. Iroaganachi is passionate about information literacy, digital libraries, and capacity building for library professionals in Africa.",
+    bio: "Dr. Mercy Ariomerebi Iroaganachi is the 7th substantive University Librarian of the University of Ibadan, Nigeria, and former University Librarian of Covenant University, Ota. A Certified Librarian of Nigeria, she holds a Ph.D. in Information Resources Management from Babcock University, alongside B.A. and MLIS degrees from the University of Ibadan. She has published widely in high-impact, SCOPUS-indexed journals and has delivered over 22 plenary and keynote lectures worldwide. Notably, she was Keynote Speaker at the 2022 CALIM National Librarians’ Conference (Enugu) and the 2023 Stephen Ellis Annual Lecture at Leiden University, Netherlands. Her professional affiliations include the Association of University Librarians of Nigerian Universities (AULNU), Nigerian Library Association (NLA), Association of Academic Librarians (AAL), and OWSD. Her research interests cover ICT in libraries, gender studies, community development, library administration, and STEM education. Dr. Iroaganachi is a devoted wife, mother, and grandmother, admired for her leadership, mentorship, and passion for advancing 21st-century librarianship",
   },
   "dr-helen-o-komolafe-opadeji": {
     name: "DR. HELEN O. KOMOLAFE-OPADEJI",
@@ -101,44 +65,38 @@ const librariansData: Record<string, LibrarianData> = {
     email: "helen.komolafe@ui.edu.ng",
     phone: "+234 (0) 2 810 1101",
     office: "Emeritus Office, Kenneth Dike Library",
+    yearsOfExperience: 28,
     education: [
       "Ph.D. in Library and Information Science, University of Ibadan (2012)",
       "M.L.S., University of Ibadan (1995)",
       "B.A. History, University of Ibadan (1988)",
       "Certificate in Information Management, University of London (2000)",
     ],
-    experience: [
-      "University Librarian, University of Ibadan (2016-2022)",
-      "Deputy University Librarian, University of Ibadan (2012-2016)",
-      "Principal Librarian, University of Ibadan (2008-2012)",
-      "Senior Librarian, University of Ibadan (2000-2008)",
-    ],
-    achievements: [
-      "Expanded electronic database subscriptions to over 10 million volumes",
-      "Established the University of Ibadan Institutional Repository (UIIR)",
-      "Led the library through successful NUC accreditation processes",
-      "Implemented 24/7 library services for students",
-      "Developed strategic partnerships with international libraries",
-    ],
-    research: [
+    researchInterests: [
       "Academic Library Management",
       "Information Resources Development",
       "Library Automation Systems",
       "Scholarly Communication",
+      "Institutional Repositories",
+      "Collection Development",
     ],
-    publications: [
-      "Komolafe-Opadeji, H.O. (2021). 'Building Digital Collections in Nigerian Universities.' African Journal of Library Science, 28(1), 15-28.",
-      "Komolafe-Opadeji, H.O. (2020). 'The Role of Academic Libraries in Research Excellence.' Library Management, 41(6), 401-415.",
-      "Komolafe-Opadeji, H.O. (2019). 'Institutional Repositories: A Tool for Scholarly Communication.' Journal of Librarianship, 45(3), 178-192.",
+    currentResearch: [
+      {
+        title: "Post-Retirement Library Consultancy Models",
+        description:
+          "Developing frameworks for retired library professionals to continue contributing to library development through consultancy services.",
+        status: "Publication Phase",
+        startDate: "2022",
+      },
+      {
+        title: "Historical Analysis of Nigerian Academic Libraries",
+        description:
+          "Comprehensive study documenting the evolution and development of academic libraries in Nigeria from 1960 to present.",
+        status: "Writing Phase",
+        startDate: "2022",
+      },
     ],
-    socials: {
-      email: "helen.komolafe@ui.edu.ng",
-      linkedin: "https://linkedin.com/in/helen-komolafe-opadeji",
-      orcid: "https://orcid.org/0000-0003-2345-6789",
-    },
-    bio: "Dr. Helen O. Komolafe-Opadeji served as University Librarian from 2016 to 2022, during which she transformed the Kenneth Dike Library into a modern, digitally-enabled learning environment. Her tenure was marked by significant expansion of electronic resources, implementation of cutting-edge library technologies, and establishment of the institutional repository. She is recognized as a pioneer in digital library services in Nigeria and continues to contribute to library development through research and consultancy.",
   },
-  // Add more librarians with similar detailed structure...
   "mr-c-o-ola": {
     name: "MR. C. O. OLA",
     title: "Deputy University Librarian",
@@ -148,39 +106,41 @@ const librariansData: Record<string, LibrarianData> = {
     email: "c.ola@ui.edu.ng",
     phone: "+234 (0) 2 810 1102",
     office: "Deputy Librarian's Office, Kenneth Dike Library",
+    yearsOfExperience: 18,
     education: [
       "M.L.I.S., University of Ibadan (2005)",
       "B.A. English Language, University of Lagos (1998)",
       "Postgraduate Diploma in Library Science, University of Ibadan (2002)",
     ],
-    experience: [
-      "Deputy University Librarian, University of Ibadan (2022-Present)",
-      "Principal Librarian, University of Ibadan (2018-2022)",
-      "Senior Librarian, University of Ibadan (2012-2018)",
-      "Librarian II, University of Ibadan (2006-2012)",
-    ],
-    achievements: [
-      "Streamlined library administrative processes",
-      "Implemented staff development programs",
-      "Coordinated inter-library cooperation initiatives",
-      "Enhanced user service delivery systems",
-    ],
-    research: [
-      "Library Administration and Management",
-      "Staff Development in Academic Libraries",
+    researchInterests: [
+      "Library Administration",
+      "Staff Development",
       "User Services Optimization",
+      "Library Technology Integration",
+      "Performance Management",
+      "Quality Assurance in Libraries",
     ],
-    publications: [
-      "Ola, C.O. (2022). 'Effective Library Administration in Nigerian Universities.' Library Administration Quarterly, 18(2), 45-58.",
-      "Ola, C.O. (2021). 'Staff Development Strategies for Academic Libraries.' Professional Librarian, 12(4), 23-35.",
+    currentResearch: [
+      {
+        title: "Staff Motivation and Productivity in Academic Libraries",
+        description:
+          "Investigating the relationship between staff motivation strategies and productivity levels in Nigerian university libraries.",
+        status: "Data Collection Phase",
+        startDate: "2024",
+      },
+      {
+        title: "Digital Skills Training for Library Staff",
+        description:
+          "Developing and implementing comprehensive digital skills training programs for library personnel in the digital age.",
+        status: "Implementation Phase",
+        startDate: "2023",
+      },
     ],
-    socials: {
-      email: "c.ola@ui.edu.ng",
-      linkedin: "https://linkedin.com/in/c-ola",
-    },
-    bio: "Mr. C. O. Ola is an experienced library administrator who currently serves as Deputy University Librarian at the University of Ibadan. With over two decades of experience in academic librarianship, he has been instrumental in improving administrative efficiency and staff development within the library system. His expertise in library management and user services has contributed significantly to the overall effectiveness of library operations.",
   },
 }
+
+
+
 export default function LibrarianPage() {
   const params = useParams()
   const slug = params.slug as string
@@ -210,7 +170,7 @@ export default function LibrarianPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-amber-600 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-600 to-indigo-600 origin-left z-50"
         style={{ scaleX }}
       />
 
@@ -233,7 +193,7 @@ export default function LibrarianPage() {
         </div>
       </motion.header>
 
-      <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-4xl">
+      <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
         {/* Hero Section */}
         <motion.div
           className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8 sm:mb-12"
@@ -241,7 +201,10 @@ export default function LibrarianPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="relative h-48 sm:h-64 bg-gradient-to-r from-indigo-600 to-amber-600">
+          <div
+            className="relative h-48 sm:h-64 bg-cover bg-center"
+            style={{ backgroundImage: `url('/slug-bg/bg-bboks1.jpg')` }}
+          >
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="absolute bottom-6 left-6 right-6 text-white">
               <motion.h1
@@ -264,10 +227,10 @@ export default function LibrarianPage() {
           </div>
 
           <div className="p-6 sm:p-8">
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Profile Image */}
               <motion.div
-                className="flex-shrink-0 mx-auto lg:mx-0"
+                className="flex flex-col items-center text-center"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -275,238 +238,170 @@ export default function LibrarianPage() {
                 <img
                   src={librarian.image || "/placeholder.svg"}
                   alt={librarian.name}
-                  className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full object-cover border-4 border-indigo-100 shadow-lg"
+                  className="w-40 h-40 lg:w-48 lg:h-48 rounded-full object-cover border-4 border-amber-200 shadow-lg mb-4"
                 />
+                <div className="flex items-center gap-2 text-amber-600 mb-2">
+                  <Clock className="h-5 w-5" />
+                  <span className="font-semibold">{librarian.yearsOfExperience} Years Experience</span>
+                </div>
+                <p className="text-gray-600">{librarian.section}</p>
+                <p className="text-sm text-gray-500">{librarian.period}</p>
               </motion.div>
 
-              {/* Contact Info */}
-              <div className="flex-1 space-y-4">
-                <motion.div
-                  className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.8 }}
-                >
-                  <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-indigo-600" />
+              {/* Contact Information */}
+              <motion.div
+                className="lg:col-span-2 space-y-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="flex items-start gap-3">
+                    <Mail className="h-5 w-5 text-blue-600 mt-1" />
                     <div>
-                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="text-sm font-medium text-gray-500 mb-1">Email</p>
                       <a href={`mailto:${librarian.email}`} className="text-blue-600 hover:underline">
                         {librarian.email}
                       </a>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-indigo-600" />
+                  <div className="flex items-start gap-3">
+                    <Phone className="h-5 w-5 text-blue-600 mt-1" />
                     <div>
-                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="text-sm font-medium text-gray-500 mb-1">Phone</p>
                       <p className="text-gray-900">{librarian.phone}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="h-5 w-5 text-indigo-600" />
+                  <div className="flex items-start gap-3 sm:col-span-2">
+                    <MapPin className="h-5 w-5 text-blue-600 mt-1" />
                     <div>
-                      <p className="text-sm text-gray-500">Office</p>
+                      <p className="text-sm font-medium text-gray-500 mb-1">Office</p>
                       <p className="text-gray-900">{librarian.office}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-indigo-600" />
-                    <div>
-                      <p className="text-sm text-gray-500">Tenure</p>
-                      <p className="text-gray-900">{librarian.period}</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Social Links */}
-                <motion.div
-                  className="flex gap-4 pt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 1 }}
-                >
-                  {librarian.socials.linkedin && (
-                    <a
-                      href={librarian.socials.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </a>
-                  )}
-                  {librarian.socials.twitter && (
-                    <a
-                      href={librarian.socials.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center hover:bg-amber-600 transition-colors"
-                    >
-                      <Twitter className="h-5 w-5" />
-                    </a>
-                  )}
-                  {librarian.socials.orcid && (
-                    <a
-                      href={librarian.socials.orcid}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center hover:bg-indigo-700 transition-colors"
-                    >
-                      <ExternalLink className="h-5 w-5" />
-                    </a>
-                  )}
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>
 
-        {/* Biography */}
-        <motion.section
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Users className="h-6 w-6 text-indigo-600" />
-            Biography
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-lg">{librarian.bio}</p>
-        </motion.section>
+          {"bio" in librarian && librarian.bio && (
+          <motion.section
+            className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mt-8 mb-10"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Biography</h2>
+            <p className="text-gray-700 leading-relaxed">{librarian.bio}</p>
+          </motion.section>
+        )}
 
-        {/* Education */}
-        <motion.section
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <BookOpen className="h-6 w-6 text-indigo-600" />
-            Education
-          </h2>
-          <ul className="space-y-3">
-            {librarian.education.map((edu, index) => (
-              <motion.li
-                key={index}
-                className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-              >
-                <Award className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700">{edu}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.section>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Education */}
+          <motion.section
+            className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <BookOpen className="h-6 w-6 text-amber-600" />
+              Education
+            </h2>
+            <div className="space-y-4">
+              {librarian.education.map((edu, index) => (
+                <motion.div
+                  key={index}
+                  className="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-600"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                >
+                  <p className="text-gray-700 font-medium">{edu}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
 
-        {/* Experience */}
+          {/* Research Interests */}
+          <motion.section
+            className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <Search className="h-6 w-6 text-indigo-600" />
+              Research Interests
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              {librarian.researchInterests.map((interest, index) => (
+                <motion.span
+                  key={index}
+                  className="px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+                >
+                  {interest}
+                </motion.span>
+              ))}
+            </div>
+          </motion.section>
+        </div>
+
+        {/* Current Research Work */}
         <motion.section
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8"
+          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mt-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Calendar className="h-6 w-6 text-indigo-600" />
-            Professional Experience
+            <FileText className="h-6 w-6 text-blue-600" />
+            Current Research Work
           </h2>
-          <div className="space-y-4">
-            {librarian.experience.map((exp, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {librarian.currentResearch.map((research, index) => (
               <motion.div
                 key={index}
-                className="border-l-4 border-indigo-600 pl-4 py-2"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
+                className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
               >
-                <p className="text-gray-900 font-medium">{exp}</p>
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="text-lg font-semibold text-gray-900 leading-tight">{research.title}</h3>
+                  <span className="text-xs text-gray-500 ml-2 flex-shrink-0">{research.startDate}</span>
+                </div>
+                <p className="text-gray-700 text-sm mb-4 leading-relaxed">{research.description}</p>
+                <div className="flex items-center justify-between">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${research.status === "Ongoing"
+                        ? "bg-amber-100 text-amber-800"
+                        : research.status === "Data Collection Phase"
+                          ? "bg-blue-100 text-blue-800"
+                          : research.status === "Analysis Phase"
+                            ? "bg-indigo-100 text-indigo-800"
+                            : research.status === "Publication Phase"
+                              ? "bg-green-100 text-green-800"
+                              : research.status === "Writing Phase"
+                                ? "bg-purple-100 text-purple-800"
+                                : "bg-gray-100 text-gray-800"
+                      }`}
+                  >
+                    {research.status}
+                  </span>
+                </div>
               </motion.div>
             ))}
           </div>
         </motion.section>
 
-        {/* Achievements */}
-        <motion.section
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Award className="h-6 w-6 text-indigo-600" />
-            Key Achievements
-          </h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {librarian.achievements.map((achievement, index) => (
-              <motion.li
-                key={index}
-                className="flex items-start gap-3 p-4 bg-indigo-50 rounded-lg"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
-              >
-                <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-gray-700">{achievement}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.section>
+      
 
-        {/* Research Interests */}
-        <motion.section
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <Globe className="h-6 w-6 text-indigo-600" />
-            Research Interests
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            {librarian.research.map((interest, index) => (
-              <motion.span
-                key={index}
-                className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
-              >
-                {interest}
-              </motion.span>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Publications */}
-        <motion.section
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <BookOpen className="h-6 w-6 text-indigo-600" />
-            Selected Publications
-          </h2>
-          <div className="space-y-4">
-            {librarian.publications.map((publication, index) => (
-              <motion.div
-                key={index}
-                className="p-4 bg-gray-50 rounded-lg border-l-4 border-amber-600"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 1.4 + index * 0.1 }}
-              >
-                <p className="text-gray-700 italic">{publication}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
       </article>
     </div>
   )
