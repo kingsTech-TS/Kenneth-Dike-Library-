@@ -295,7 +295,7 @@ export default function HistoryPage() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-         <Moving />
+         <Moving / >
         </motion.section>
 
         {/* Current Services Section */}
@@ -555,8 +555,7 @@ function LibrarianCard({ librarian, index }: { librarian: any; index: number }) 
         </div>
       </motion.div>
 
-      {/* Scroll to top added here — ideally not inside each card */}
-      {/* <ScrollToTop /> */}
+    
     </>
   );
 }

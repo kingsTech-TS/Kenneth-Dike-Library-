@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { Button } from "@/components/ui/button"
 
 const librarians = [
   {
@@ -108,6 +109,19 @@ const Moving = () => {
             )
           })}
         </motion.div>
+
+
+      {/* Button to the other Library staff */}
+<div className="w-full flex justify-center mt-6">
+  <Button
+    className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+  >
+    <Link href="/staff">
+      See other library staffs
+    </Link>
+  </Button>
+</div>
+
       </div>
     </motion.section>
   )
