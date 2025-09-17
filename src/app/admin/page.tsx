@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Shield } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -10,25 +10,29 @@ import { auth } from "../../../lib/firebase";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
-    if (loading) return; // don’t redirect until state is known
+    if (loading) return;
 
-    const currentPath = window.location.pathname;
-
-    // Redirect logic
-    if (user && currentPath !== "/admin") {
+    if (user && pathname !== "/admin") {
       router.replace("/admin");
-    } else if (!user && currentPath !== "/admin/login") {
+    } else if (!user && pathname !== "/admin/login") {
       router.replace("/admin/login");
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, pathname]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
+      {/* Mobile Warning */}
+      <div className="flex md:hidden text-center text-white text-lg">
+        This admin page is only accessible on desktop devices.
+      </div>
+
+      {/* Desktop Only */}
       <motion.div
-        className="w-full max-w-md"
+        className="hidden md:block w-full max-w-md"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
