@@ -438,7 +438,7 @@ export default function LibrariesPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-indigo-600">19</div>
+              <div className="text-2xl sm:text-3xl font-bold text-indigo-600">{facultyLibraries.length}</div>
               <div className="text-xs sm:text-sm text-gray-600">Faculty Libraries</div>
             </div>
             <div className="text-center">

@@ -2,20 +2,20 @@
 import { initializeApp, getApp, getApps } from "firebase/app"
 import { getAuth } from "firebase/auth"
 
-// Your Firebase config
+// Direct Firebase config (⚠️ visible to anyone in client bundle)
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyCLoNJDBk1MXF5Jk2KCfzPJtF5HLh9ifyo",
+  authDomain: "kdl-auth.firebaseapp.com",
+  projectId: "kdl-auth",
+  storageBucket: "kdl-auth.appspot.com", // fixed from .firebasestorage.app
+  messagingSenderId: "793457189937",
+  appId: "1:793457189937:web:928001282ea111db6c6110",
 }
 
 // Initialize Firebase only once
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
-// Auth (client-safe)
+// Auth
 const auth = getAuth(app)
 
 export { app, auth }

@@ -30,7 +30,7 @@ export default function AdminLoginPage() {
       if (res) {
         setEmail("");
         setPassword("");
-        router.push("/admin");
+        router.push("/admin/overview");
       }
     } catch (err: any) {
       setError(err?.message || "Login failed.");

@@ -183,7 +183,7 @@ const libraryData = {
     departments: ["Veterinary Medicine", "Veterinary Anatomy", "Veterinary Microbiology and Virology", "Veterinary Physiology and Biochemistry", "Veterinary Pharmacology and Toxicology", "Veterinary Pathology", "Veterinary Public Health and Preventive Medicine", "Veterinary Surgery and Production", "Veterinary Theriogenology", "Veterinary of Parasitology and Entomology"],
   },
 
-    art: {
+  art: {
     name: "Faculty of Arts Library ",
     faculty: "Art",
     image: "/Libraries/Art/art.jpeg",
@@ -231,7 +231,7 @@ const libraryData = {
     ],
   },
 
-   law: {
+  law: {
     name: "Adéọlá Odùtọ́lá Law Library",
     faculty: "Law",
     image: "/Libraries/Law/law.jpg",
@@ -316,10 +316,13 @@ const libraryData = {
       "Furniture such as study tables, chairs, book shelves, cloakroom shelf.",
     ],
     departments: [
-      "Commercial and Industrial Law",
-      "Jurisprudence and International Law",
-      "Private and Property Law",
-      "Public Law",
+      "Crop Protection and Environmental Biology",
+      "Animal Science",
+      "Agricultural Extension and Rural Development",
+      "Agricultural Economics",
+      "Soil Science",
+      "Forest Resources Management",
+      "Wildlife and Ecotourism Management",
     ],
   },
 
@@ -350,7 +353,7 @@ const libraryData = {
       "Education (Orientation)",
     ],
     facilities: [
-       "Air conditioners",
+      "Air conditioners",
       "Ceiling fan",
       "Standing fan",
       "Reading tables and chairs.",
@@ -403,7 +406,7 @@ const libraryData = {
       "Theses",
       "Reading tables and chairs.",
     ],
- departments: [
+    departments: [
       "International Centre for Educational Evaluation (ICEE)",
       "School and Outreach Department",
     ],
@@ -415,7 +418,7 @@ const libraryData = {
     image: "/Libraries/Africa/africa.jpeg",
     description:
       "The Institute of African Studies Library, University of Ibadan, Nigeria, is the pioneer library of African Studies on the African continent. It was established in 1962 and supports the postgraduate curriculum of the Institute. The library supports the teaching, learning and research activities of faculty members, students, international students and the university community at large. The library collection includes a wide range of information resources such as books, journals, theses and dissertations, seminar papers, reference materials, conference proceedings, bound newspapers and so on. The collection covers all academic disciplines and areas of specialization available in the Institute. The extension of the Institute library- Abolurin Library, is dedicated to serve only faculty members and Ph.D. students. The Institute of African Studies also has research and documentation arms which include Centre for Arabic Documentation, Women Research and Documentation Centre, the Institute Museum, the Studio/Archive of Sound and Vision, Digital Africana, the Traditional Medicine Documentation and Research Centre.",
-      location: "Inside the Institute of African Studies Building.",
+    location: "Inside the Institute of African Studies Building.",
     coordinates: "7.3785° N, 3.9460° E",
     books: "3,000",
     journals: "2,000+",
@@ -440,7 +443,7 @@ const libraryData = {
       "Information Literacy Instruction",
     ],
     facilities: [
-       "Air conditioners",
+      "Air conditioners",
       "Ceiling fan",
       "Standing fan",
       "Reading tables and chairs.",
@@ -466,7 +469,7 @@ const libraryData = {
     image: "/Libraries/Technology/tech.jpeg",
     description:
       "The Faculty of Technology Library is situated in the old faculty building and serves ten departments in the faculty. Established possibly with the inception of the Institute of Applied Science and Technology in the 1972/73 session, the library supports the faculty's mission by providing resources and services to students, staff, faculty, and other users. The library facilitates access to information through traditional and evolving technologies and is an integral part of the faculty, with the librarian serving on the Library and Publications Committee and the Faculty Board.",
-      location: "Faculty of Technology.",
+    location: "Faculty of Technology.",
     coordinates: "7.3785° N, 3.9460° E",
     books: "4,353",
     journals: "12",
@@ -524,7 +527,7 @@ const libraryData = {
     image: "/Libraries/EducationPro/edu.jpg",
     description:
       "Faculty of Education Library serves the information need of users in the faculty. The library opens from 8am to 4pm except Saturdays and Sundays,  the library has 96 seating capacity with 12 reading tables and 8 chairs attached to each table. The library holds about 14,500 volume of books, reference materials and also 15,100 volume of Bachelor degree project as well as 8,220 volume of Masters dissertations.",
-      location: "Faculty of Education.",
+    location: "Faculty of Education.",
     coordinates: "7.3785° N, 3.9460° E",
     books: "7,200",
     journals: "7,300",
