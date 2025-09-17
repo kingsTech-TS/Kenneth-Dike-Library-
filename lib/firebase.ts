@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth"
 
 // Direct Firebase config (⚠️ visible to anyone in client bundle)
 const firebaseConfig = {
-  apiKey: "AIzaSyCLoNJDBk1MXF5Jk2KCfzPJtF5HLh9ifyo",
-  authDomain: "kdl-auth.firebaseapp.com",
-  projectId: "kdl-auth",
-  storageBucket: "kdl-auth.appspot.com", // fixed from .firebasestorage.app
-  messagingSenderId: "793457189937",
-  appId: "1:793457189937:web:928001282ea111db6c6110",
+  apiKey: "AIzaSyCWu9cLZr0urYcDMGOZlYaQ4Oay4XINRTE",
+  authDomain: "kdlui-d9d03.firebaseapp.com",
+  projectId: "kdlui-d9d03",
+  storageBucket: "kdlui-d9d03.appspot.com", // ✅ fixed
+  messagingSenderId: "75333895030",
+  appId: "1:75333895030:web:8f0667498d89a9c90db057"
 }
 
 // Initialize Firebase only once
