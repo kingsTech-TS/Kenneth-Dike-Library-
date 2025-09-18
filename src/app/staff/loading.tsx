@@ -4,7 +4,7 @@ export default function StaffLoading() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-indigo-50">
       {/* Hero Section Skeleton */}
-      <div className="relative bg-gradient-to-r from-amber-600 via-indigo-600 to-blue-600 text-white py-20">
+      <div className="relative bg-gradient-to-br from-indigo-50 via-amber-50 to-blue-50 text-white py-20">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="h-16 bg-white/20 rounded-lg mb-6 animate-pulse"></div>

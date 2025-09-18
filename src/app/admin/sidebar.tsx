@@ -16,6 +16,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Newspaper,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { onAuthStateChanged, signOut } from "firebase/auth"
@@ -31,7 +32,8 @@ const navigation = [
   { name: "Librarians", href: "/admin/librarians", icon: Users },
   { name: "Libraries", href: "/admin/libraries", icon: Building2 },
   { name: "Gallery", href: "/admin/gallery", icon: Camera },
-  { name: "E-Resources", href: "/admin/resources", icon: Database },
+  { name: "New & Annoucement", href: "/admin/e-resources", icon: Newspaper },
+  { name: "E-Resources", href: "/admin/e-resources", icon: Database },
 ]
 
 export default function Sidebar({ children }: AdminLayoutProps) {
