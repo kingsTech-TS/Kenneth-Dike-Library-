@@ -1,170 +1,158 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Calendar, Users, BookOpen, Award, ArrowRight, Clock } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Bell, Calendar, Clock, ArrowRight, BookOpen, Users, Wifi } from "lucide-react"
+import Link from "next/link"
 
 const announcements = [
   {
     id: 1,
-    type: "Event",
-    title: "Digital Literacy Workshop",
-    description: "Join us for an intensive workshop on navigating digital databases and research tools.",
-    date: "2024-02-15",
-    time: "10:00 AM - 2:00 PM",
-    location: "Main Library, Conference Room A",
-    icon: BookOpen,
-    color: "from-indigo-500 to-blue-600",
-    bgColor: "bg-indigo-50",
-    borderColor: "border-indigo-200",
-    textColor: "text-indigo-700",
+    title: "Extended Hours During Exam Period",
+    description: "The library will be open 24/7 from December 1-15 to support students during final examinations.",
+    date: "2024-11-25",
+    type: "hours",
+    icon: Clock,
+    urgent: true,
   },
   {
     id: 2,
-    type: "News",
-    title: "New E-Resource Database Added",
-    description: "We've added access to SpringerLink, expanding our digital collection by 2 million articles.",
-    date: "2024-02-10",
-    location: "Available 24/7 online",
-    icon: Award,
-    color: "from-blue-500 to-indigo-600",
-    bgColor: "bg-blue-50",
-    borderColor: "border-blue-200",
-    textColor: "text-blue-700",
+    title: "New Digital Database Access",
+    description: "We've added access to JSTOR and Project MUSE databases. Login with your student credentials.",
+    date: "2024-11-20",
+    type: "resources",
+    icon: BookOpen,
+    urgent: false,
   },
   {
     id: 3,
-    type: "Update",
-    title: "Extended Study Hours",
-    description: "During exam period, the library will be open 24/7 from March 1st to March 31st.",
-    date: "2024-02-08",
-    location: "All library locations",
-    icon: Clock,
-    color: "from-amber-500 to-yellow-500",
-    bgColor: "bg-amber-50",
-    borderColor: "border-amber-200",
-    textColor: "text-amber-700",
+    title: "Library Orientation for New Students",
+    description: "Join us for a comprehensive library tour and research skills workshop every Friday at 2 PM.",
+    date: "2024-11-18",
+    type: "event",
+    icon: Users,
+    urgent: false,
   },
   {
     id: 4,
-    type: "Event",
-    title: "Research Excellence Awards",
-    description: "Celebrating outstanding research achievements by our faculty and graduate students.",
-    date: "2024-02-20",
-    time: "6:00 PM - 8:00 PM",
-    location: "Library Auditorium",
-    icon: Users,
-    color: "from-indigo-600 to-blue-500",
-    bgColor: "bg-indigo-50",
-    borderColor: "border-indigo-200",
-    textColor: "text-indigo-700",
+    title: "WiFi Network Upgrade Complete",
+    description: "Enjoy faster internet speeds throughout the library with our newly upgraded network infrastructure.",
+    date: "2024-11-15",
+    type: "technology",
+    icon: Wifi,
+    urgent: false,
   },
 ]
 
+const typeColors = {
+  hours: "from-red-500 to-red-600",
+  resources: "from-blue-500 to-blue-600",
+  event: "from-green-500 to-green-600",
+  technology: "from-purple-500 to-purple-600",
+}
+
 export default function Announcements() {
   return (
-    <section className="py-20 bg-gradient-to-br from-white via-indigo-50 to-blue-50">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.div
-            className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-sm font-medium mb-6"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Calendar className="w-4 h-4 mr-2" />
-            Latest Updates
-          </motion.div>
-
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            News &{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
-              Announcements
-            </span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Stay updated with the latest events, news, and important information from Kenneth Dike Library
+          <div className="flex items-center justify-center mb-4">
+            <Bell className="h-8 w-8 text-orange-600 mr-3" />
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">Latest Announcements</h2>
+          </div>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Stay updated with the latest news, events, and important information from Kenneth Dike Library
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {announcements.map((announcement, index) => (
             <motion.div
               key={announcement.id}
-              initial={{ opacity: 0, y: 50 }}
+              className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 ${
+                announcement.urgent ? "border-red-500" : "border-gray-200"
+              }`}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -10, scale: 1.02 }}
+              whileHover={{ y: -5 }}
             >
-              <Card
-                className={`p-6 h-full ${announcement.bgColor} ${announcement.borderColor} border-2 hover:shadow-xl transition-all duration-300 group`}
-              >
+              <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
-                  <div
-                    className={`w-12 h-12 bg-gradient-to-r ${announcement.color} rounded-xl flex items-center justify-center shadow-lg`}
-                  >
-                    <announcement.icon className="h-6 w-6 text-white" />
-                  </div>
-                  <div className="text-right">
-                    <span
-                      className={`inline-block px-3 py-1 ${announcement.bgColor} ${announcement.textColor} text-xs font-semibold rounded-full border ${announcement.borderColor}`}
+                  <div className="flex items-center">
+                    <div
+                      className={`w-12 h-12 bg-gradient-to-r ${typeColors[announcement.type as keyof typeof typeColors]} rounded-lg flex items-center justify-center mr-4`}
                     >
-                      {announcement.type}
-                    </span>
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors duration-300">
-                  {announcement.title}
-                </h3>
-
-                <p className="text-gray-700 leading-relaxed mb-4">{announcement.description}</p>
-
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Calendar className="h-4 w-4 mr-2 text-indigo-500" />
-                    <span>
-                      {new Date(announcement.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </span>
-                  </div>
-
-                  {announcement.time && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Clock className="h-4 w-4 mr-2 text-blue-500" />
-                      <span>{announcement.time}</span>
+                      <announcement.icon className="h-6 w-6 text-white" />
                     </div>
-                  )}
-
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Users className="h-4 w-4 mr-2 text-amber-500" />
-                    <span>{announcement.location}</span>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                        {announcement.title}
+                        {announcement.urgent && (
+                          <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Urgent</span>
+                        )}
+                      </h3>
+                      <div className="flex items-center text-sm text-gray-500">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        {new Date(announcement.date).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <Button
-                  variant="outline"
-                  className={`w-full group-hover:bg-gradient-to-r group-hover:${announcement.color} group-hover:text-white group-hover:border-transparent transition-all duration-300`}
-                >
-                  Learn More
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </Button>
-              </Card>
+                <p className="text-gray-600 mb-4 leading-relaxed">{announcement.description}</p>
+
+                <div className="flex items-center justify-between">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${
+                      announcement.type === "hours"
+                        ? "bg-red-100 text-red-800"
+                        : announcement.type === "resources"
+                          ? "bg-blue-100 text-blue-800"
+                          : announcement.type === "event"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-purple-100 text-purple-800"
+                    }`}
+                  >
+                    {announcement.type}
+                  </span>
+
+                  <button className="flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">
+                    Read More
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </button>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
 
+        {/* View All Link */}
+        <motion.div
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          <Link
+            href="/announcements"
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-orange-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            View All Announcements
+            <ArrowRight className="h-5 w-5 ml-2" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   )
