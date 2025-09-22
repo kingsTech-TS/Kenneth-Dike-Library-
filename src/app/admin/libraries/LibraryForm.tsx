@@ -340,13 +340,13 @@ export default function LibraryForm({ initialData, onSave, onCancel }: LibraryFo
             <Button
               type="button"
               onClick={handleCancel}
-              className="px-4 py-2 rounded border text-gray-600 hover:bg-gray-100"
+              className="px-4 py-2 rounded border text-gray-600 bg-red-600 hover:bg-red-300"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="px-4 py-2 rounded bg-orange-500 text-white hover:bg-orange-600"
+              className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-300"
             >
               Save Library
             </Button>

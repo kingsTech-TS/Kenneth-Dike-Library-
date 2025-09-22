@@ -32,7 +32,7 @@ const navigation = [
   { name: "Librarians", href: "/admin/librarians", icon: Users },
   { name: "Libraries", href: "/admin/libraries", icon: Building2 },
   { name: "Gallery", href: "/admin/gallery", icon: Camera },
-  { name: "New & Annoucement", href: "/admin/e-resources", icon: Newspaper },
+  { name: "New & Annoucement", href: "/admin/news", icon: Newspaper },
   { name: "E-Resources", href: "/admin/e-resources", icon: Database },
 ]
 

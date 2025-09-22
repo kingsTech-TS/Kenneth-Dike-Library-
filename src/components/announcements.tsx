@@ -146,7 +146,7 @@ export default function Announcements() {
           viewport={{ once: true }}
         >
           <Link
-            href="/announcements"
+            href="/news"
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             View All Announcements

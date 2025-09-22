@@ -147,7 +147,7 @@ export default function LibraryManager() {
                 </Button>
                 <Button
                   onClick={() => handleDelete(lib.name)}
-                  className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1"
+                  className="bg-red-600 hover:bg-red-300 text-white text-sm px-3 py-1"
                 >
                   Delete
                 </Button>
