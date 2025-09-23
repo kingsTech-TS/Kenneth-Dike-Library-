@@ -22,7 +22,8 @@ export default function GalleryPage() {
       }))
       setItems(docs)
     } catch (err) {
-      toast.error("Failed to fetch gallery items")
+      console.error("Fetch error:", err)
+      toast.error("Failed to fetch gallery items ❌")
     }
   }
 
@@ -43,40 +44,44 @@ export default function GalleryPage() {
   }
 
   const handleDelete = async (id: string, title: string) => {
-    toast((t) => (
-      <div className="flex flex-col gap-3">
-        <p className="text-sm">
-          Are you sure you want to delete <b>{title}</b>?
-        </p>
-        <div className="flex gap-2 justify-end">
-          <Button
-            size="sm"
-            variant="destructive"
-            onClick={async () => {
-              try {
-                await deleteDoc(doc(db, "galleryImages", id))
-                toast.success(`"${title}" deleted ✅`)
-                fetchItems()
-              } catch (err) {
-                toast.error("Failed to delete item ❌")
-              }
-              toast.dismiss(t.id)
-            }}
-          >
-            Yes, Delete
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => toast.dismiss(t.id)}
-          >
-            Cancel
-          </Button>
+    toast(
+      (t) => (
+        <div className="flex flex-col gap-3">
+          <p className="text-sm">
+            Are you sure you want to delete <b>{title}</b>?
+          </p>
+          <div className="flex gap-2 justify-end">
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={async () => {
+                try {
+                  await deleteDoc(doc(db, "galleryImages", id))
+                  setItems((prev) => prev.filter((i) => i.id !== id)) // ✅ Optimistic update
+                  toast.success(`"${title}" deleted ✅`)
+                } catch (err) {
+                  console.error("Delete error:", err)
+                  toast.error("Failed to delete item ❌")
+                }
+                toast.dismiss(t.id)
+              }}
+            >
+              Yes, Delete
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
-      </div>
-    ), {
-      duration: 5000, // auto close if ignored
-    })
+      ),
+      {
+        duration: 5000, // auto close if ignored
+      }
+    )
   }
 
   return (
@@ -94,7 +99,7 @@ export default function GalleryPage() {
         />
       ) : (
         <>
-          <Button onClick={() => setShowForm(true)}>+ Add Gallery Item</Button>
+          <Button className="bg-blue-600 text-white hover:bg-blue-400" onClick={() => setShowForm(true)}>+ Add Gallery Item</Button>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             {items.map((item) => (
@@ -103,11 +108,18 @@ export default function GalleryPage() {
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
               >
                 {/* Image */}
-                <img
-                  src={item.src || (item as any).imageUrl}
-                  alt={item.title}
-                  className="w-full h-48 object-cover"
-                />
+                {item.imageUrl ? (
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title || "Gallery Image"}
+                    className="w-full h-48 object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
+                    No Image
+                  </div>
+                )}
+
 
                 {/* Content */}
                 <div className="p-4">
@@ -127,7 +139,7 @@ export default function GalleryPage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="bg-blue-600 hover:bg-blue-400 text-white"
+                      className="bg-blue-600 hover:bg-blue-500 text-white"
                       onClick={() => {
                         setSelectedItem(item)
                         setShowForm(true)
@@ -138,7 +150,7 @@ export default function GalleryPage() {
                     <Button
                       size="sm"
                       variant="destructive"
-                       className="bg-red-600 hover:bg-red-400 text-white"
+                      className="bg-red-600 hover:bg-red-500 text-white"
                       onClick={() => handleDelete(item.id!, item.title)}
                     >
                       <Trash2 className="h-4 w-4 mr-1" /> Delete
