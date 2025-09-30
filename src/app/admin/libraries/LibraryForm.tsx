@@ -83,7 +83,7 @@ export default function LibraryForm({ initialData, onSave, onCancel }: LibraryFo
   
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
       <div className="bg-white w-full max-w-3xl rounded-lg shadow-lg mt-12">
 
         {/* Header */}
@@ -340,7 +340,7 @@ export default function LibraryForm({ initialData, onSave, onCancel }: LibraryFo
             <Button
               type="button"
               onClick={handleCancel}
-              className="px-4 py-2 rounded border text-gray-600 bg-red-600 hover:bg-red-300"
+              className="px-4 py-2 rounded border text-white bg-red-600 hover:bg-red-300"
             >
               Cancel
             </Button>
