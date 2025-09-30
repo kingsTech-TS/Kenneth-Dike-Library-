@@ -3,10 +3,12 @@ import { db } from "../../../../../lib/firebaseAdmin"
 import admin from "firebase-admin"
 import { newsSchema } from "../../../../../lib/validation/newsSchema"
 
-// GET a single news item
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+// ✅ GET a single news item
+export async function GET(req: Request, context: { params: { id: string } }) {
+  const { id } = context.params
+
   try {
-    const doc = await db.collection("news").doc(params.id).get()
+    const doc = await db.collection("news").doc(id).get()
 
     if (!doc.exists) {
       return NextResponse.json({ error: "News not found" }, { status: 404 })
@@ -19,8 +21,10 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-// PATCH: update a news item
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+// ✅ PATCH: update a news item
+export async function PATCH(req: Request, context: { params: { id: string } }) {
+  const { id } = context.params
+
   try {
     const body = await req.json()
 
@@ -33,7 +37,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
       return NextResponse.json({ error: parsed.error.format() }, { status: 400 })
     }
 
-    await db.collection("news").doc(params.id).update({
+    await db.collection("news").doc(id).update({
       ...parsed.data,
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     })
@@ -45,10 +49,12 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   }
 }
 
-// DELETE: remove a news item
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+// ✅ DELETE: remove a news item
+export async function DELETE(req: Request, context: { params: { id: string } }) {
+  const { id } = context.params
+
   try {
-    const docRef = db.collection("news").doc(params.id)
+    const docRef = db.collection("news").doc(id)
     const doc = await docRef.get()
 
     if (!doc.exists) {
