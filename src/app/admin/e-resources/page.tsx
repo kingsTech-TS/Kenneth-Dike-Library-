@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import toast, { Toaster } from "react-hot-toast"
 import EResourcesForm, { EResourceItem } from "./EresourcesForm"
-import { Edit, Trash2, BookOpen, Users, Download } from "lucide-react"
+import { Edit, Trash2, BookOpen } from "lucide-react"
 import { db } from "../../../../lib/firebase"
 import {
   collection,
@@ -15,16 +15,26 @@ import {
   onSnapshot,
 } from "firebase/firestore"
 
-// ResourceCard Component
+// ================= ResourceCard =================
 function ResourceCard({
   resource,
   onEdit,
   onDelete,
+  deleting,
 }: {
   resource: EResourceItem
   onEdit: (res: EResourceItem) => void
   onDelete: (id?: string, name?: string) => void
+  deleting?: boolean
 }) {
+  // Pick up to 3 non-empty stats from resource.stats
+  const statsEntries = resource.stats
+    ? Object.entries(resource.stats).filter(
+        ([_, value]) => value !== "" && value !== null && value !== undefined
+      )
+    : []
+  const displayedStats = statsEntries.slice(0, 3)
+
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
       {resource.logoURL ? (
@@ -42,22 +52,20 @@ function ResourceCard({
       <div className="p-4">
         <h2 className="text-lg font-semibold">{resource.name}</h2>
         <p className="text-sm text-gray-600">{resource.category}</p>
-
         <p className="text-sm text-gray-600 line-clamp-3 mt-2">
           {resource.description || "No description provided"}
         </p>
 
-        <div className="flex justify-between gap-4 text-xs text-gray-500 mt-3">
-          <div className="flex items-center gap-1">
-            <BookOpen size={14} /> {resource.papers || 0} Papers
+        {displayedStats.length > 0 && (
+          <div className="flex justify-between gap-4 text-xs text-gray-500 mt-3">
+            {displayedStats.map(([key, value]) => (
+              <div key={key} className="flex items-center gap-1">
+                <BookOpen size={14} /> {value}{" "}
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </div>
+            ))}
           </div>
-          <div className="flex items-center gap-1">
-            <Users size={14} /> {resource.authors || 0} Authors
-          </div>
-          <div className="flex items-center gap-1">
-            <Download size={14} /> {resource.downloads || 0}
-          </div>
-        </div>
+        )}
 
         <div className="flex justify-end gap-2 mt-4">
           <Button
@@ -74,9 +82,10 @@ function ResourceCard({
             variant="destructive"
             className="bg-red-600 hover:bg-red-500 text-white"
             onClick={() => onDelete(resource.id, resource.name)}
+            disabled={deleting}
             aria-label={`Delete ${resource.name}`}
           >
-            <Trash2 className="h-4 w-4 mr-1" /> Delete
+            <Trash2 className="h-4 w-4 mr-1" /> {deleting ? "Deleting..." : "Delete"}
           </Button>
         </div>
       </div>
@@ -84,42 +93,38 @@ function ResourceCard({
   )
 }
 
-// SkeletonCard Component with shimmer
+// ================= SkeletonCard =================
 function SkeletonCard() {
+  const shimmer =
+    "absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer"
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
       <div className="relative w-full h-40 bg-gray-200 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer" />
+        <div className={shimmer} />
       </div>
-
       <div className="p-4 space-y-2">
         <div className="h-5 bg-gray-300 rounded w-3/4 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
+          <div className={shimmer} />
         </div>
         <div className="h-3 bg-gray-300 rounded w-1/2 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
+          <div className={shimmer} />
         </div>
         <div className="h-12 bg-gray-300 rounded mt-2 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
+          <div className={shimmer} />
         </div>
-
         <div className="flex justify-between mt-3 gap-2">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-3 bg-gray-300 rounded w-1/4 relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
+            <div key={i} className="h-3 bg-gray-300 rounded w-1/4 relative overflow-hidden">
+              <div className={shimmer} />
             </div>
           ))}
         </div>
-
         <div className="flex justify-end gap-2 mt-4">
           <div className="h-7 bg-gray-300 rounded w-16 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
+            <div className={shimmer} />
           </div>
           <div className="h-7 bg-gray-300 rounded w-16 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
+            <div className={shimmer} />
           </div>
         </div>
       </div>
@@ -127,22 +132,20 @@ function SkeletonCard() {
   )
 }
 
-// Main Component
+// ================= Main Manager =================
 export default function EresourcesManager() {
   const [resources, setResources] = useState<EResourceItem[]>([])
   const [selected, setSelected] = useState<EResourceItem | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [actionLoading, setActionLoading] = useState<{ [key: string]: boolean }>({})
 
-  // Real-time Firestore subscription
+  // Real-time subscription
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "eResource"),
       (snapshot) => {
-        const docs = snapshot.docs.map((d) => ({
-          id: d.id,
-          ...(d.data() as EResourceItem),
-        }))
+        const docs = snapshot.docs.map((d) => ({ id: d.id, ...(d.data() as EResourceItem) }))
         setResources(docs)
         setLoading(false)
       },
@@ -155,17 +158,17 @@ export default function EresourcesManager() {
     return () => unsubscribe()
   }, [])
 
-  // Save (Add/Update)
+  // Save handler (add/update)
   const handleSave = async (data: EResourceItem) => {
+    setActionLoading({ ...actionLoading, saving: true })
     try {
       const { id, ...dataToSave } = data
-
-      if (selected && selected.id) {
-        await updateDoc(doc(db, "eResource", selected.id), dataToSave)
-        toast.success("Resource updated ✅")
+      if (id) {
+        await updateDoc(doc(db, "eResource", id), dataToSave)
+        toast.success(`Resource "${data.name}" updated ✅`)
       } else {
         await addDoc(collection(db, "eResource"), dataToSave)
-        toast.success("Resource added 🎉")
+        toast.success(`Resource "${data.name}" added 🎉`)
       }
     } catch (err) {
       console.error("Save error:", err)
@@ -173,6 +176,7 @@ export default function EresourcesManager() {
     } finally {
       setSelected(null)
       setShowForm(false)
+      setActionLoading({ ...actionLoading, saving: false })
     }
   }
 
@@ -182,7 +186,8 @@ export default function EresourcesManager() {
     toast("Action cancelled ❌", { icon: "🚫" })
   }
 
-  const handleDelete = async (id?: string, name?: string) => {
+  // Delete handler
+  const handleDelete = (id?: string, name?: string) => {
     if (!id) return
     toast(
       (t) => (
@@ -195,17 +200,21 @@ export default function EresourcesManager() {
               size="sm"
               variant="destructive"
               onClick={async () => {
+                setActionLoading({ ...actionLoading, [id]: true })
                 try {
                   await deleteDoc(doc(db, "eResource", id))
-                  toast.success(`“${name}” deleted 🗑️`)
+                  toast.success(`"${name}" deleted 🗑️`)
                 } catch (err) {
                   console.error("Delete error:", err)
                   toast.error("Failed to delete ❌")
+                } finally {
+                  setActionLoading({ ...actionLoading, [id]: false })
+                  toast.dismiss(t.id)
                 }
-                toast.dismiss(t.id)
               }}
+              disabled={actionLoading[id]}
             >
-              Yes, Delete
+              {actionLoading[id] ? "Deleting..." : "Yes, Delete"}
             </Button>
             <Button size="sm" variant="outline" onClick={() => toast.dismiss(t.id)}>
               Cancel
@@ -231,7 +240,7 @@ export default function EresourcesManager() {
       ) : (
         <>
           <Button
-            className="bg-blue-600 text-white hover:bg-blue-400"
+            className="bg-blue-600 text-white hover:bg-blue-500"
             onClick={() => {
               setSelected(null)
               setShowForm(true)
@@ -252,6 +261,7 @@ export default function EresourcesManager() {
                       setShowForm(true)
                     }}
                     onDelete={handleDelete}
+                    deleting={actionLoading[res.id] || false}type undefined cannot be used as an index
                   />
                 ))}
           </div>

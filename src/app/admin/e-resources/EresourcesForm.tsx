@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,20 +21,19 @@ import { db } from "../../../../lib/firebase";
 
 export interface EResourceItem {
   id?: string;
-  color?: string;
-  papers?: string;
-  authors?: string;
+  name?: string;
   category?: string;
+  categories?: string;
+  color?: string;
   description?: string;
-  downloads?: string;
-  features?: string;
+  features?: string[];
   linkURL?: string;
   logoURL?: string;
-  name?: string;
-  subjects?: string;
-  counter?: number;
+  subjects?: string[];
+  stats?: Record<string, string>;
   createdAt?: any;
   updatedAt?: any;
+  counter?: number;
 }
 
 interface EResourcesFormProps {
@@ -49,29 +48,46 @@ export default function EResourcesForm({
   onCancel,
 }: EResourcesFormProps) {
   const [formData, setFormData] = useState<EResourceItem>({
-    id: undefined,
-    color: "",
-    papers: "",
-    authors: "",
-    category: "",
-    description: "",
-    downloads: "",
-    features: "",
-    linkURL: "",
-    logoURL:
-      "https://res.cloudinary.com/dskj6z1lj/image/upload/v1743679356/nk6w9kiiwkz3xjrnnw1c.webp",
+    id: "",
     name: "",
-    subjects: "",
-    counter: undefined,
+    category: "",
+    categories: "",
+    color: "",
+    description: "",
+    features: [],
+    subjects: [],
+    linkURL: "",
+    logoURL: "",
+    stats: {},
+    counter: 0,
+    createdAt: null,
+    updatedAt: null,
   });
 
   const [preview, setPreview] = useState<string>(formData.logoURL || "");
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
+  const [featureInput, setFeatureInput] = useState("");
+  const [subjectInput, setSubjectInput] = useState("");
+
+  // Normalize initialData
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({
+        ...initialData,
+        stats: { ...initialData.stats },
+        features: Array.isArray(initialData.features)
+          ? initialData.features
+          : typeof initialData.features === "string"
+            ? initialData.features.split(",").map((v) => v.trim())
+            : [],
+        subjects: Array.isArray(initialData.subjects)
+          ? initialData.subjects
+          : typeof initialData.subjects === "string"
+            ? initialData.subjects.split(",").map((v) => v.trim())
+            : [],
+      });
       setPreview(initialData.logoURL || "");
     }
   }, [initialData]);
@@ -80,7 +96,15 @@ export default function EResourcesForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (formData.stats && name in formData.stats) {
+      setFormData((prev) => ({
+        ...prev,
+        stats: { ...prev.stats, [name]: value },
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +116,7 @@ export default function EResourcesForm({
       const uploadData = new FormData();
       uploadData.append("file", file);
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: uploadData,
-      });
-
+      const res = await fetch("/api/upload", { method: "POST", body: uploadData });
       const data = await res.json();
 
       if (!res.ok || data.error) {
@@ -122,11 +142,7 @@ export default function EResourcesForm({
   };
 
   const getNextCounter = async (): Promise<number> => {
-    const q = query(
-      collection(db, "eResource"),
-      orderBy("counter", "desc"),
-      limit(1)
-    );
+    const q = query(collection(db, "eResource"), orderBy("counter", "desc"), limit(1));
     const snapshot = await getDocs(q);
     if (snapshot.empty) return 1;
     const maxCounter = snapshot.docs[0].data().counter || 0;
@@ -139,7 +155,7 @@ export default function EResourcesForm({
 
     try {
       const dataToSave = { ...formData };
-      delete dataToSave.id; // remove id before saving
+      delete dataToSave.id;
 
       if (initialData?.id) {
         const docRef = doc(db, "eResource", initialData.id);
@@ -148,9 +164,10 @@ export default function EResourcesForm({
           updatedAt: serverTimestamp(),
         });
         toast.success("E-Resource updated ✅");
+        onSave({ ...dataToSave, id: initialData.id });
       } else {
         const counter = await getNextCounter();
-        await addDoc(collection(db, "eResource"), {
+        const docRef = await addDoc(collection(db, "eResource"), {
           ...dataToSave,
           counter,
           uploadedBy: "admin",
@@ -158,9 +175,8 @@ export default function EResourcesForm({
           updatedAt: serverTimestamp(),
         });
         toast.success(`New E-Resource #${counter} added 🎉`);
+        onSave({ ...dataToSave, id: docRef.id, counter });
       }
-
-      onSave(formData);
     } catch (err: unknown) {
       console.error(err);
       const message =
@@ -171,9 +187,51 @@ export default function EResourcesForm({
     }
   };
 
+  const addTag = (type: "features" | "subjects", value: string) => {
+    if (!value.trim()) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      [type]: Array.isArray(prev[type]) ? [...prev[type]!, value.trim()] : [value.trim()],
+    }));
+
+    if (type === "features") setFeatureInput("");
+    else setSubjectInput("");
+  };
+
+  const removeTag = (type: "features" | "subjects", index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      [type]: Array.isArray(prev[type])
+        ? prev[type]!.filter((_, i) => i !== index)
+        : [],
+    }));
+  };
+
+  const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>, type: "features" | "subjects") => {
+    const inputValue = type === "features" ? featureInput : subjectInput;
+
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      addTag(type, inputValue);
+    } else if (e.key === "Backspace" && !inputValue) {
+      // Remove last tag if input is empty
+      const tags = formData[type] || [];
+      removeTag(type, tags.length - 1);
+    }
+  };
+
+  const inputFields = [
+    "name", "category", "categories", "color", "linkURL",
+    "downloads", "papers", "authors", "books", "journals", "cases", "citations", "countries", "databases",
+    "disciplines", "ebooks", "formats", "grants", "indicators", "institutions", "languages", "laws",
+    "pages", "partners", "preprints", "programs", "publicDomain", "publishers", "records", "reports",
+    "states", "subPerMonth", "updates", "variables", "years", "courts", "newspapers", "agencies"
+  ];
+
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl h-[90vh] overflow-y-auto p-6">
+      <div className="bg-white rounded-xl shadow-lg w-full max-w-3xl h-[90vh] overflow-y-auto p-6">
         <h2 className="text-xl font-semibold mb-4">
           {initialData ? "Edit E-Resource" : "Add New E-Resource"}
         </h2>
@@ -188,48 +246,90 @@ export default function EResourcesForm({
               <div className="mt-2 rounded-lg border p-2 bg-gray-50">
                 <img
                   src={preview}
-                  alt="Logo Preview"
+                  alt={formData.name || "Logo Preview"}
                   className="w-full h-40 object-contain rounded-md"
                 />
               </div>
             )}
           </div>
 
-          {/* Controlled Inputs */}
-          {[
-            { label: "Name", name: "name", required: true, type: "text" },
-            { label: "Category", name: "category", required: true, type: "text" },
-            { label: "Color", name: "color", required: false, type: "text" },
-            { label: "Papers", name: "papers", required: false, type: "text" },
-            { label: "Authors", name: "authors", required: false, type: "text" },
-            { label: "Downloads", name: "downloads", required: false, type: "text" },
-            { label: "Subjects", name: "subjects", required: false, type: "text" },
-            { label: "Resource Link", name: "linkURL", required: true, type: "url" },
-          ].map((field) => (
-            <div key={field.name} className="space-y-2">
-              <Label>{field.label}</Label>
+          {/* Dynamic Inputs */}
+          {inputFields.map((field) => (
+            <div key={field} className="space-y-2">
+              <Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Label>
               <Input
-                type={field.type}
-                name={field.name}
-                value={formData[field.name as keyof EResourceItem] || ""}
+                type={field === "linkURL" ? "url" : "text"}
+                name={field}
+                value={
+                  formData.stats && field in formData.stats
+                    ? formData.stats[field as keyof typeof formData.stats] || ""
+                    : formData[field as keyof EResourceItem] || ""
+                }
                 onChange={handleChange}
-                placeholder={field.label}
-                required={field.required}
+                placeholder={field}
               />
             </div>
           ))}
 
-          {/* Textareas */}
+          {/* Features Tag Input */}
           <div className="space-y-2">
             <Label>Features</Label>
-            <Textarea
-              name="features"
-              value={formData.features || ""}
-              onChange={handleChange}
-              placeholder="Key features or highlights"
-            />
+            <div className="flex flex-wrap gap-2 border rounded p-2 min-h-[44px] items-center">
+              {formData.features?.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-blue-100 text-blue-800 px-2 py-1 rounded flex items-center gap-1"
+                >
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => removeTag("features", index)}
+                    className="font-bold"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+              <Input
+                value={featureInput}
+                onChange={(e) => setFeatureInput(e.target.value)}
+                onKeyDown={(e) => handleTagKeyDown(e, "features")}
+                placeholder="Type and press Enter"
+                className="flex-1 min-w-[120px] border-none focus:ring-0"
+              />
+            </div>
           </div>
 
+          {/* Subjects Tag Input */}
+          <div className="space-y-2">
+            <Label>Subjects</Label>
+            <div className="flex flex-wrap gap-2 border rounded p-2 min-h-[44px] items-center">
+              {formData.subjects?.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-green-100 text-green-800 px-2 py-1 rounded flex items-center gap-1"
+                >
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => removeTag("subjects", index)}
+                    className="font-bold"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+              <Input
+                value={subjectInput}
+                onChange={(e) => setSubjectInput(e.target.value)}
+                onKeyDown={(e) => handleTagKeyDown(e, "subjects")}
+                placeholder="Type and press Enter"
+                className="flex-1 min-w-[120px] border-none focus:ring-0"
+              />
+            </div>
+          </div>
+
+          {/* Description */}
           <div className="space-y-2">
             <Label>Description</Label>
             <Textarea
