@@ -150,6 +150,44 @@ export default function EResourcesForm({
     return maxCounter + 1;
   };
 
+ const handlePasteData = () => {
+  const pasted = prompt(
+    "Paste your data block (JSON or JS object like your ERIC example)."
+  );
+  if (!pasted) return;
+
+  try {
+    // Parse JS object string safely
+    const parsed: any = Function(`"use strict"; return (${pasted})`)();
+
+    // Map keys to your form structure
+    const mappedData: EResourceItem = {
+      name: parsed.name || "",
+      category: parsed.category || "",
+      description: parsed.description || "",
+      features: Array.isArray(parsed.features) ? parsed.features : [],
+      subjects: Array.isArray(parsed.subjects) ? parsed.subjects : [],
+      logoURL: parsed.logo || "",
+      linkURL: parsed.url || "",
+      color: parsed.color || "",
+      stats: parsed.stats || {},
+    };
+
+    setFormData((prev) => ({
+      ...prev,
+      ...mappedData,
+    }));
+
+    setPreview(mappedData.logoURL || "");
+    toast.success("Data pasted successfully!");
+  } catch (err) {
+    toast.error("Failed to parse data. Make sure the format is correct!");
+    console.error(err);
+  }
+};
+
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -236,6 +274,14 @@ export default function EResourcesForm({
         <h2 className="text-xl font-semibold mb-4">
           {initialData ? "Edit E-Resource" : "Add New E-Resource"}
         </h2>
+
+           <Button
+            type="button"
+            className="bg-green-600 text-white hover:bg-green-500 mb-4"
+            onClick={handlePasteData}
+          >
+            Paste Data
+          </Button>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Logo Upload */}

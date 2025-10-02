@@ -30,8 +30,8 @@ function ResourceCard({
   // Pick up to 3 non-empty stats from resource.stats
   const statsEntries = resource.stats
     ? Object.entries(resource.stats).filter(
-        ([_, value]) => value !== "" && value !== null && value !== undefined
-      )
+      ([_, value]) => value !== "" && value !== null && value !== undefined
+    )
     : []
   const displayedStats = statsEntries.slice(0, 3)
 
@@ -253,17 +253,17 @@ export default function EresourcesManager() {
             {loading
               ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
               : resources.map((res) => (
-                  <ResourceCard
-                    key={res.id}
-                    resource={res}
-                    onEdit={(r) => {
-                      setSelected(r)
-                      setShowForm(true)
-                    }}
-                    onDelete={handleDelete}
-                    deleting={!!(res.id && actionLoading[res.id])}
-                  />
-                ))}
+                <ResourceCard
+                  key={res.id}
+                  resource={res}
+                  onEdit={(r) => {
+                    setSelected(r)
+                    setShowForm(true)
+                  }}
+                  onDelete={handleDelete}
+                  deleting={!!(res.id && actionLoading[res.id])}
+                />
+              ))}
           </div>
         </>
       )}
