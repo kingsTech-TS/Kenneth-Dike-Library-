@@ -224,7 +224,7 @@ export default function EResourcesForm({
 
   const inputFields = [
     "name", "category", "categories", "color", "linkURL",
-    "downloads", "papers", "authors", "books", "journals", "cases", "citations", "countries", "databases",
+    "downloads", "papers", "authors", "books", "journals", "articles", "cases", "citations", "countries", "databases",
     "disciplines", "ebooks", "formats", "grants", "indicators", "institutions", "languages", "laws",
     "pages", "partners", "preprints", "programs", "publicDomain", "publishers", "records", "reports",
     "states", "subPerMonth", "updates", "variables", "years", "courts", "newspapers", "agencies"
