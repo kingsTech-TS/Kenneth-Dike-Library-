@@ -1,39 +1,126 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
 import StaffForm, { StaffItem } from "./StaffForm";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 
+// StaffCard Component
+function StaffCard({
+  staff,
+  onEdit,
+  onDelete,
+}: {
+  staff: StaffItem;
+  onEdit: (s: StaffItem) => void;
+  onDelete: (id: string, name: string) => void;
+}) {
+  return (
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+      {staff.imageURL ? (
+        <img
+          src={staff.imageURL}
+          alt={staff.first || "Staff"}
+          className="w-full h-48 object-cover"
+        />
+      ) : (
+        <div className="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-sm italic">
+          No Image Available
+        </div>
+      )}
+
+      <div className="p-4">
+        <h2 className="text-lg font-semibold">
+          {staff.first} {staff.otherNames} {staff.surname}
+        </h2>
+        <p className="text-sm text-gray-600">{staff.designation}</p>
+        <p className="text-xs text-gray-500">{staff.department}</p>
+
+        <div className="flex justify-end gap-2 mt-4">
+          <Button
+            size="sm"
+            variant="outline"
+            className="bg-blue-600 hover:bg-blue-500 text-white"
+            onClick={() => onEdit(staff)}
+          >
+            <Edit className="h-4 w-4 mr-1" /> Edit
+          </Button>
+          <Button
+            size="sm"
+            variant="destructive"
+            className="bg-red-600 hover:bg-red-500 text-white"
+            onClick={() =>
+              onDelete(staff.id!, `${staff.first} ${staff.surname}`)
+            }
+          >
+            <Trash2 className="h-4 w-4 mr-1" /> Delete
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// SkeletonCard for shimmer-loading
+function SkeletonCard() {
+  return (
+    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+      <div className="relative w-full h-48 bg-gray-200 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer" />
+      </div>
+      <div className="p-4 space-y-2">
+        <div className="h-5 bg-gray-300 rounded w-3/4 relative overflow-hidden" />
+        <div className="h-3 bg-gray-300 rounded w-1/2 relative overflow-hidden" />
+        <div className="flex justify-end gap-2 mt-4">
+          <div className="h-7 bg-gray-300 rounded w-16 relative overflow-hidden" />
+          <div className="h-7 bg-gray-300 rounded w-16 relative overflow-hidden" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// EmptyState Component
+function EmptyState() {
+  return (
+    <div className="col-span-full text-center py-20 text-gray-400 italic">
+      No staff members found.
+    </div>
+  );
+}
+
+// Main StaffPage Component
 export default function StaffPage() {
   const [items, setItems] = useState<StaffItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<StaffItem | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch staff members
-  const fetchItems = async () => {
-    try {
-      const snapshot = await getDocs(collection(db, "staff"));
-      const docs = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as StaffItem),
-      }));
-      setItems(docs);
-    } catch (err) {
-      console.error("Fetch error:", err);
-      toast.error("Failed to fetch staff ❌");
-    }
-  };
-
+  // Real-time Firestore subscription
   useEffect(() => {
-    fetchItems();
+    const unsubscribe = onSnapshot(
+      collection(db, "staff"),
+      (snapshot) => {
+        const docs = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as StaffItem),
+        }));
+        setItems(docs);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Realtime fetch error:", error);
+        toast.error("Failed to fetch staff ❌");
+        setLoading(false);
+      }
+    );
+    return () => unsubscribe();
   }, []);
 
   const handleSave = () => {
-    fetchItems();
     setShowForm(false);
     setSelectedItem(null);
     toast.success("Staff saved successfully 🎉");
@@ -105,59 +192,21 @@ export default function StaffPage() {
           </Button>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
-              >
-                {/* Staff Image */}
-                {item.imageURL ? (
-                  <img
-                    src={item.imageURL}
-                    alt={item.first || "Staff"}
-                    className="w-full h-48 object-cover"
+            {loading
+              ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
+              : items.length === 0
+              ? <EmptyState />
+              : items.map((item) => (
+                  <StaffCard
+                    key={item.id}
+                    staff={item}
+                    onEdit={(i) => {
+                      setSelectedItem(i);
+                      setShowForm(true);
+                    }}
+                    onDelete={handleDelete}
                   />
-                ) : (
-                  <div className="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-sm italic">
-                    No Image Available
-                  </div>
-                )}
-
-                {/* Content */}
-                <div className="p-4">
-                  <h2 className="text-lg font-semibold">
-                    {item.first} {item.otherNames} {item.surname}
-                  </h2>
-                  <p className="text-sm text-gray-600">{item.designation}</p>
-                  <p className="text-xs text-gray-500">{item.department}</p>
-
-                  {/* Actions */}
-                  <div className="flex justify-end gap-2 mt-4">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="bg-blue-600 hover:bg-blue-500 text-white"
-                      onClick={() => {
-                        setSelectedItem(item);
-                        setShowForm(true);
-                      }}
-                    >
-                      <Edit className="h-4 w-4 mr-1" /> Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      className="bg-red-600 hover:bg-red-500 text-white"
-                      onClick={() =>
-                        handleDelete(item.id!, `${item.first} ${item.surname}`)
-                      }
-                    >
-                      <Trash2 className="h-4 w-4 mr-1" /> Delete
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
+                ))}
           </div>
         </>
       )}

@@ -18,6 +18,8 @@ import {
   ChevronRight,
   Newspaper,
   User2,
+  UserStar,
+  Users2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { onAuthStateChanged, signOut } from "firebase/auth"
@@ -30,8 +32,8 @@ interface AdminLayoutProps {
 
 const navigation = [
   { name: "Overview", href: "/admin/overview", icon: BarChart3 },
-  { name: "Librarians", href: "/admin/librarians", icon: Users },
-  { name: "Staffs", href: "/admin/staff", icon: User2 },
+  { name: "Librarians", href: "/admin/librarians", icon: UserStar },
+  { name: "Staffs", href: "/admin/staff", icon: Users },
   { name: "Libraries", href: "/admin/libraries", icon: Building2 },
   { name: "Gallery", href: "/admin/gallery", icon: Camera },
   { name: "New & Annoucement", href: "/admin/news", icon: Newspaper },
