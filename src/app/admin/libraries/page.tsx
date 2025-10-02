@@ -1,171 +1,157 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore"
+import { db } from "../../../../lib/firebase"
 import LibraryForm from "./LibraryForm"
-import { Library } from "../../../../data/libraryData"
 import { Button } from "@/components/ui/button"
+import { Edit, Trash2 } from "lucide-react"
 import toast, { Toaster } from "react-hot-toast"
 
-export default function LibraryManager() {
-  const [libraries, setLibraries] = useState<Library[]>([])
+export default function LibraryPage() {
+  const [libraries, setLibraries] = useState<any[]>([])
+  const [selectedLibrary, setSelectedLibrary] = useState<any | null>(null)
   const [showForm, setShowForm] = useState(false)
-  const [editing, setEditing] = useState<Library | null>(null)
 
-  const handleSave = (data: Library) => {
-    if (editing) {
-      // update existing
-      setLibraries(libraries.map((lib) => (lib.name === editing.name ? data : lib)))
-      toast.success("Library updated successfully ✅")
-    } else {
-      // add new
-      setLibraries([...libraries, data])
-      toast.success("Library added successfully 🎉")
+  const fetchLibraries = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "libraries"))
+      const docs = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as any),
+      }))
+      setLibraries(docs)
+    } catch (err) {
+      console.error("Fetch error:", err)
+      toast.error("Failed to fetch libraries ❌")
     }
-    setEditing(null)
+  }
+
+  useEffect(() => {
+    fetchLibraries()
+  }, [])
+
+  const handleSave = () => {
+    fetchLibraries()
     setShowForm(false)
+    setSelectedLibrary(null)
+    toast.success("Library saved successfully 🎉")
   }
 
   const handleCancel = () => {
-    setEditing(null)
     setShowForm(false)
-    toast("Action cancelled ❌", { icon: "🚫" })
+    setSelectedLibrary(null)
   }
 
-  const handleDelete = (name: string) => {
+  const handleDelete = (id: string, name: string) => {
     toast(
       (t) => (
         <div className="flex flex-col gap-2">
-          <span className="font-medium">Delete “{name}”?</span>
-          <div className="flex gap-2 justify-end">
-            <Button
-              size="sm"
-              className="bg-gray-300 text-black hover:bg-gray-400"
+          <span>
+            Delete <b>{name}</b>?
+          </span>
+          <div className="flex gap-2">
+            <button
+              className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-500"
+              onClick={async () => {
+                try {
+                  await deleteDoc(doc(db, "libraries", id))
+                  setLibraries((prev) => prev.filter((i) => i.id !== id))
+                  toast.dismiss(t.id)
+                  toast.success(`"${name}" deleted ✅`)
+                } catch (err) {
+                  console.error("Delete error:", err)
+                  toast.dismiss(t.id)
+                  toast.error("Failed to delete ❌")
+                }
+              }}
+            >
+              Yes
+            </button>
+            <button
+              className="px-3 py-1 rounded bg-gray-300 hover:bg-gray-400"
               onClick={() => toast.dismiss(t.id)}
             >
               Cancel
-            </Button>
-            <Button
-              size="sm"
-              className="bg-red-600 hover:bg-red-700 text-white"
-              onClick={() => {
-                setLibraries(libraries.filter((l) => l.name !== name))
-                toast.dismiss(t.id)
-                toast.success(`“${name}” deleted 🗑️`)
-              }}
-            >
-              Delete
-            </Button>
+            </button>
           </div>
         </div>
       ),
-      { duration: 4000 }
+      { duration: 5000 }
     )
   }
 
   return (
     <div className="p-6">
-      <Toaster position="top-right" />
+      <Toaster position="top-right" reverseOrder={false} />
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="p-4 bg-white rounded shadow">
-          Total Libraries: {libraries.length}
-        </div>
-      </div>
+      <h1 className="text-xl font-bold mb-4">Library Manager</h1>
 
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Library Archive Management</h2>
-        <Button
-          onClick={() => {
-            setEditing(null)
-            setShowForm(true)
-          }}
-          className="bg-blue-600 hover:bg-blue-300 text-white"
-        >
-          Add Library
-        </Button>
-      </div>
-
-      {/* Empty State */}
-      {libraries.length === 0 && (
-        <p className="text-gray-500 italic mb-6">
-          No libraries yet. Click “Add Library” to get started.
-        </p>
-      )}
-
-      {/* List in advanced card format */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {libraries.map((lib, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col"
+      {showForm ? (
+        <LibraryForm
+          initialData={selectedLibrary || undefined}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
+      ) : (
+        <>
+          <Button
+            className="bg-blue-600 text-white hover:bg-blue-400"
+            onClick={() => setShowForm(true)}
           >
-            {/* Image */}
-            <div className="h-40 w-full bg-gray-200">
-              <img
-                src={lib.image || "/placeholder-library.jpg"}
-                alt={lib.name}
-                className="h-full w-full object-cover"
-              />
-            </div>
+            + Add Library
+          </Button>
 
-            {/* Content */}
-            <div className="p-5 flex flex-col flex-grow">
-              <h3 className="font-semibold text-lg text-gray-800">{lib.name}</h3>
-              <p className="text-sm text-gray-500">
-                🏛 {lib.faculty || "Unknown Faculty"}
-              </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+            {libraries.map((lib) => (
+              <div
+                key={lib.id}
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
+              >
+                {lib.libraryImageURL ? (
+                  <img
+                    src={lib.libraryImageURL}
+                    alt={lib.name}
+                    className="w-full h-48 object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
+                    No Image
+                  </div>
+                )}
 
-              <p className="text-sm text-gray-600 mt-3 flex-grow line-clamp-3">
-                {lib.description ||
-                  "This library provides resources for study, research, and learning..."}
-              </p>
+                <div className="p-4">
+                  <h2 className="text-lg font-semibold">{lib.name}</h2>
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {lib.description}
+                  </p>
 
-              {/* Stats */}
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                <div className="text-center">
-                  <p className="text-xl font-bold">{lib.books || 0}</p>
-                  <p className="text-xs text-gray-500">Books</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-xl font-bold">{lib.journals || 0}</p>
-                  <p className="text-xs text-gray-500">Journals</p>
+                  <div className="flex justify-end gap-2 mt-4">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="bg-blue-600 hover:bg-blue-500 text-white"
+                      onClick={() => {
+                        setSelectedLibrary(lib)
+                        setShowForm(true)
+                      }}
+                    >
+                      <Edit className="h-4 w-4 mr-1" /> Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="bg-red-600 hover:bg-red-500 text-white"
+                      onClick={() => handleDelete(lib.id!, lib.name)}
+                    >
+                      <Trash2 className="h-4 w-4 mr-1" /> Delete
+                    </Button>
+                  </div>
                 </div>
               </div>
-
-              {/* Actions */}
-              <div className="mt-5 flex justify-end gap-2">
-                <Button
-                  onClick={() => {
-                    setEditing(lib)
-                    setShowForm(true)
-                  }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1"
-                >
-                  Edit
-                </Button>
-                <Button
-                  onClick={() => handleDelete(lib.name)}
-                  className="bg-red-600 hover:bg-red-300 text-white text-sm px-3 py-1"
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
-
-      {/* Modal Form */}
-      {showForm && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <LibraryForm
-            initialData={editing || undefined}
-            onSave={handleSave}
-            onCancel={handleCancel}
-          />
-        </div>
+        </>
       )}
     </div>
   )

@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react"
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore"
 import { db } from "../../../../lib/firebase"
-import GalleryForm, { GalleryItem } from "./GalleryForm"
 import { Button } from "@/components/ui/button"
 import { Calendar, Edit, Trash2 } from "lucide-react"
 import toast, { Toaster } from "react-hot-toast"
+import GalleryForm, { GalleryItem } from "./GalleryForm"
 
 export default function GalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>([])
