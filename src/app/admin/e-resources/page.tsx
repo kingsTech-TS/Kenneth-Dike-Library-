@@ -261,7 +261,7 @@ export default function EresourcesManager() {
                       setShowForm(true)
                     }}
                     onDelete={handleDelete}
-                    deleting={actionLoading[res.id] || false}type undefined cannot be used as an index
+                    deleting={!!(res.id && actionLoading[res.id])}
                   />
                 ))}
           </div>
