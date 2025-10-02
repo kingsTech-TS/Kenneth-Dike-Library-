@@ -79,13 +79,14 @@ export default function EResourcesForm({
         stats: { ...initialData.stats },
         features: Array.isArray(initialData.features)
           ? initialData.features
-          : typeof initialData.features === "string"
-            ? initialData.features.split(",").map((v) => v.trim())
+          : initialData.features
+            ? String(initialData.features).split(",").map((v) => v.trim())
             : [],
+
         subjects: Array.isArray(initialData.subjects)
           ? initialData.subjects
-          : typeof initialData.subjects === "string"
-            ? initialData.subjects.split(",").map((v) => v.trim())
+          : initialData.subjects
+            ? String(initialData.subjects).split(",").map((v) => v.trim())
             : [],
       });
       setPreview(initialData.logoURL || "");
