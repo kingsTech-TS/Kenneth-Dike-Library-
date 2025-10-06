@@ -64,14 +64,13 @@ export default function EResourcesForm({
     updatedAt: null,
   });
 
-  const [preview, setPreview] = useState<string>(formData.logoURL || "");
+  const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-
   const [featureInput, setFeatureInput] = useState("");
   const [subjectInput, setSubjectInput] = useState("");
 
-  // Normalize initialData
+  // ✅ Normalize initialData
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -80,14 +79,13 @@ export default function EResourcesForm({
         features: Array.isArray(initialData.features)
           ? initialData.features
           : initialData.features
-            ? String(initialData.features).split(",").map((v) => v.trim())
-            : [],
-
+          ? String(initialData.features).split(",").map((v) => v.trim())
+          : [],
         subjects: Array.isArray(initialData.subjects)
           ? initialData.subjects
           : initialData.subjects
-            ? String(initialData.subjects).split(",").map((v) => v.trim())
-            : [],
+          ? String(initialData.subjects).split(",").map((v) => v.trim())
+          : [],
       });
       setPreview(initialData.logoURL || "");
     }
@@ -134,7 +132,7 @@ export default function EResourcesForm({
       toast.success("Upload successful!");
       setFormData((prev) => ({ ...prev, logoURL }));
       setPreview(logoURL);
-    } catch (err: unknown) {
+    } catch (err) {
       const message = err instanceof Error ? err.message : "Unexpected error";
       toast.error(message);
     } finally {
@@ -150,43 +148,35 @@ export default function EResourcesForm({
     return maxCounter + 1;
   };
 
- const handlePasteData = () => {
-  const pasted = prompt(
-    "Paste your data block (JSON or JS object like your ERIC example)."
-  );
-  if (!pasted) return;
+  const handlePasteData = () => {
+    const pasted = prompt(
+      "Paste your data block (JSON or JS object like your ERIC example)."
+    );
+    if (!pasted) return;
 
-  try {
-    // Parse JS object string safely
-    const parsed: any = Function(`"use strict"; return (${pasted})`)();
+    try {
+      const parsed: any = Function(`"use strict"; return (${pasted})`)();
 
-    // Map keys to your form structure
-    const mappedData: EResourceItem = {
-      name: parsed.name || "",
-      category: parsed.category || "",
-      description: parsed.description || "",
-      features: Array.isArray(parsed.features) ? parsed.features : [],
-      subjects: Array.isArray(parsed.subjects) ? parsed.subjects : [],
-      logoURL: parsed.logo || "",
-      linkURL: parsed.url || "",
-      color: parsed.color || "",
-      stats: parsed.stats || {},
-    };
+      const mappedData: EResourceItem = {
+        name: parsed.name || "",
+        category: parsed.category || "",
+        description: parsed.description || "",
+        features: Array.isArray(parsed.features) ? parsed.features : [],
+        subjects: Array.isArray(parsed.subjects) ? parsed.subjects : [],
+        logoURL: parsed.logoURL || parsed.logo || "",
+        linkURL: parsed.linkURL || parsed.url || "",
+        color: parsed.color || "",
+        stats: parsed.stats || {},
+      };
 
-    setFormData((prev) => ({
-      ...prev,
-      ...mappedData,
-    }));
-
-    setPreview(mappedData.logoURL || "");
-    toast.success("Data pasted successfully!");
-  } catch (err) {
-    toast.error("Failed to parse data. Make sure the format is correct!");
-    console.error(err);
-  }
-};
-
-
+      setFormData((prev) => ({ ...prev, ...mappedData }));
+      setPreview(mappedData.logoURL || "");
+      toast.success("Data pasted successfully!");
+    } catch (err) {
+      toast.error("Failed to parse data. Make sure the format is correct!");
+      console.error(err);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -198,10 +188,7 @@ export default function EResourcesForm({
 
       if (initialData?.id) {
         const docRef = doc(db, "eResource", initialData.id);
-        await updateDoc(docRef, {
-          ...dataToSave,
-          updatedAt: serverTimestamp(),
-        });
+        await updateDoc(docRef, { ...dataToSave, updatedAt: serverTimestamp() });
         toast.success("E-Resource updated ✅");
         onSave({ ...dataToSave, id: initialData.id });
       } else {
@@ -216,7 +203,7 @@ export default function EResourcesForm({
         toast.success(`New E-Resource #${counter} added 🎉`);
         onSave({ ...dataToSave, id: docRef.id, counter });
       }
-    } catch (err: unknown) {
+    } catch (err) {
       console.error(err);
       const message =
         err instanceof Error ? err.message : "Failed to save E-Resource ❌";
@@ -228,12 +215,10 @@ export default function EResourcesForm({
 
   const addTag = (type: "features" | "subjects", value: string) => {
     if (!value.trim()) return;
-
     setFormData((prev) => ({
       ...prev,
-      [type]: Array.isArray(prev[type]) ? [...prev[type]!, value.trim()] : [value.trim()],
+      [type]: [...(prev[type] || []), value.trim()],
     }));
-
     if (type === "features") setFeatureInput("");
     else setSubjectInput("");
   };
@@ -241,20 +226,16 @@ export default function EResourcesForm({
   const removeTag = (type: "features" | "subjects", index: number) => {
     setFormData((prev) => ({
       ...prev,
-      [type]: Array.isArray(prev[type])
-        ? prev[type]!.filter((_, i) => i !== index)
-        : [],
+      [type]: (prev[type] || []).filter((_, i) => i !== index),
     }));
   };
 
   const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>, type: "features" | "subjects") => {
     const inputValue = type === "features" ? featureInput : subjectInput;
-
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       addTag(type, inputValue);
     } else if (e.key === "Backspace" && !inputValue) {
-      // Remove last tag if input is empty
       const tags = formData[type] || [];
       removeTag(type, tags.length - 1);
     }
@@ -262,10 +243,12 @@ export default function EResourcesForm({
 
   const inputFields = [
     "name", "category", "categories", "color", "linkURL",
-    "downloads", "papers", "authors", "books", "journals", "articles", "cases", "citations", "countries", "databases",
-    "disciplines", "ebooks", "formats", "grants", "indicators", "institutions", "languages", "laws",
-    "pages", "partners", "preprints", "programs", "publicDomain", "publishers", "records", "reports",
-    "states", "subPerMonth", "updates", "variables", "years", "courts", "newspapers", "agencies"
+    "downloads", "papers", "authors", "books", "journals", "articles", "cases",
+    "citations", "countries", "databases", "disciplines", "ebooks", "formats",
+    "grants", "indicators", "institutions", "languages", "laws", "pages",
+    "partners", "preprints", "programs", "publicDomain", "publishers", "records",
+    "reports", "states", "subPerMonth", "updates", "variables", "years", "courts",
+    "newspapers", "agencies"
   ];
 
   return (
@@ -275,13 +258,13 @@ export default function EResourcesForm({
           {initialData ? "Edit E-Resource" : "Add New E-Resource"}
         </h2>
 
-           <Button
-            type="button"
-            className="bg-green-600 text-white hover:bg-green-500 mb-4"
-            onClick={handlePasteData}
-          >
-            Paste Data
-          </Button>
+        <Button
+          type="button"
+          className="bg-green-600 text-white hover:bg-green-500 mb-4"
+          onClick={handlePasteData}
+        >
+          Paste Data
+        </Button>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Logo Upload */}
@@ -310,7 +293,7 @@ export default function EResourcesForm({
                 value={
                   formData.stats && field in formData.stats
                     ? formData.stats[field as keyof typeof formData.stats] || ""
-                    : formData[field as keyof EResourceItem] || ""
+                    : (formData[field as keyof EResourceItem] as string) || ""
                 }
                 onChange={handleChange}
                 placeholder={field}
@@ -318,7 +301,7 @@ export default function EResourcesForm({
             </div>
           ))}
 
-          {/* Features Tag Input */}
+          {/* Features */}
           <div className="space-y-2">
             <Label>Features</Label>
             <div className="flex flex-wrap gap-2 border rounded p-2 min-h-[44px] items-center">
@@ -347,7 +330,7 @@ export default function EResourcesForm({
             </div>
           </div>
 
-          {/* Subjects Tag Input */}
+          {/* Subjects */}
           <div className="space-y-2">
             <Label>Subjects</Label>
             <div className="flex flex-wrap gap-2 border rounded p-2 min-h-[44px] items-center">
@@ -393,7 +376,6 @@ export default function EResourcesForm({
             <Button
               type="button"
               className="bg-red-600 text-white hover:bg-red-500"
-              variant="outline"
               onClick={onCancel}
             >
               Cancel
