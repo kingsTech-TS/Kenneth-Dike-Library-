@@ -14,6 +14,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
+import { X } from "lucide-react";
 
 export interface Library {
   id?: string;
@@ -30,9 +31,9 @@ export interface Library {
   phoneNumber: string;
   email: string;
   librarian: string;
-  services: string;
-  facilities: string;
-  departments: string;
+  services: string[];
+  facilities: string[];
+  departments: string[];
   libraryImageURL: string;
   librarianImageURL: string;
 }
@@ -42,6 +43,18 @@ interface LibraryFormProps {
   onSave: (data: Library) => void;
   onCancel: () => void;
 }
+
+const normalizeToArray = (v: unknown): string[] => {
+  if (!v) return [];
+  if (Array.isArray(v)) return v as string[];
+  if (typeof v === "string") {
+    return v
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  return [];
+};
 
 export default function LibraryForm({
   initialData,
@@ -63,11 +76,17 @@ export default function LibraryForm({
     phoneNumber: "",
     email: "",
     librarian: "",
+    services: [],
+    facilities: [],
+    departments: [],
+    libraryImageURL: "",
+    librarianImageURL: "",
+  });
+
+  const [tagInputs, setTagInputs] = useState({
     services: "",
     facilities: "",
     departments: "",
-    libraryImageURL: "",
-    librarianImageURL: "",
   });
 
   const [previews, setPreviews] = useState({
@@ -80,13 +99,43 @@ export default function LibraryForm({
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({
+        ...formData,
+        ...initialData,
+        services: normalizeToArray(initialData.services),
+        facilities: normalizeToArray(initialData.facilities),
+        departments: normalizeToArray(initialData.departments),
+      });
       setPreviews({
-        libraryImageURL: initialData.libraryImageURL,
-        librarianImageURL: initialData.librarianImageURL,
+        libraryImageURL: initialData.libraryImageURL ?? "",
+        librarianImageURL: initialData.librarianImageURL ?? "",
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData]);
+
+  // ✅ Add and remove tags
+  const addTag = (
+    type: "services" | "facilities" | "departments",
+    value: string
+  ) => {
+    if (!value.trim()) return;
+    setFormData((prev) => ({
+      ...prev,
+      [type]: [...(prev[type] || []), value.trim()],
+    }));
+    setTagInputs((prev) => ({ ...prev, [type]: "" }));
+  };
+
+  const removeTag = (
+    type: "services" | "facilities" | "departments",
+    index: number
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [type]: (prev[type] || []).filter((_, i) => i !== index),
+    }));
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -104,88 +153,127 @@ export default function LibraryForm({
 
     try {
       setUploading((prev) => ({ ...prev, [field]: true }));
-
       const uploadData = new FormData();
       uploadData.append("file", file);
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: uploadData,
-      });
-
+      const res = await fetch("/api/upload", { method: "POST", body: uploadData });
       const data = await res.json();
+
       if (!res.ok || data.error) {
         toast.error(`Upload failed: ${data.error?.message || "Unknown error"}`);
         return;
       }
 
       const imageUrl = data.secure_url;
-      if (!imageUrl) {
-        toast.error("Upload succeeded but no image URL returned ❌");
-        return;
-      }
-
       toast.success("Upload successful!");
       setFormData((prev) => ({ ...prev, [field]: imageUrl }));
       setPreviews((prev) => ({ ...prev, [field]: imageUrl }));
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Unexpected error";
-      toast.error(message);
+      toast.error(err instanceof Error ? err.message : "Unexpected error");
     } finally {
       setUploading((prev) => ({ ...prev, [field]: false }));
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
+  // ✅ Paste JSON or JS object directly into form
+  const handlePasteJSON = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (!text) {
+        toast.error("Clipboard is empty!");
+        return;
+      }
 
-  try {
-    // remove id before saving
-    const { id, ...dataToSave } = formData;
+      // Try parsing JSON or JS object format
+      let parsed: any;
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        // Try to evaluate JS object-like input
+        const cleaned = text
+          .trim()
+          .replace(/^[^{]+/, "") // remove leading "const x =" etc.
+          .replace(/;$/, "");
+        parsed = eval("(" + cleaned + ")");
+      }
 
-    if (initialData?.id) {
-      await setDoc(doc(db, "libraries", initialData.id), {
-        ...dataToSave,
-        updatedAt: serverTimestamp(),
+      if (!parsed || typeof parsed !== "object") {
+        toast.error("Invalid JSON or object format ❌");
+        return;
+      }
+
+      const mappedData: Partial<Library> = {
+        name: parsed.name || "",
+        faculty: parsed.faculty || "",
+        description: parsed.description || "",
+        location: parsed.location || "",
+        coordinates: parsed.coordinates || "",
+        books: String(parsed.books || ""),
+        journals: String(parsed.journals || ""),
+        articles: String(parsed.articles || ""),
+        seatingCapacity: String(parsed.seatingCapacity || ""),
+        openingHours: parsed.openingHours || "",
+        phoneNumber: parsed.contact?.phone || "",
+        email: parsed.contact?.email || "",
+        librarian: parsed.contact?.librarian || "",
+        services: normalizeToArray(parsed.services),
+        facilities: normalizeToArray(parsed.facilities),
+        departments: normalizeToArray(parsed.departments),
+        libraryImageURL: parsed.image || "",
+        librarianImageURL: parsed.contact?.librarianImage || "",
+      };
+
+      setFormData((prev) => ({ ...prev, ...mappedData }));
+      setPreviews({
+        libraryImageURL: mappedData.libraryImageURL ?? "",
+        librarianImageURL: mappedData.librarianImageURL ?? "",
       });
-      toast.success("Library updated ✅");
-    } else {
-      await addDoc(collection(db, "libraries"), {
-        ...dataToSave,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-      toast.success("New library added 🎉");
+
+      toast.success("Data pasted successfully ✅");
+    } catch (err: any) {
+      console.error(err);
+      toast.error("Failed to parse clipboard data ❌");
     }
-    onSave(formData);
-  } catch (err: unknown) {
-    console.error(err);
-    const message =
-      err instanceof Error ? err.message : "Failed to save library ❌";
-    toast.error(message);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { id, ...dataToSave } = formData;
+      if (initialData?.id) {
+        await setDoc(doc(db, "libraries", initialData.id), {
+          ...dataToSave,
+          updatedAt: serverTimestamp(),
+        });
+        toast.success("Library updated ✅");
+      } else {
+        await addDoc(collection(db, "libraries"), {
+          ...dataToSave,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+        toast.success("New library added 🎉");
+      }
+
+      onSave(formData);
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Failed to save ❌");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async () => {
     if (!initialData?.id) return;
-
-    toast(
-      (t) => (
-        <div className="flex items-center gap-3">
-          <button
-            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300"
-            onClick={() => toast.dismiss(t.id)}
-          >
-            Cancel
-          </button>
-        </div>
-      ),
-      { duration: 5000 }
-    );
+    try {
+      await deleteDoc(doc(db, "libraries", initialData.id));
+      toast.success("Library deleted 🗑️");
+      onCancel();
+    } catch {
+      toast.error("Failed to delete ❌");
+    }
   };
 
   return (
@@ -193,18 +281,33 @@ export default function LibraryForm({
       onSubmit={handleSubmit}
       className="space-y-4 p-4 bg-white rounded-xl shadow-md max-h-[80vh] overflow-y-auto"
     >
-      {/* Images */}
+      {/* Paste JSON Button */}
+      <div className="flex justify-end">
+        <Button
+          type="button"
+          onClick={handlePasteJSON}
+          className="bg-green-600 text-white hover:bg-green-500"
+        >
+          📋 Paste JSON Data
+        </Button>
+      </div>
+
+      {/* Image Uploads */}
+      {/* Library Image Upload */}
       <div>
         <label className="block text-sm font-medium mb-1">Library Image</label>
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={(e) => handleFileChange(e, "libraryImageURL")}
-        />
-        {uploading.libraryImageURL && (
-          <p className="text-xs text-gray-500 mt-1">Uploading...</p>
-        )}
-        {previews.libraryImageURL && (
+        <div className="flex items-center gap-2">
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleFileChange(e, "libraryImageURL")}
+            disabled={uploading.libraryImageURL}
+          />
+          {uploading.libraryImageURL && (
+            <span className="text-sm text-gray-500 animate-pulse">Uploading...</span>
+          )}
+        </div>
+        {previews.libraryImageURL && !uploading.libraryImageURL && (
           <img
             src={previews.libraryImageURL}
             alt="Library Preview"
@@ -213,17 +316,21 @@ export default function LibraryForm({
         )}
       </div>
 
+      {/* Librarian Image Upload */}
       <div>
         <label className="block text-sm font-medium mb-1">Librarian Image</label>
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={(e) => handleFileChange(e, "librarianImageURL")}
-        />
-        {uploading.librarianImageURL && (
-          <p className="text-xs text-gray-500 mt-1">Uploading...</p>
-        )}
-        {previews.librarianImageURL && (
+        <div className="flex items-center gap-2">
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleFileChange(e, "librarianImageURL")}
+            disabled={uploading.librarianImageURL}
+          />
+          {uploading.librarianImageURL && (
+            <span className="text-sm text-gray-500 animate-pulse">Uploading...</span>
+          )}
+        </div>
+        {previews.librarianImageURL && !uploading.librarianImageURL && (
           <img
             src={previews.librarianImageURL}
             alt="Librarian Preview"
@@ -232,159 +339,114 @@ export default function LibraryForm({
         )}
       </div>
 
-      {/* General Info */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Library Name</label>
-        <Input
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
+      {/* Regular Fields */}
+      {[
+        "name",
+        "faculty",
+        "description",
+        "location",
+        "coordinates",
+        "books",
+        "journals",
+        "articles",
+        "seatingCapacity",
+        "openingHours",
+        "phoneNumber",
+        "email",
+        "librarian",
+      ].map((field) => (
+        <div key={field}>
+          <label className="block text-sm font-medium mb-1 capitalize">
+            {field.replace(/([A-Z])/g, " $1")}
+          </label>
+          {field === "description" ? (
+            <Textarea
+              name={field}
+              value={String((formData as any)[field] ?? "")}
+              onChange={handleChange}
+            />
+          ) : (
+            <Input
+              name={field}
+              value={String((formData as any)[field] ?? "")}
+              onChange={handleChange}
+            />
+          )}
+        </div>
+      ))}
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Faculty</label>
-        <Input
-          name="faculty"
-          value={formData.faculty}
-          onChange={handleChange}
-        />
-      </div>
+      {/* Tag Inputs */}
+      {["services", "facilities", "departments"].map((type) => {
+        const tags = formData[type as keyof Library];
+        const tagList = Array.isArray(tags) ? tags : [];
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Description</label>
-        <Textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-      </div>
+        return (
+          <div key={type}>
+            <label className="block text-sm font-medium mb-1 capitalize">
+              {type}
+            </label>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Location</label>
-        <Input
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-        />
-      </div>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {tagList.map((tag, i) => (
+                <div
+                  key={i}
+                  className="flex items-center bg-blue-100 text-blue-700 px-2 py-1 rounded-full"
+                >
+                  <span>{tag}</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      removeTag(
+                        type as "services" | "facilities" | "departments",
+                        i
+                      )
+                    }
+                    className="ml-2 text-blue-600 hover:text-blue-800"
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Coordinates</label>
-        <Input
-          name="coordinates"
-          value={formData.coordinates}
-          onChange={handleChange}
-        />
-      </div>
+            <div className="flex gap-2">
+              <Input
+                placeholder={`Add ${type.slice(0, -1)}...`}
+                value={tagInputs[type as keyof typeof tagInputs] || ""}
+                onChange={(e) =>
+                  setTagInputs((prev) => ({
+                    ...prev,
+                    [type]: e.target.value,
+                  }))
+                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    addTag(
+                      type as "services" | "facilities" | "departments",
+                      tagInputs[type as keyof typeof tagInputs]
+                    );
+                  }
+                }}
+              />
+              <Button
+                type="button"
+                onClick={() =>
+                  addTag(
+                    type as "services" | "facilities" | "departments",
+                    tagInputs[type as keyof typeof tagInputs]
+                  )
+                }
+              >
+                Add
+              </Button>
+            </div>
+          </div>
+        );
+      })}
 
-      {/* Resources */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Books</label>
-        <Input
-          name="books"
-          value={formData.books}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Journals</label>
-        <Input
-          name="journals"
-          value={formData.journals}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Articles</label>
-        <Input
-          name="articles"
-          value={formData.articles}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Seating Capacity</label>
-        <Input
-          name="seatingCapacity"
-          value={formData.seatingCapacity}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* Hours */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Opening Hours</label>
-        <Input
-          name="openingHours"
-          value={formData.openingHours}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* Contact */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Phone Number</label>
-        <Input
-          name="phoneNumber"
-          value={formData.phoneNumber}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Email</label>
-        <Input
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Librarian</label>
-        <Input
-          name="librarian"
-          value={formData.librarian}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* Services & Facilities */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Services</label>
-        <Textarea
-          name="services"
-          value={formData.services}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Facilities</label>
-        <Textarea
-          name="facilities"
-          value={formData.facilities}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Departments</label>
-        <Textarea
-          name="departments"
-          value={formData.departments}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* Footer buttons */}
-      <div className="flex gap-2 justify-end">
+      {/* Footer Buttons */}
+      <div className="flex gap-2 justify-end pt-4">
         <Button
           type="button"
           className="bg-gray-300 text-black hover:bg-gray-400"
@@ -392,14 +454,21 @@ export default function LibraryForm({
         >
           Cancel
         </Button>
+
+        {initialData?.id && (
+          <Button
+            type="button"
+            onClick={handleDelete}
+            className="bg-red-600 text-white hover:bg-red-500"
+          >
+            Delete
+          </Button>
+        )}
+
         <Button
           type="submit"
           className="bg-blue-600 text-white hover:bg-blue-400"
-          disabled={
-            loading ||
-            uploading.libraryImageURL ||
-            uploading.librarianImageURL
-          }
+          disabled={loading}
         >
           {loading ? "Saving..." : initialData ? "Update" : "Add"} Library
         </Button>
