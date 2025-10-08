@@ -150,7 +150,7 @@ export function DatabaseCard({
           {database.linkURL ? (
             <Button
               asChild
-              className="w-full bg-indigo-600 hover:bg-indigo-700 flex items-center justify-center"
+              className="w-full bg-indigo-600 hover:bg-indigo-900 flex items-center justify-center"
             >
               <a
                 href={database.linkURL}
