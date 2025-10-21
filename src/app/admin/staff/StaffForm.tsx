@@ -63,13 +63,31 @@ export default function StaffForm({
     }
   }, [initialData]);
 
-  // Handle text input
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+// Handle text input
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) => {
+  const { name, value } = e.target;
+  let formattedValue = value;
+
+
+  // Rule 2: Capitalize the first letter of every word (for title/department)
+   if (["designation", "department", "surname", "first", "otherNames"].includes(name)) {
+    formattedValue = value
+      .toLowerCase()
+      .split(" ")
+      .map(
+        (word) =>
+          word.charAt(0).toUpperCase() + word.slice(1)
+      )
+      .join(" ");
+  }
+
+  setFormData((prev) => ({ ...prev, [name]: formattedValue }));
+};
+
+
+
 
   // Handle file upload
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -36,6 +36,7 @@ export interface Library {
   departments: string[];
   libraryImageURL: string;
   librarianImageURL: string;
+  slug: string;
 }
 
 interface LibraryFormProps {
@@ -81,6 +82,7 @@ export default function LibraryForm({
     departments: [],
     libraryImageURL: "",
     librarianImageURL: "",
+    slug: "",
   });
 
   const [tagInputs, setTagInputs] = useState({
@@ -114,7 +116,18 @@ export default function LibraryForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData]);
 
-  // ✅ Add and remove tags
+  // ✅ Auto-generate slug from name
+  useEffect(() => {
+    if (formData.name) {
+      const generatedSlug = formData.name
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "");
+      setFormData((prev) => ({ ...prev, slug: generatedSlug }));
+    }
+  }, [formData.name]);
+
   const addTag = (
     type: "services" | "facilities" | "departments",
     value: string
@@ -175,7 +188,6 @@ export default function LibraryForm({
     }
   };
 
-  // ✅ Paste JSON or JS object directly into form
   const handlePasteJSON = async () => {
     try {
       const text = await navigator.clipboard.readText();
@@ -184,15 +196,13 @@ export default function LibraryForm({
         return;
       }
 
-      // Try parsing JSON or JS object format
       let parsed: any;
       try {
         parsed = JSON.parse(text);
       } catch {
-        // Try to evaluate JS object-like input
         const cleaned = text
           .trim()
-          .replace(/^[^{]+/, "") // remove leading "const x =" etc.
+          .replace(/^[^{]+/, "")
           .replace(/;$/, "");
         parsed = eval("(" + cleaned + ")");
       }
@@ -293,7 +303,6 @@ export default function LibraryForm({
       </div>
 
       {/* Image Uploads */}
-      {/* Library Image Upload */}
       <div>
         <label className="block text-sm font-medium mb-1">Library Image</label>
         <div className="flex items-center gap-2">
@@ -316,7 +325,6 @@ export default function LibraryForm({
         )}
       </div>
 
-      {/* Librarian Image Upload */}
       <div>
         <label className="block text-sm font-medium mb-1">Librarian Image</label>
         <div className="flex items-center gap-2">
@@ -374,6 +382,20 @@ export default function LibraryForm({
           )}
         </div>
       ))}
+
+      {/* ✅ Slug Field (non-editable) */}
+      <div>
+        <label className="block text-sm font-medium mb-1">Slug</label>
+        <Input
+          name="slug"
+          value={formData.slug}
+          readOnly
+          className="bg-gray-100 cursor-not-allowed text-gray-600"
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          Automatically generated from the name.
+        </p>
+      </div>
 
       {/* Tag Inputs */}
       {["services", "facilities", "departments"].map((type) => {
