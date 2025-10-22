@@ -161,7 +161,7 @@ export default function StaffPage() {
                       <div className="h-48 overflow-hidden">
                         <motion.img
                           src={staff.imageURL || "/placeholder.svg"}
-                          alt={`${staff.first} ${staff.surname}`}
+                          alt={`${staff.first} ${staff.surname} ${staff.otherNames}`}
                           className="w-full h-full object-top object-cover"
                           whileHover={{ scale: 1.1 }}
                           transition={{ duration: 0.3 }}
@@ -176,7 +176,7 @@ export default function StaffPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2 }}
                         >
-                          {staff.first} {staff.surname}
+                          {staff.first} {staff.surname} {staff.otherNames}
                         </motion.h3>
                         <motion.p
                           className="text-amber-200 font-medium"
@@ -211,7 +211,7 @@ export default function StaffPage() {
                         />
                       </div>
                       <h3 className="text-xl font-bold text-indigo-600 mb-1">
-                        {staff.first} {staff.surname}
+                        {staff.first} {staff.surname} {staff.otherNames}
                       </h3>
                       <p className="text-indigo-500 font-medium mb-4">
                         {staff.designation}
@@ -239,23 +239,6 @@ export default function StaffPage() {
         </div>
       )}
 
-      {/* Department Summary */}
-      <div className="bg-gradient-to-r from-indigo-50 to-blue-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Departments</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our staff work across various specialized departments to provide comprehensive library services
-            </p>
-          </motion.div>
-        </div>
-      </div>
 
       {/* Footer */}
       <Footer />
