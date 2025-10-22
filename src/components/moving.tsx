@@ -1,62 +1,20 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
+import { collection, onSnapshot } from 'firebase/firestore'
+import { db } from '../../lib/firebase'
 
-const librarians = [
-  {
-    name: "DR. MERCY ARIOMEREBI IROAGANACHI",
-    title: "University Librarian",
-    section: "",
-    image: "/librarians/Liba.jpg",
-  },
-  {
-    name: "DR. HELEN O. KOMOLAFE-OPADEJI",
-    title: "Former University Librarian",
-    section: "",
-    image: "/librarians/DPT9.PNG",
-  },
-  {
-    name: "MR. C. O. OLA",
-    title: "Deputy University Librarian",
-    section: "",
-    image: "/librarians/DPT1.png",
-  },
-  {
-    name: "DR. BEATRICE A. FABUNMI",
-    title: "Deputy University Librarian",
-    section: "Readers Section",
-    image: "/librarians/DPT6.PNG",
-  },
-  {
-    name: "DR. ADETOUN A. OYELUDE",
-    title: "Deputy University Librarian",
-    section: "Technical Services",
-    image: "/librarians/DPT7.PNG",
-  },
-  {
-    name: "DR. REUBEN A. OJO",
-    title: "Deputy mUniversity Librarian",
-    section: "ICT & Systems",
-    image: "/librarians/DPT8.PNG",
-  },
-  {
-    name: "MRS. BOLARINWA M. ADEYEMI",
-    title: "Deputy University Librarian",
-    section: "Special Collections",
-    image: "/librarians/DPT4.png",
-  },
-  {
-    name: "DR. GRACE A. AJUWON",
-    title: "Deputy University Librarian",
-    section: "Medical Library",
-    image: "/librarians/DPT5.png",
-  },
-]
+type Librarian = {
+  id?: string
+  fullName: string
+  designation: string
+  department: string
+  imageURL: string
+}
 
-// Utility to generate slug
 const generateSlug = (name: string) =>
   name
     .toLowerCase()
@@ -65,6 +23,23 @@ const generateSlug = (name: string) =>
     .replace(/[^a-z0-9\-]/g, '')
 
 const Moving = () => {
+  const [librarians, setLibrarians] = useState<Librarian[]>([])
+
+  // ✅ Real-time Firestore listener
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'librarians'), (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Librarian[]
+      setLibrarians(data)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  const shouldAnimate = librarians.length > 1
+
   return (
     <motion.section
       className="mb-20"
@@ -80,29 +55,35 @@ const Moving = () => {
       <div className="overflow-hidden relative">
         <motion.div
           className="flex gap-8 w-max"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{
-            repeat: Infinity,
-            duration: 100,
-            ease: "linear",
-          }}
+          animate={shouldAnimate ? { x: ['0%', '-50%'] } : {}}
+          transition={
+            shouldAnimate
+              ? { repeat: Infinity, duration: 100, ease: 'linear' }
+              : {}
+          }
         >
-          {[...librarians, ...librarians].map((librarian, index) => {
-            const slug = generateSlug(librarian.name)
+          {librarians.map((librarian, index) => {
+            const slug = generateSlug(librarian.fullName)
             return (
-              <Link key={index} href={`/history/${slug}`}>
+              <Link key={librarian.id || index} href={`/history/${slug}`}>
                 <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 flex-shrink-0 w-72 cursor-pointer hover:shadow-xl transition">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-blue-100">
                       <img
-                        src={librarian.image || "/placeholder.svg"}
-                        alt={librarian.name}
+                        src={librarian.imageURL || '/placeholder.svg'}
+                        alt={librarian.fullName}
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">{librarian.name}</h3>
-                    <p className="text-blue-600 font-semibold mb-2">{librarian.title}</p>
-                    <p className="text-xs text-gray-500 italic">{librarian.section}</p>
+                    <h3 className="text-xl font-bold text-gray-900 mb-1">
+                      {librarian.fullName}
+                    </h3>
+                    <p className="text-blue-600 font-semibold mb-2">
+                      {librarian.designation}
+                    </p>
+                    <p className="text-xs text-gray-500 italic">
+                      {librarian.department}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -110,18 +91,12 @@ const Moving = () => {
           })}
         </motion.div>
 
-
-      {/* Button to the other Library staff */}
-<div className="w-full flex justify-center mt-6">
-  <Button
-    className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
-  >
-    <Link href="/staff">
-      See other library staffs
-    </Link>
-  </Button>
-</div>
-
+        {/* Button to the other Library staff */}
+        <div className="w-full flex justify-center mt-6">
+          <Button className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+            <Link href="/staff">See other library staffs</Link>
+          </Button>
+        </div>
       </div>
     </motion.section>
   )

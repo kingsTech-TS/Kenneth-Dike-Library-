@@ -14,7 +14,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
 
-// ✅ Librarians type
 export interface LibrariansItem {
   id?: string;
   fullName: string;
@@ -27,10 +26,11 @@ export interface LibrariansItem {
   researchInterests: string;
   bio: string;
   email: string;
-  phone: string; // ✅ string
+  phone: string;
   imageURL: string;
   createdAt?: Date;
   updatedAt?: Date;
+  slug: string;
 }
 
 interface LibrariansFormProps {
@@ -58,19 +58,54 @@ export default function LibrariansForm({
     email: "",
     phone: "",
     imageURL: "",
+    slug: "",
   });
 
   const [preview, setPreview] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
+  // ✅ Merge initialData safely
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
-      setPreview(initialData.imageURL);
+      setFormData((prev) => ({
+        ...prev,
+        ...initialData,
+        fullName: initialData.fullName || "",
+        designation: initialData.designation || "",
+        department: initialData.department || "",
+        office: initialData.office || "",
+        period: initialData.period || "",
+        yearsOfExperience: initialData.yearsOfExperience ?? 0,
+        education: initialData.education || "",
+        researchInterests: initialData.researchInterests || "",
+        bio: initialData.bio || "",
+        email: initialData.email || "",
+        phone: initialData.phone || "",
+        imageURL: initialData.imageURL || "",
+        slug: initialData.slug || "",
+      }));
+      setPreview(initialData.imageURL || "");
     }
   }, [initialData]);
 
+  // ✅ Auto-generate slug whenever fullName changes
+  useEffect(() => {
+    if (formData.fullName.trim().length > 0) {
+      const generatedSlug = formData.fullName
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+
+      setFormData((prev) => ({ ...prev, slug: generatedSlug }));
+    } else {
+      setFormData((prev) => ({ ...prev, slug: "" }));
+    }
+  }, [formData.fullName]);
+
+  // ✅ Handle all input changes (simplified)
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -81,6 +116,7 @@ export default function LibrariansForm({
     }));
   };
 
+  // ✅ Handle file upload
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -118,16 +154,15 @@ export default function LibrariansForm({
     }
   };
 
+  // ✅ Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // ✅ Remove id before saving to Firestore
       const { id, ...dataToSave } = formData;
 
       if (initialData?.id) {
-        // 🔄 Update existing librarian
         const docRef = doc(db, "librarians", initialData.id);
         await updateDoc(docRef, {
           ...dataToSave,
@@ -135,7 +170,6 @@ export default function LibrariansForm({
         });
         toast.success("Librarian updated ✅");
       } else {
-        // ➕ Add new librarian
         await addDoc(collection(db, "librarians"), {
           ...dataToSave,
           createdAt: serverTimestamp(),
@@ -143,6 +177,7 @@ export default function LibrariansForm({
         });
         toast.success("New librarian added 🎉");
       }
+
       onSave(formData);
     } catch (err: unknown) {
       console.error(err);
@@ -181,6 +216,18 @@ export default function LibrariansForm({
           value={formData.fullName}
           onChange={handleChange}
           placeholder="Enter full name"
+        />
+      </div>
+
+      {/* Auto-generated Slug */}
+      <div>
+        <label className="block text-sm font-medium mb-1">Slug</label>
+        <Input
+          name="slug"
+          value={formData.slug}
+          readOnly
+          className="bg-gray-100 cursor-not-allowed"
+          placeholder="auto-generated from name"
         />
       </div>
 
@@ -304,7 +351,7 @@ export default function LibrariansForm({
         />
       </div>
 
-      {/* Read-only Timestamps (when editing) */}
+      {/* Timestamps */}
       {initialData?.createdAt && (
         <p className="text-xs text-gray-500">
           Created: {new Date(initialData.createdAt).toLocaleString()}
