@@ -1,12 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  orderBy,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
 import LibrariansForm, { LibrariansItem } from "./LibrariansForm";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, GripVertical } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 // LibrarianCard Component
 function LibrarianCard({
@@ -19,7 +28,7 @@ function LibrarianCard({
   onDelete: (id: string, name: string) => void;
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
       {item.imageURL ? (
         <img
           src={item.imageURL}
@@ -33,7 +42,10 @@ function LibrarianCard({
       )}
 
       <div className="p-4">
-        <h2 className="text-lg font-semibold">{item.fullName}</h2>
+        <div className="flex justify-between items-center mb-1">
+          <h2 className="text-lg font-semibold">{item.fullName}</h2>
+          <GripVertical className="cursor-grab text-gray-400" />
+        </div>
         <p className="text-sm text-gray-600">{item.designation}</p>
         <p className="text-xs text-gray-500">{item.department}</p>
         <p className="text-xs text-gray-500 italic">{item.period}</p>
@@ -61,41 +73,20 @@ function LibrarianCard({
   );
 }
 
-// SkeletonCard Component for shimmer loading
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="relative w-full h-48 bg-gray-200 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer" />
-      </div>
-
+    <div className="bg-white rounded-xl shadow-md overflow-hidden animate-pulse">
+      <div className="w-full h-48 bg-gray-200" />
       <div className="p-4 space-y-2">
-        <div className="h-5 bg-gray-300 rounded w-3/4 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
-        </div>
-        <div className="h-3 bg-gray-300 rounded w-1/2 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
-        </div>
-        <div className="h-3 bg-gray-300 rounded w-1/3 relative overflow-hidden mt-1">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
-        </div>
-        <div className="h-3 bg-gray-300 rounded w-1/4 relative overflow-hidden mt-1">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
-        </div>
-        <div className="flex justify-end gap-2 mt-4">
-          <div className="h-7 bg-gray-300 rounded w-16 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
-          </div>
-          <div className="h-7 bg-gray-300 rounded w-16 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 animate-shimmer" />
-          </div>
-        </div>
+        <div className="h-5 bg-gray-300 rounded w-3/4" />
+        <div className="h-3 bg-gray-300 rounded w-1/2" />
+        <div className="h-3 bg-gray-300 rounded w-1/3" />
+        <div className="h-3 bg-gray-300 rounded w-1/4" />
       </div>
     </div>
   );
 }
 
-// EmptyState Component
 function EmptyState() {
   return (
     <div className="col-span-full text-center py-20 text-gray-400 italic">
@@ -104,17 +95,18 @@ function EmptyState() {
   );
 }
 
-// Main LibrariansPage Component
+// Main Component
 export default function LibrariansPage() {
   const [items, setItems] = useState<LibrariansItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<LibrariansItem | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Real-time Firestore subscription
+  // Fetch librarians ordered by "position"
   useEffect(() => {
+    const q = query(collection(db, "librarians"), orderBy("position", "asc"));
     const unsubscribe = onSnapshot(
-      collection(db, "librarians"),
+      q,
       (snapshot) => {
         const docs = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -168,7 +160,11 @@ export default function LibrariansPage() {
             >
               Yes, Delete
             </Button>
-            <Button size="sm" variant="outline" onClick={() => toast.dismiss(t.id)}>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => toast.dismiss(t.id)}
+            >
               Cancel
             </Button>
           </div>
@@ -178,10 +174,31 @@ export default function LibrariansPage() {
     );
   };
 
+  // Handle drag-and-drop
+  const handleDragEnd = async (result: any) => {
+    if (!result.destination) return;
+
+    const reordered = Array.from(items);
+    const [moved] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, moved);
+    setItems(reordered);
+
+    try {
+      await Promise.all(
+        reordered.map((item, index) =>
+          updateDoc(doc(db, "librarians", item.id!), { position: index })
+        )
+      );
+      toast.success("Order updated ✅");
+    } catch (err) {
+      console.error("Reorder error:", err);
+      toast.error("Failed to update order ❌");
+    }
+  };
+
   return (
     <div className="p-6">
       <Toaster position="top-right" reverseOrder={false} />
-
       <h1 className="text-xl font-bold mb-4">Librarians Manager</h1>
 
       {showForm ? (
@@ -199,23 +216,65 @@ export default function LibrariansPage() {
             + Add Librarian
           </Button>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {loading
-              ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
-              : items.length === 0
-              ? <EmptyState />
-              : items.map((item) => (
-                  <LibrarianCard
-                    key={item.id}
-                    item={item}
-                    onEdit={(i) => {
-                      setSelectedItem(i);
-                      setShowForm(true);
-                    }}
-                    onDelete={handleDelete}
-                  />
-                ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          ) : items.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <Droppable droppableId="librarians" direction="vertical">
+                {(provided) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+                  >
+                    {items.map((item, index) => (
+                      <Draggable
+                        key={item.id}
+                        draggableId={item.id!}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={{
+                              ...provided.draggableProps.style,
+                              transition: snapshot.isDragging
+                                ? "transform 0.25s ease"
+                                : "transform 0.2s ease-in-out",
+                              transform: snapshot.isDragging
+                                ? `${provided.draggableProps.style?.transform} scale(1.05)`
+                                : provided.draggableProps.style?.transform,
+                            }}
+                            className={`${
+                              snapshot.isDragging ? "z-50" : ""
+                            }`}
+                          >
+                            <LibrarianCard
+                              item={item}
+                              onEdit={(i) => {
+                                setSelectedItem(i);
+                                setShowForm(true);
+                              }}
+                              onDelete={handleDelete}
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
         </>
       )}
     </div>

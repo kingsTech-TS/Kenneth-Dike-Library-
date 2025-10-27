@@ -11,6 +11,9 @@ import {
   serverTimestamp,
   doc,
   updateDoc,
+  getDocs,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
 
@@ -31,6 +34,7 @@ export interface LibrariansItem {
   createdAt?: Date;
   updatedAt?: Date;
   slug: string;
+  position?: number; // ✅ new field
 }
 
 interface LibrariansFormProps {
@@ -59,6 +63,7 @@ export default function LibrariansForm({
     phone: "",
     imageURL: "",
     slug: "",
+    position: undefined,
   });
 
   const [preview, setPreview] = useState<string>("");
@@ -84,6 +89,7 @@ export default function LibrariansForm({
         phone: initialData.phone || "",
         imageURL: initialData.imageURL || "",
         slug: initialData.slug || "",
+        position: initialData.position,
       }));
       setPreview(initialData.imageURL || "");
     }
@@ -105,7 +111,7 @@ export default function LibrariansForm({
     }
   }, [formData.fullName]);
 
-  // ✅ Handle all input changes (simplified)
+  // ✅ Handle input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -163,6 +169,7 @@ export default function LibrariansForm({
       const { id, ...dataToSave } = formData;
 
       if (initialData?.id) {
+        // 🟩 Update existing librarian
         const docRef = doc(db, "librarians", initialData.id);
         await updateDoc(docRef, {
           ...dataToSave,
@@ -170,8 +177,18 @@ export default function LibrariansForm({
         });
         toast.success("Librarian updated ✅");
       } else {
+        // 🟦 Add new librarian → find next position value
+        const q = query(collection(db, "librarians"), orderBy("position", "asc"));
+        const snapshot = await getDocs(q);
+        const lastPosition =
+          snapshot.docs.length > 0
+            ? (snapshot.docs[snapshot.docs.length - 1].data().position ?? 0)
+            : 0;
+        const nextPosition = lastPosition + 1;
+
         await addDoc(collection(db, "librarians"), {
           ...dataToSave,
+          position: nextPosition, // ✅ Assign next available position
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });

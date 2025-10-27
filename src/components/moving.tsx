@@ -1,44 +1,45 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { collection, onSnapshot } from 'firebase/firestore'
-import { db } from '../../lib/firebase'
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { db } from "../../lib/firebase";
 
 type Librarian = {
-  id?: string
-  fullName: string
-  designation: string
-  department: string
-  imageURL: string
-}
+  id?: string;
+  fullName: string;
+  designation: string;
+  department: string;
+  imageURL: string;
+  position?: number;
+};
 
 const generateSlug = (name: string) =>
   name
     .toLowerCase()
-    .replace(/\./g, '')
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9\-]/g, '')
+    .replace(/\./g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-]/g, "");
 
 const Moving = () => {
-  const [librarians, setLibrarians] = useState<Librarian[]>([])
+  const [librarians, setLibrarians] = useState<Librarian[]>([]);
 
-  // ✅ Real-time Firestore listener
+  // ✅ Real-time Firestore listener (ordered by position)
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'librarians'), (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Librarian[]
-      setLibrarians(data)
-    })
+    const q = query(collection(db, "librarians"), orderBy("position", "asc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() } as Librarian)
+      );
+      setLibrarians(data);
+    });
 
-    return () => unsubscribe()
-  }, [])
+    return () => unsubscribe();
+  }, []);
 
-  const shouldAnimate = librarians.length > 1
+  const shouldAnimate = librarians.length > 1;
 
   return (
     <motion.section
@@ -55,22 +56,22 @@ const Moving = () => {
       <div className="overflow-hidden relative">
         <motion.div
           className="flex gap-8 w-max"
-          animate={shouldAnimate ? { x: ['0%', '-50%'] } : {}}
+          animate={shouldAnimate ? { x: ["0%", "-50%"] } : {}}
           transition={
             shouldAnimate
-              ? { repeat: Infinity, duration: 100, ease: 'linear' }
+              ? { repeat: Infinity, duration: 100, ease: "linear" }
               : {}
           }
         >
           {librarians.map((librarian, index) => {
-            const slug = generateSlug(librarian.fullName)
+            const slug = generateSlug(librarian.fullName);
             return (
               <Link key={librarian.id || index} href={`/history/${slug}`}>
                 <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 flex-shrink-0 w-72 cursor-pointer hover:shadow-xl transition">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-blue-100">
                       <img
-                        src={librarian.imageURL || '/placeholder.svg'}
+                        src={librarian.imageURL || "/placeholder.svg"}
                         alt={librarian.fullName}
                         className="w-full h-full object-cover"
                       />
@@ -87,19 +88,19 @@ const Moving = () => {
                   </div>
                 </div>
               </Link>
-            )
+            );
           })}
         </motion.div>
 
         {/* Button to the other Library staff */}
         <div className="w-full flex justify-center mt-6">
           <Button className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-            <Link href="/staff">See other library staffs</Link>
+            <Link href="/staff">See other library staff</Link>
           </Button>
         </div>
       </div>
     </motion.section>
-  )
-}
+  );
+};
 
-export default Moving
+export default Moving;
