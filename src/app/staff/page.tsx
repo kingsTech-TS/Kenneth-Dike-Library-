@@ -158,12 +158,12 @@ export default function StaffPage() {
                     style={{ backfaceVisibility: "hidden" }}
                   >
                     <div className="relative h-full">
-                      <div className="h-48 overflow-hidden">
+                      <div className="h-60 overflow-hidden flex items-center justify-center bg-gray-100">
                         <motion.img
                           src={staff.imageURL || "/placeholder.svg"}
                           alt={`${staff.first} ${staff.surname} ${staff.otherNames}`}
-                          className="w-full h-full object-top object-cover"
-                          whileHover={{ scale: 1.1 }}
+                          className="w-full h-full object-contain"
+                          whileHover={{ scale: 1.05 }}
                           transition={{ duration: 0.3 }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -179,7 +179,7 @@ export default function StaffPage() {
                           {staff.first} {staff.surname} {staff.otherNames}
                         </motion.h3>
                         <motion.p
-                          className="text-amber-200 font-medium"
+                          className="text-white font-medium"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.3 }}
