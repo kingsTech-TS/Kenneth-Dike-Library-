@@ -17,7 +17,7 @@ import { Edit, Trash2, GripVertical } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
-// LibrarianCard Component
+// ---------------- LibrarianCard ----------------
 function LibrarianCard({
   item,
   onEdit,
@@ -44,7 +44,10 @@ function LibrarianCard({
       <div className="p-4">
         <div className="flex justify-between items-center mb-1">
           <h2 className="text-lg font-semibold">{item.fullName}</h2>
-          <GripVertical className="cursor-grab text-gray-400" />
+          <GripVertical
+            className="cursor-grab text-gray-400"
+            aria-label="Drag to reorder"
+          />
         </div>
         <p className="text-sm text-gray-600">{item.designation}</p>
         <p className="text-xs text-gray-500">{item.department}</p>
@@ -73,6 +76,7 @@ function LibrarianCard({
   );
 }
 
+// ---------------- SkeletonCard ----------------
 function SkeletonCard() {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden animate-pulse">
@@ -87,6 +91,7 @@ function SkeletonCard() {
   );
 }
 
+// ---------------- EmptyState ----------------
 function EmptyState() {
   return (
     <div className="col-span-full text-center py-20 text-gray-400 italic">
@@ -95,14 +100,14 @@ function EmptyState() {
   );
 }
 
-// Main Component
+// ---------------- Main Component ----------------
 export default function LibrariansPage() {
   const [items, setItems] = useState<LibrariansItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<LibrariansItem | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Fetch librarians ordered by "position"
+  // 🔹 Fetch librarians ordered by position (Realtime)
   useEffect(() => {
     const q = query(collection(db, "librarians"), orderBy("position", "asc"));
     const unsubscribe = onSnapshot(
@@ -124,17 +129,20 @@ export default function LibrariansPage() {
     return () => unsubscribe();
   }, []);
 
+  // 🔹 Handle save (just closes form and triggers toast)
   const handleSave = () => {
     setShowForm(false);
     setSelectedItem(null);
     toast.success("Librarian saved successfully 🎉");
   };
 
+  // 🔹 Cancel form
   const handleCancel = () => {
     setShowForm(false);
     setSelectedItem(null);
   };
 
+  // 🔹 Delete librarian
   const handleDelete = async (id: string, name: string) => {
     toast(
       (t) => (
@@ -149,7 +157,6 @@ export default function LibrariansPage() {
               onClick={async () => {
                 try {
                   await deleteDoc(doc(db, "librarians", id));
-                  setItems((prev) => prev.filter((i) => i.id !== id));
                   toast.success(`"${name}" deleted ✅`);
                 } catch (err) {
                   console.error("Delete error:", err);
@@ -174,28 +181,31 @@ export default function LibrariansPage() {
     );
   };
 
-  // Handle drag-and-drop
+  // 🔹 Handle drag reorder
   const handleDragEnd = async (result: any) => {
-    if (!result.destination) return;
+    if (!result.destination || result.source.index === result.destination.index)
+      return;
 
     const reordered = Array.from(items);
     const [moved] = reordered.splice(result.source.index, 1);
     reordered.splice(result.destination.index, 0, moved);
     setItems(reordered);
 
-    try {
-      await Promise.all(
+    toast.promise(
+      Promise.all(
         reordered.map((item, index) =>
           updateDoc(doc(db, "librarians", item.id!), { position: index })
         )
-      );
-      toast.success("Order updated ✅");
-    } catch (err) {
-      console.error("Reorder error:", err);
-      toast.error("Failed to update order ❌");
-    }
+      ),
+      {
+        loading: "Saving new order...",
+        success: "Order updated ✅",
+        error: "Failed to update order ❌",
+      }
+    );
   };
 
+  // ---------------- Render ----------------
   return (
     <div className="p-6">
       <Toaster position="top-right" reverseOrder={false} />
@@ -246,16 +256,12 @@ export default function LibrariansPage() {
                             {...provided.dragHandleProps}
                             style={{
                               ...provided.draggableProps.style,
-                              transition: snapshot.isDragging
-                                ? "transform 0.25s ease"
-                                : "transform 0.2s ease-in-out",
                               transform: snapshot.isDragging
-                                ? `${provided.draggableProps.style?.transform} scale(1.05)`
+                                ? `${provided.draggableProps.style?.transform ?? ""} scale(1.02)`
                                 : provided.draggableProps.style?.transform,
+                              transition: "transform 0.2s ease",
                             }}
-                            className={`${
-                              snapshot.isDragging ? "z-50" : ""
-                            }`}
+                            className={`${snapshot.isDragging ? "z-50" : ""}`}
                           >
                             <LibrarianCard
                               item={item}

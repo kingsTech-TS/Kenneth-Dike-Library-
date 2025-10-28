@@ -21,6 +21,7 @@ interface StaffMember {
   imageURL: string
   designation: string
   department: string
+  position?: number
 }
 
 const containerVariants = {
@@ -37,27 +38,36 @@ export default function StaffPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  // ✅ Fetch staff data from Firebase in real time
+  // ✅ Fetch staff data in saved order (by "position")
   useEffect(() => {
     try {
-      const q = query(collection(db, "staff"), orderBy("surname", "asc"))
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const staffList: StaffMember[] = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as StaffMember[]
-        setStaffMembers(staffList)
-        setLoading(false)
-      })
+      const q = query(collection(db, "staff"), orderBy("position", "asc"))
+      const unsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          const staffList: StaffMember[] = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as StaffMember[]
+          setStaffMembers(staffList)
+          setLoading(false)
+        },
+        (error) => {
+          console.error("Snapshot error:", error)
+          toast.error("Failed to load staff data ❌")
+          setLoading(false)
+        }
+      )
 
       return () => unsubscribe()
     } catch (err: any) {
-      toast.error("Failed to load staff data ❌")
+      console.error("Fetch error:", err)
+      toast.error("Error fetching staff data ❌")
       setLoading(false)
     }
   }, [])
 
-  // ✅ Detect mobile for flip behavior
+  // ✅ Detect mobile for flip interaction
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
     handleResize()
@@ -123,7 +133,7 @@ export default function StaffPage() {
         </div>
       </div>
 
-      {/* Loading state */}
+      {/* Loading State */}
       {loading && (
         <div className="flex justify-center items-center py-20">
           <p className="text-gray-600 text-lg animate-pulse">Loading staff...</p>
@@ -161,7 +171,7 @@ export default function StaffPage() {
                       <div className="h-60 overflow-hidden flex items-center justify-center bg-gray-100">
                         <motion.img
                           src={staff.imageURL || "/placeholder.svg"}
-                          alt={`${staff.first} ${staff.surname} ${staff.otherNames}`}
+                          alt={`${staff.first} ${staff.surname} ${staff.otherNames || ""}`}
                           className="w-full h-full object-contain"
                           whileHover={{ scale: 1.05 }}
                           transition={{ duration: 0.3 }}
@@ -238,7 +248,6 @@ export default function StaffPage() {
           </motion.div>
         </div>
       )}
-
 
       {/* Footer */}
       <Footer />

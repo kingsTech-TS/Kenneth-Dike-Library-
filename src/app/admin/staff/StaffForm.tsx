@@ -5,14 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
-import {
-  addDoc,
-  collection,
-  serverTimestamp,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
-import { db } from "../../../../lib/firebase";
 
 export interface StaffItem {
   id?: string;
@@ -21,24 +13,21 @@ export interface StaffItem {
   surname: string;
   department: string;
   designation: string;
+  position?: number;
   email?: string;
   phoneNumber?: string;
   imageURL?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: any;
+  updatedAt?: any;
 }
 
 interface StaffFormProps {
   initialData?: StaffItem | null;
-  onSave: (data: StaffItem) => void;
+  onSave: (data: StaffItem) => Promise<void> | void;
   onCancel: () => void;
 }
 
-export default function StaffForm({
-  initialData,
-  onSave,
-  onCancel,
-}: StaffFormProps) {
+export default function StaffForm({ initialData, onSave, onCancel }: StaffFormProps) {
   const [formData, setFormData] = useState<StaffItem>({
     first: "",
     surname: "",
@@ -51,121 +40,89 @@ export default function StaffForm({
   });
 
   const [preview, setPreview] = useState<string>("");
-  const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  // Populate form on edit
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
-      if (initialData.imageURL) {
-        setPreview(initialData.imageURL);
-      }
+      if (initialData.imageURL) setPreview(initialData.imageURL);
     }
   }, [initialData]);
 
-// Handle text input
-const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-) => {
-  const { name, value } = e.target;
-  let formattedValue = value;
+  // Handle input updates
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
 
+    const formatName = (val: string) =>
+      val
+        .trim()
+        .toLowerCase()
+        .split(" ")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
 
-  // Rule 2: Capitalize the first letter of every word (for title/department)
-   if (["designation", "department", "surname", "first", "otherNames"].includes(name)) {
-    formattedValue = value
-      .toLowerCase()
-      .split(" ")
-      .map(
-        (word) =>
-          word.charAt(0).toUpperCase() + word.slice(1)
-      )
-      .join(" ");
-  }
+    let newValue = value;
+    if (["first", "surname", "otherNames", "designation", "department"].includes(name)) {
+      newValue = formatName(value);
+    }
 
-  setFormData((prev) => ({ ...prev, [name]: formattedValue }));
-};
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
+  };
 
-
-
-
-  // Handle file upload
+  // Upload image
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     try {
       setUploading(true);
-      const uploadData = new FormData();
-      uploadData.append("file", file);
+      const formDataUpload = new FormData();
+      formDataUpload.append("file", file);
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: uploadData,
-      });
-
+      const res = await fetch("/api/upload", { method: "POST", body: formDataUpload });
       const data = await res.json();
-      console.log("Upload API response:", data);
 
-      if (!res.ok || data.error) {
-        toast.error(`Upload failed: ${data.error?.message || "Unknown error"}`);
-        return;
-      }
+      if (!res.ok || !data.secure_url) throw new Error("Upload failed");
 
-      if (!data.secure_url) {
-        toast.error("No image URL returned from server ❌");
-        return;
-      }
-
-      toast.success("Upload successful!");
       setFormData((prev) => ({ ...prev, imageURL: data.secure_url }));
       setPreview(data.secure_url);
-    } catch (err: any) {
-      toast.error(err.message || "Unexpected error");
+      toast.success("Image uploaded successfully ✅");
+    } catch (err) {
+      console.error("Upload error:", err);
+      toast.error("Image upload failed ❌");
     } finally {
       setUploading(false);
     }
   };
 
-  // Handle submit
+  // Submit form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    if (!formData.first || !formData.surname || !formData.designation || !formData.department) {
+      toast.error("Please fill in all required fields ❌");
+      return;
+    }
 
     try {
-      if (initialData?.id) {
-        const docRef = doc(db, "staff", initialData.id);
-        await updateDoc(docRef, {
-          ...formData,
-          updatedAt: serverTimestamp(),
-        });
-        toast.success("Staff member updated ✅");
-      } else {
-        await addDoc(collection(db, "staff"), {
-          ...formData,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        });
-        toast.success("New staff member added 🎉");
-      }
-      onSave(formData);
-    } catch (err: any) {
-      toast.error(err.message || "Failed to save staff ❌");
+      setLoading(true);
+      await onSave(formData);
+      toast.success(initialData ? "Staff updated ✅" : "Staff added ✅");
+    } catch (err) {
+      console.error("Save error:", err);
+      toast.error("Failed to save staff ❌");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4 p-4 bg-white rounded-xl shadow-md"
-    >
-      {/* Upload Image */}
+    <form onSubmit={handleSubmit} className="space-y-4 p-6 bg-white rounded-xl shadow-md">
+      {/* Image Upload */}
       <div>
         <label className="block text-sm font-medium mb-1">Upload Image</label>
         <Input type="file" accept="image/*" onChange={handleFileChange} />
-        {uploading && <p className="text-xs text-gray-500">Uploading...</p>}
+        {uploading && <p className="text-xs text-gray-500 mt-1">Uploading...</p>}
         {preview && (
           <img
             src={preview}
@@ -175,8 +132,8 @@ const handleChange = (
         )}
       </div>
 
-      {/* Names */}
-      <div className="grid grid-cols-3 gap-2">
+      {/* Basic Info */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
         <Input
           name="first"
           value={formData.first}
@@ -199,17 +156,15 @@ const handleChange = (
         />
       </div>
 
-      {/* Email */}
+      {/* Contact Info */}
       <Input
         name="email"
         type="email"
-        value={formData.email}
+        value={formData.email || ""}
         onChange={handleChange}
         placeholder="Email"
         required
       />
-
-      {/* Phone */}
       <Input
         name="phoneNumber"
         type="tel"
@@ -219,7 +174,7 @@ const handleChange = (
         required
       />
 
-      {/* Designation */}
+      {/* Work Info */}
       <Input
         name="designation"
         value={formData.designation}
@@ -227,8 +182,6 @@ const handleChange = (
         placeholder="Designation"
         required
       />
-
-      {/* Department */}
       <Textarea
         name="department"
         value={formData.department}
@@ -237,22 +190,23 @@ const handleChange = (
         required
       />
 
-      {/* Actions */}
-      <div className="flex gap-2 justify-end">
+      {/* Buttons */}
+      <div className="flex justify-end gap-2 pt-2">
         <Button
           type="button"
-          className="bg-red-600 text-white hover:bg-red-400"
           variant="outline"
+          className="bg-red-600 hover:bg-red-500 text-white"
           onClick={onCancel}
+          disabled={loading || uploading}
         >
           Cancel
         </Button>
         <Button
           type="submit"
-          className="bg-blue-600 text-white hover:bg-blue-400"
+          className="bg-blue-600 hover:bg-blue-500 text-white"
           disabled={loading || uploading}
         >
-          {loading ? "Saving..." : initialData ? "Update" : "Add"} Staff
+          {loading ? "Saving..." : initialData ? "Update Staff" : "Add Staff"}
         </Button>
       </div>
     </form>
