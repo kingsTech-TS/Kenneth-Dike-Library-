@@ -9,6 +9,7 @@ import Header from "@/components/header"
 import Moving from "@/components/moving"
 import ScrollToTop from "@/components/scroll-to-top"
 import Footer from "@/components/footer"
+import ChatBotTemplate from "@/components/ChatBotTemplate "
 
 const librarians = [
   {
@@ -375,6 +376,7 @@ export default function HistoryPage() {
 
        {/* Footer and ScrollToTop */}
            <Footer />
+           <ChatBotTemplate />
            <ScrollToTop />
     </div>
   )

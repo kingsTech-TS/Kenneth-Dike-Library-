@@ -50,7 +50,7 @@ const Moving = () => {
       viewport={{ once: true }}
     >
       <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-        Distinguished Librarians
+        Library Management Team
       </h2>
 
       <div className="overflow-hidden relative">
