@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore"
 import { db } from "../../../../lib/firebase"
 import { Button } from "@/components/ui/button"
-import { Calendar, Edit, Trash2 } from "lucide-react"
+import { Calendar, Camera, Edit, Trash2 } from "lucide-react"
 import toast, { Toaster } from "react-hot-toast"
 import GalleryForm, { GalleryItem } from "./GalleryForm"
 
@@ -38,6 +38,9 @@ function GalleryCard({
 
         <div className="flex items-center gap-2 text-xs text-gray-500 mt-3">
           <Calendar size={14} /> <span>{item.date}</span>
+        </div>
+         <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+          <Camera size={14} /> <span>{item.photographer}</span>
         </div>
 
         <div className="flex justify-end gap-2 mt-4">

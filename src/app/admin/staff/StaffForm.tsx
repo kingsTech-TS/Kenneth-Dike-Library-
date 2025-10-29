@@ -54,22 +54,22 @@ export default function StaffForm({ initialData, onSave, onCancel }: StaffFormPr
   // Handle input updates
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-    const formatName = (val: string) =>
-      val
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    if (["first", "surname", "otherNames", "designation", "department"].includes(name)) {
+      const formattedValue = value
         .trim()
         .toLowerCase()
         .split(" ")
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" ");
-
-    let newValue = value;
-    if (["first", "surname", "otherNames", "designation", "department"].includes(name)) {
-      newValue = formatName(value);
+      setFormData((prev) => ({ ...prev, [name]: formattedValue }));
     }
-
-    setFormData((prev) => ({ ...prev, [name]: newValue }));
   };
+
 
   // Upload image
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,6 +179,7 @@ export default function StaffForm({ initialData, onSave, onCancel }: StaffFormPr
         name="designation"
         value={formData.designation}
         onChange={handleChange}
+        onBlur={handleBlur}
         placeholder="Designation"
         required
       />
@@ -186,9 +187,11 @@ export default function StaffForm({ initialData, onSave, onCancel }: StaffFormPr
         name="department"
         value={formData.department}
         onChange={handleChange}
+        onBlur={handleBlur}
         placeholder="Department"
         required
       />
+
 
       {/* Buttons */}
       <div className="flex justify-end gap-2 pt-2">
