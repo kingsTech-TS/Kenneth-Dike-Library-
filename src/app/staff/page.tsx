@@ -10,6 +10,7 @@ import Footer from "@/components/footer"
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore"
 import toast from "react-hot-toast"
 import { db } from "../../../lib/firebase"
+import ChatBotTemplate from "../../components/ChatBotTemplate"
 
 interface StaffMember {
   id: string
@@ -251,6 +252,7 @@ export default function StaffPage() {
 
       {/* Footer */}
       <Footer />
+      <ChatBotTemplate />
       <ScrollToTop />
     </div>
   )

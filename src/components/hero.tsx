@@ -12,7 +12,7 @@ const heroSlides = [
     title: "Discover Knowledge Beyond Limits",
     subtitle: "Step into a world where tradition meets innovation",
     description: "Our library is more than books—it's your gateway to endless possibilities and academic excellence.",
-    stats: { resources: "2.5M+", students: "45K+", access: "24/7" },
+    stats: { resources: "5M+", students: "45K+", access: "24/7" },
   },
   {
     id: 2,

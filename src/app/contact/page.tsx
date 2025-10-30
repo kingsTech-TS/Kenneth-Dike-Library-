@@ -30,6 +30,7 @@ import BookRecommendationModal from "@/components/book-recommendation-modal"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import ScrollToTop from "@/components/scroll-to-top"
+import ChatBotTemplate from "../../components/ChatBotTemplate"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -437,6 +438,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
  {/* Footer and ScrollToTop */}
       <Footer />
+      <ChatBotTemplate />
       <ScrollToTop />
     
     </div>

@@ -9,7 +9,7 @@ import Header from "@/components/header"
 import Moving from "@/components/moving"
 import ScrollToTop from "@/components/scroll-to-top"
 import Footer from "@/components/footer"
-import ChatBotTemplate from "@/components/ChatBotTemplate "
+import ChatBotTemplate from "@/components/ChatBotTemplate"
 
 const librarians = [
   {

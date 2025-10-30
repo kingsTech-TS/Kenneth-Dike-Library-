@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageCircle, X } from "lucide-react"
+import { Bot, Send, X } from "lucide-react"
+
 
 export default function ChatBotTemplate() {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,7 +20,7 @@ export default function ChatBotTemplate() {
         className="fixed bottom-24 right-8 z-50 w-14 h-14 bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
         aria-label="Toggle Chatbot"
       >
-        {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+        {isOpen ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
       </motion.button>
 
       {/* Chat Window */}
@@ -54,7 +55,7 @@ export default function ChatBotTemplate() {
                 className="flex-1 border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button className="bg-blue-600 text-white rounded-full p-2 hover:bg-blue-700 transition">
-                Send
+               <Send className="h-6 w-6" />
               </button>
             </div>
           </motion.div>
