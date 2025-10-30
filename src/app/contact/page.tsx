@@ -106,7 +106,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     name: "Reference Services",
     email: "reference@library.ui.edu.ng",
     phone: "+234 (0) 2 810 1104",
-    head: "Dr. Adetoun A. Oyelude",
+    head: "Dr. Joseph Olubunmi Olorunsaye",
   },
   ]
 
