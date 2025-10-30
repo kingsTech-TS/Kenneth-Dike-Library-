@@ -32,7 +32,7 @@ const homeDropdownItems = [
 ]
 
 const getStartedItems = [
-  { name: "Register", href: "http://41.184.122.87:8080/" },
+  { name: "Register", href: "http://41.184.122.87:8080/patron/add" },
   { name: "Search", href: "http://41.184.122.87:8080/record/opac" },
   { name: "Institutional Repository", href: "https://repository.ui.edu.ng/home" },
 ]
