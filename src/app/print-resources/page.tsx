@@ -111,17 +111,10 @@ export default function PrintResourcesPage() {
         },
         {
           wing: "East Wing",
-          title: "General Reading Room",
-          description:
-            "The General Reading Room is mainly for consultation of reference work and reading of current work, current journals and newspapers. It is also used for 24 hours library services.",
-          capacity: "600 readers at a time",
           collections: [
-            "Undergraduate reference collection",
-            "Current issues of journals on display",
-            "Latest issues of newspapers",
-            "General reading collection",
-            "Recent accessions",
-            "University calendars and prospectuses",
+            "24 hours Library",
+            "Potters Desk",
+            "Cloak Room",
           ],
         },
       ],
@@ -135,8 +128,7 @@ export default function PrintResourcesPage() {
           wing: "West Wing",
           facilities: [
             "ICT and Systems Division",
-            "Space for Internet Users with seating capacity of 70 users at a time",
-            "Office of the Deputy University Librarian (DUL), ICT and Systems",
+            "Space for Internet Users",
             "Server Room",
             "Head, Technical, Infrastructure and Internet Services' Office",
           ],
@@ -158,10 +150,9 @@ export default function PrintResourcesPage() {
         {
           wing: "West Wing",
           facilities: [
-            "Collection Development Librarian's Office",
-            "Acquisition Librarian's Office",
-            "Reading Room – Seating Capacity (70)",
-            "Book Shelves",
+            "Collection Development Section",
+            "Acquisition Section",
+            "Reading Room / Book Shelves",
             "Collection Development Technical Staff Office",
             "Collection Development Work Room",
           ],
@@ -189,7 +180,10 @@ export default function PrintResourcesPage() {
       wings: [
         {
           wing: "West Wing",
-          facilities: ["Office of the University Librarian"],
+          facilities: [
+            "Office of the University Librarian",
+            "Administrative Office",
+        ],
         },
         {
           wing: "East Wing",

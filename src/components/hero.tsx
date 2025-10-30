@@ -12,7 +12,7 @@ const heroSlides = [
     title: "Discover Knowledge Beyond Limits",
     subtitle: "Step into a world where tradition meets innovation",
     description: "Our library is more than books—it's your gateway to endless possibilities and academic excellence.",
-    stats: { resources: "5M+", students: "45K+", access: "24/7" },
+    stats: {  },
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const heroSlides = [
     title: "Modern Learning Spaces",
     subtitle: "Where comfort meets productivity",
     description: "Experience state-of-the-art study environments designed for collaboration, focus, and innovation.",
-    stats: { rooms: "150+", seats: "2000+", hours: "24/7" },
+    stats: {  },
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const heroSlides = [
     title: "Digital Excellence",
     subtitle: "Access the world's knowledge",
     description: "Explore millions of digital resources, databases, and e-books from anywhere, anytime.",
-    stats: { databases: "500+", ebooks: "1M+", journals: "50K+" },
+    stats: {  },
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ const heroSlides = [
     title: "Research Support",
     subtitle: "Expert guidance for your journey",
     description: "Get personalized research assistance from our expert librarians and subject specialists.",
-    stats: { librarians: "25+", consultations: "5K+", success: "98%" },
+    stats: {  },
   },
 ]
 
@@ -170,7 +170,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.4 }}
               >
-                {Object.entries(currentSlideData.stats).map(([key, value], index) => (
+                {/* {Object.entries(currentSlideData.stats).map(([key, value], index) => (
                   <motion.div
                     key={key}
                     className="text-left"
@@ -185,7 +185,7 @@ export default function Hero() {
                       {key.replace(/([A-Z])/g, " $1")}
                     </div>
                   </motion.div>
-                ))}
+                ))} */}
               </motion.div>
             </motion.div>
           </AnimatePresence>

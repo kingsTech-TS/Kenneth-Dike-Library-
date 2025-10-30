@@ -127,14 +127,6 @@ export default function LibrariesPage() {
             Discover specialized library resources across all faculties at the
             University of Ibadan, each tailored to support academic and research needs.
           </motion.p>
-
-          {/* Stats */}
-          <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-8 sm:mt-12 max-w-4xl mx-auto">
-            <Stat value={libraries.length} label="Faculty Libraries" color="text-indigo-600" />
-            <Stat value="500K+" label="Total Books" color="text-blue-600" />
-            <Stat value="3,000+" label="Journals" color="text-amber-600" />
-            <Stat value="1,500+" label="Seating Capacity" color="text-indigo-500" />
-          </motion.div>
         </motion.div>
 
         {/* Search & Filter */}
