@@ -192,9 +192,22 @@ function HeroSection({ totalPhotos }: { totalPhotos: number }) {
         transition={{ duration: 0.8, delay: 0.8 }}
       >
         <Stat label="Photos" value={totalPhotos} color="purple" />
-        <Stat label="Years" value="75" color="pink" />
-        <Stat label="Latest" value="2024" color="orange" />
+
+        {/* Dynamic Years (77 in 2025, increments from 2026 onward) */}
+        <Stat
+          label="Years"
+          value={77 + Math.max(0, new Date().getFullYear() - 2025)}
+          color="pink"
+        />
+
+        {/* Dynamic Latest (always current year) */}
+        <Stat
+          label="Latest"
+          value={new Date().getFullYear()}
+          color="orange"
+        />
       </motion.div>
+
     </motion.div>
   );
 }
@@ -223,9 +236,8 @@ function AnimatedBackground() {
       {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
-          className={`absolute w-4 h-4 rounded-full ${
-            ["bg-purple-300/20", "bg-pink-300/20", "bg-orange-300/20", "bg-blue-300/20"][i % 4]
-          }`}
+          className={`absolute w-4 h-4 rounded-full ${["bg-purple-300/20", "bg-pink-300/20", "bg-orange-300/20", "bg-blue-300/20"][i % 4]
+            }`}
           initial={{
             x: Math.random() * 1920,
             y: Math.random() * 1080,

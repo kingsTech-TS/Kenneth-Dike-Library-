@@ -32,7 +32,7 @@ interface AdminLayoutProps {
 
 const navigation = [
   { name: "Overview", href: "/admin/overview", icon: BarChart3 },
-  { name: "Librarians", href: "/admin/librarians", icon: UserStar },
+  { name: "Management", href: "/admin/librarians", icon: UserStar },
   { name: "Staffs", href: "/admin/staff", icon: Users },
   { name: "Libraries", href: "/admin/libraries", icon: Building2 },
   { name: "Gallery", href: "/admin/gallery", icon: Camera },
