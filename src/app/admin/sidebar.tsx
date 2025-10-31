@@ -20,6 +20,7 @@ import {
   User2,
   UserStar,
   Users2,
+  BookText,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { onAuthStateChanged, signOut } from "firebase/auth"
@@ -38,6 +39,7 @@ const navigation = [
   { name: "Gallery", href: "/admin/gallery", icon: Camera },
   // { name: "New & Annoucement", href: "/admin/news", icon: Newspaper },
   { name: "E-Resources", href: "/admin/e-resources", icon: Database },
+  { name: "Book Recomendation", href: "/admin/recomend", icon: BookText },
 ]
 
 export default function Sidebar({ children }: AdminLayoutProps) {

@@ -332,68 +332,96 @@ function GalleryLightbox({
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
-        <div className="hidden lg:flex w-full h-full items-center justify-center p-6 xl:p-8">
+        <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-6">
+          {/* Close Button */}
           <button
-            className="absolute top-6 right-6 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors duration-200"
-            onClick={onClose}
+            className="absolute top-4 right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors duration-200"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
           >
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
 
+          {/* Prev / Next Buttons (visible only on md+) */}
           <button
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors duration-200"
+            className="hidden md:flex absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full items-center justify-center text-white transition-colors duration-200"
             onClick={(e) => {
               e.stopPropagation();
               onPrev();
             }}
           >
-            <ChevronLeft className="h-7 w-7" />
+            <ChevronLeft className="h-6 w-6" />
           </button>
 
           <button
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors duration-200"
+            className="hidden md:flex absolute right-4 top-1/2 transform -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full items-center justify-center text-white transition-colors duration-200"
             onClick={(e) => {
               e.stopPropagation();
               onNext();
             }}
           >
-            <ChevronRight className="h-7 w-7" />
+            <ChevronRight className="h-6 w-6" />
           </button>
 
+          {/* Main Content */}
           <motion.div
-            className="w-full max-w-7xl flex gap-8 items-center"
+            className="w-full max-w-6xl flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex-1 flex items-center justify-center">
+            {/* Image Section */}
+            <div className="flex-1 flex items-center justify-center w-full">
               <img
                 src={selectedImage.imageUrl}
                 alt={selectedImage.title}
-                className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+                className="max-w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg shadow-2xl"
               />
             </div>
 
-            <div className="w-96 xl:w-[28rem] flex-shrink-0">
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 xl:p-8 shadow-2xl max-h-[80vh] overflow-y-auto">
-                <h3 className="text-2xl xl:text-3xl font-bold text-gray-900 mb-4 leading-tight">
-                  {selectedImage.title}
-                </h3>
-                <p className="text-gray-700 text-base xl:text-lg leading-relaxed mb-6">
-                  {selectedImage.description}
-                </p>
-                <div className="flex flex-col gap-3 text-sm xl:text-base text-gray-500 pt-4 border-t border-gray-200">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5" />
-                    <span>{selectedImage.date}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Camera className="h-5 w-5" />
-                    <span>{selectedImage.photographer}</span>
-                  </div>
+            {/* Info Section (below image on mobile) */}
+            <div className="w-full lg:w-96 bg-white/95 backdrop-blur-sm rounded-2xl p-5 sm:p-6 shadow-2xl overflow-y-auto max-h-[70vh]">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 leading-tight">
+                {selectedImage.title}
+              </h3>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-5">
+                {selectedImage.description}
+              </p>
+              <div className="flex flex-col gap-3 text-sm sm:text-base text-gray-500 pt-3 border-t border-gray-200">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span>{selectedImage.date}</span>
                 </div>
+                <div className="flex items-center gap-2">
+                  <Camera className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span>{selectedImage.photographer}</span>
+                </div>
+              </div>
+
+              {/* Navigation for mobile */}
+              <div className="flex items-center justify-between mt-6 lg:hidden">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onPrev();
+                  }}
+                  className="px-4 py-2 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition"
+                >
+                  <ChevronLeft className="inline-block w-5 h-5" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onNext();
+                  }}
+                  className="px-4 py-2 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition"
+                >
+                  <ChevronRight className="inline-block w-5 h-5" />
+                </button>
               </div>
             </div>
           </motion.div>
