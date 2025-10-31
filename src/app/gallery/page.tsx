@@ -323,7 +323,6 @@ function GalleryLightbox({
   onPrev: () => void;
 }) {
   if (!selectedImage) return null;
-
   return (
     <AnimatePresence>
       <motion.div
@@ -431,4 +430,3 @@ function GalleryLightbox({
     </AnimatePresence>
   );
 }
-
