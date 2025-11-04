@@ -187,7 +187,7 @@ export default function LibraryDetailPage() {
               { icon: BookOpen, label: "Books", value: library.books },
               { icon: Database, label: "Journals", value: library.journals },
               { icon: Globe, label: "Articles", value: library.articles },
-              { icon: Users, label: "Seats", value: library.seatingCapacity },
+              { icon: Users, label: "Seating Capacity", value: library.seatingCapacity },
               { icon: Clock, label: "Hours", value: library.openingHours },
               { icon: MapPin, label: "Location", value: library.location },
             ].map((item, i) => (

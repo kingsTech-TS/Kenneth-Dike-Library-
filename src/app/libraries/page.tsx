@@ -264,7 +264,7 @@ function LibraryCard({ library, index }: { library: any; index: number }) {
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <StatBox icon={BookOpen} color="text-indigo-600" bg="bg-indigo-50" label="Books" value={library.books} />
-          <StatBox icon={Users} color="text-blue-600" bg="bg-blue-50" label="Seats" value={library.seatingCapacity} />
+          <StatBox icon={Users} color="text-blue-600" bg="bg-blue-50" label="Seating Capacity" value={library.seatingCapacity} />
         </div>
 
         <div className="flex items-center gap-2 mb-6 text-sm text-gray-600">
