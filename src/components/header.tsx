@@ -31,7 +31,7 @@ const homeDropdownItems = [
   { name: "Faculty Libraries", href: "/libraries" },
 ]
 
-const getStartedItems = [
+const getStartedItems = [// make the links here open in another tab
   { name: "Register", href: "http://41.184.122.87:8080/patron/add" },
   { name: "Search", href: "http://41.184.122.87:8080/record/opac" },
   { name: "Institutional Repository", href: "https://repository.ui.edu.ng/home" },
@@ -136,21 +136,33 @@ export default function Header() {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 bg-white border border-gray-200 shadow-md rounded-md animate-slideDown">
+              <DropdownMenuContent
+                align="end"
+                className="w-56 bg-white border border-gray-200 shadow-md rounded-md animate-slideDown"
+              >
                 {getStartedItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
-                    <Link href={item.href} className="w-full cursor-pointer px-2 py-2 hover:bg-indigo-50 rounded-md">
+                    <Link
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full cursor-pointer px-2 py-2 hover:bg-indigo-50 rounded-md"
+                    >
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
+
             </DropdownMenu>
 
             {/* Download Button */}
-            <Button className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300" onClick={handleDownload}>
-              Download Guide
-            </Button>
+            <Link
+              href="/library-guide">
+              <Button className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                Library Guide
+              </Button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -210,8 +222,53 @@ export default function Header() {
                 <div className="pt-4 border-t border-gray-100 space-y-2">
                   <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Get Started</p>
                   {getStartedItems.map((item, index) => (
-                    <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: (homeDropdownItems.length + eResourcesItems.length + navItems.length + index) * 0.1 }}>
-                      <Link href={item.href} onClick={() => setIsOpen(false)} className="block py-2 pl-4 text-gray-700 hover:text-indigo-600 font-medium">
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.3,
+                        delay:
+                          (homeDropdownItems.length +
+                            eResourcesItems.length +
+                            navItems.length +
+                            index) *
+                          0.1,
+                      }}
+                    >
+                      <Link
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsOpen(false)}
+                        className="block py-2 pl-4 text-gray-700 hover:text-indigo-600 font-medium"
+                      >
+                        {item.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                  {getStartedItems.map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.3,
+                        delay:
+                          (homeDropdownItems.length +
+                            eResourcesItems.length +
+                            navItems.length +
+                            index) *
+                          0.1,
+                      }}
+                    >
+                      <Link
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsOpen(false)}
+                        className="block py-2 pl-4 text-gray-700 hover:text-indigo-600 font-medium"
+                      >
                         {item.name}
                       </Link>
                     </motion.div>
@@ -220,9 +277,12 @@ export default function Header() {
 
                 {/* Download Button */}
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: (homeDropdownItems.length + eResourcesItems.length + navItems.length + getStartedItems.length) * 0.1 }} className="pt-4">
-                  <Button className="flex items-center gap-2 w-full justify-start bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white" onClick={handleDownload}>
-                    Download Guide
-                  </Button>
+                  <Link
+                    href="/library-guide">
+                    <Button className="flex items-center gap-2 w-full justify-start bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-yellow-600 hover:to-amber-600 text-white">
+                      Library Guide
+                    </Button>
+                  </Link>
                 </motion.div>
               </nav>
             </motion.div>
