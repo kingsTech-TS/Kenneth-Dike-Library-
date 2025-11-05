@@ -131,7 +131,7 @@ export default function PrintResourcesPage() {
             "ICT and Systems Division",
             "Space for Internet Users",
             "Server Room",
-            "Head, Technical, Infrastructure and Internet Services' Office",
+            "Staff Offices",
           ],
         },
         {
@@ -165,7 +165,7 @@ export default function PrintResourcesPage() {
         },
         {
           wing: "East Wing",
-          facilities: ["Reading Room/Book Shelves",  
+          facilities: ["Reading Room / Book Shelves",  
             "Office of the Deputy Librarian"],
           subjects: [
             { code: "A", area: "General Works" },
@@ -205,7 +205,10 @@ export default function PrintResourcesPage() {
       wings: [
         {
           wing: "West Wing",
-          facilities: ["Arabic Collection Section", "Maps Section", "Manuscripts Section"],
+          facilities: ["Arabic Collection Section", 
+            "Maps Section", 
+            "Manuscripts Section",
+          "Office of former University Librarian"],
         },
         {
           wing: "East Wing",
