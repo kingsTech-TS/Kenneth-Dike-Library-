@@ -54,8 +54,8 @@ export default function ChatBotTemplate() {
                 placeholder="Type a message..."
                 className="flex-1 border border-gray-300 rounded-full px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <button className="bg-blue-600 text-white rounded-full p-2 hover:bg-blue-700 transition">
-               <Send className="h-6 w-6" />
+              <button className="text-white rounded-full p-2 transition cursor-pointer">
+               <Send className="h-6 w-6 text-blue-600 hover:text-blue-400" />
               </button>
             </div>
           </motion.div>
