@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import Header from "@/components/header"
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import Footer from "@/components/footer"
+import ChatBotTemplate from "@/components/ChatBotTemplate"
 
 
 
@@ -247,7 +248,7 @@ export default function PrintResourcesPage() {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-110 animate-bounce-slow"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-110 animate-bounce-slow cursor-pointer"
         >
           <ArrowUp className="h-6 w-6" />
         </button>
@@ -477,6 +478,7 @@ export default function PrintResourcesPage() {
       </div>
       {/* Footer and ScrollToTop */}
       <Footer />
+      <ChatBotTemplate />
     </div>
   )
 }
