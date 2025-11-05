@@ -164,7 +164,8 @@ export default function PrintResourcesPage() {
         },
         {
           wing: "East Wing",
-          facilities: ["Reading Room", "Book Shelves", "Office of the Deputy Librarian"],
+          facilities: ["Reading Room/Book Shelves",  
+            "Office of the Deputy Librarian"],
           subjects: [
             { code: "A", area: "General Works" },
             { code: "B", area: "Philosophy" },
@@ -187,7 +188,7 @@ export default function PrintResourcesPage() {
         },
         {
           wing: "East Wing",
-          facilities: ["Reading Room", "Book Shelves"],
+          facilities: ["Reading Room/Book Shelves"],
           subjects: [
             { code: "Q", area: "Science" },
             { code: "T", area: "Technology" },
