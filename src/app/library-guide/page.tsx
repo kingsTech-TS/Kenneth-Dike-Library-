@@ -1,5 +1,6 @@
 'use client'
 
+import ChatBotTemplate from '@/components/ChatBotTemplate'
 import Header from '@/components/header'
 import AboutSection from '@/components/library-guide/about-section'
 import GeneralInfoSection from '@/components/library-guide/general-info-section'
@@ -11,6 +12,7 @@ import ServicesSection from '@/components/library-guide/services-section'
 import SidebarNavigation from '@/components/library-guide/sidebar-navigation'
 import TourSection from '@/components/library-guide/tour-section'
 import UsingLibrarySection from '@/components/library-guide/using-library-section'
+import ScrollToTop from '@/components/scroll-to-top'
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useState, useEffect } from 'react'
 
@@ -98,6 +100,9 @@ export default function LibraryGuidePage() {
           <ContactSection />
         </section> */}
             </main>
+
+            <ChatBotTemplate />
+            <ScrollToTop />
         </div>
     )
 }

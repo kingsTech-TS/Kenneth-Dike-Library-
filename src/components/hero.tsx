@@ -8,7 +8,7 @@ import Link from "next/link"
 const heroSlides = [
   {
     id: 1,
-    image: "img1.jpg",
+    image: "hero-image/img5.jpg",
     title: "Discover Knowledge Beyond Limits",
     subtitle: "Step into a world where tradition meets innovation",
     description: "Our library is more than books—it's your gateway to endless possibilities and academic excellence.",
