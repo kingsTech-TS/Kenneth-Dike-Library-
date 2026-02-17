@@ -293,58 +293,72 @@ export default function LibraryDetailPage() {
             viewport={{ once: true }}
           >
             {/* Librarian Card */}
-            <div className="bg-white rounded-3xl overflow-hidden shadow-xl shadow-indigo-100/50 border border-gray-100 sticky top-24">
-              <div className="bg-gradient-to-br from-indigo-600 to-blue-700 h-24 relative p-6">
-                <h3 className="text-white font-bold text-lg relative z-10">
-                  Head Librarian
-                </h3>
-                <div className="absolute right-0 bottom-0 opacity-10">
-                  <User className="h-32 w-32 -mb-8 -mr-8 text-white" />
+            <Link href="/history" className="block cursor-pointer group/card">
+              <div className="bg-white rounded-3xl overflow-hidden shadow-xl shadow-indigo-100/50 border border-gray-100 sticky top-24 transition-transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-200/50">
+                <div className="bg-gradient-to-br from-indigo-600 to-blue-700 h-24 relative p-6">
+                  <h3 className="text-white font-bold text-lg relative z-10 flex items-center gap-2">
+                    Head Librarian
+                    <span className="text-indigo-200 text-xs font-normal px-2 py-0.5 bg-white/10 rounded-full border border-white/20">
+                      View Profile
+                    </span>
+                  </h3>
+                  <div className="absolute right-0 bottom-0 opacity-10">
+                    <User className="h-32 w-32 -mb-8 -mr-8 text-white" />
+                  </div>
+                </div>
+                <div className="px-8 pb-8 -mt-10 relative z-10">
+                  <div className="w-24 h-24 rounded-2xl bg-white p-1.5 shadow-md mb-4 group-hover/card:scale-105 transition-transform duration-300">
+                    <img
+                      src={library.librarianImageURL || "/placeholder.svg"}
+                      alt={library.librarian || "Librarian"}
+                      className="w-full h-full object-cover rounded-xl"
+                      onError={(e) => {
+                        e.currentTarget.src = "/placeholder.svg";
+                      }}
+                    />
+                  </div>
+
+                  <h4 className="text-xl font-bold text-gray-900 group-hover/card:text-indigo-700 transition-colors">
+                    {library.librarian || "N/A"}
+                  </h4>
+                  <p className="text-indigo-600 font-medium text-sm mb-6">
+                    Chief Librarian
+                  </p>
+
+                  <div className="space-y-4">
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = `tel:${library.phoneNumber}`;
+                      }}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-indigo-50 transition-colors group cursor-pointer"
+                    >
+                      <div className="p-2 bg-white rounded-lg shadow-sm text-gray-500 group-hover:text-indigo-600 transition-colors">
+                        <Phone className="h-4 w-4" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">
+                        {library.phoneNumber || "N/A"}
+                      </span>
+                    </div>
+
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = `mailto:${library.email}`;
+                      }}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-indigo-50 transition-colors group cursor-pointer"
+                    >
+                      <div className="p-2 bg-white rounded-lg shadow-sm text-gray-500 group-hover:text-indigo-600 transition-colors">
+                        <Mail className="h-4 w-4" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-700 truncate">
+                        {library.email || "N/A"}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="px-8 pb-8 -mt-10 relative z-10">
-                <div className="w-24 h-24 rounded-2xl bg-white p-1.5 shadow-md mb-4">
-                  <img
-                    src={library.librarianImageURL || "/placeholder.svg"}
-                    alt={library.librarian}
-                    className="w-full h-full object-cover rounded-xl"
-                  />
-                </div>
-
-                <h4 className="text-xl font-bold text-gray-900">
-                  {library.librarian || "N/A"}
-                </h4>
-                <p className="text-indigo-600 font-medium text-sm mb-6">
-                  Chief Librarian
-                </p>
-
-                <div className="space-y-4">
-                  <a
-                    href={`tel:${library.phoneNumber}`}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-indigo-50 transition-colors group"
-                  >
-                    <div className="p-2 bg-white rounded-lg shadow-sm text-gray-500 group-hover:text-indigo-600 transition-colors">
-                      <Phone className="h-4 w-4" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-700">
-                      {library.phoneNumber || "N/A"}
-                    </span>
-                  </a>
-
-                  <a
-                    href={`mailto:${library.email}`}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-indigo-50 transition-colors group"
-                  >
-                    <div className="p-2 bg-white rounded-lg shadow-sm text-gray-500 group-hover:text-indigo-600 transition-colors">
-                      <Mail className="h-4 w-4" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-700 truncate">
-                      {library.email || "N/A"}
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
+            </Link>
 
             {/* Departments / Extra Info */}
             {library.departments && library.departments.length > 0 && (

@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Clock, Calendar, MapPin, Phone, AlertCircle } from "lucide-react"
-import { Card } from "@/components/ui/card"
+import { motion } from "framer-motion";
+import { Clock, Calendar, MapPin, Phone, AlertCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const libraryHours = [
   {
@@ -25,31 +25,29 @@ const libraryHours = [
     hours: "2:00 PM - 8:00 PM",
     status: "open",
   },
-]
-
-
+];
 
 export default function LibraryHours() {
-  const currentTime = new Date()
-  const currentDay = currentTime.getDay()
-  const currentHour = currentTime.getHours()
+  const currentTime = new Date();
+  const currentDay = currentTime.getDay();
+  const currentHour = currentTime.getHours();
 
   const isLibraryOpen = () => {
     // Simple logic for demonstration
     if (currentDay === 0) {
       // Sunday
-      return currentHour >= 14 && currentHour < 20
+      return currentHour >= 14 && currentHour < 20;
     } else if (currentDay === 6) {
       // Saturday
-      return currentHour >= 9 && currentHour < 18
+      return currentHour >= 9 && currentHour < 18;
     } else if (currentDay === 5) {
       // Friday
-      return currentHour >= 8 && currentHour < 20
+      return currentHour >= 8 && currentHour < 20;
     } else {
       // Monday-Thursday
-      return currentHour >= 8 && currentHour < 22
+      return currentHour >= 8 && currentHour < 22;
     }
-  }
+  };
 
   return (
     <section className="py-20 bg-gradient-to-br from-indigo-50 via-white to-blue-50">
@@ -73,10 +71,13 @@ export default function LibraryHours() {
 
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6z">
             Library{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">Hours</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
+              Hours
+            </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Plan your visit with our current operating hours and special schedules
+            Plan your visit with our current operating hours and special
+            schedules
           </p>
         </motion.div>
 
@@ -115,7 +116,9 @@ export default function LibraryHours() {
                       : "bg-red-500/20 text-red-100 border border-red-400/30"
                   }`}
                 >
-                  <div className={`w-2 h-2 rounded-full mr-2 ${isLibraryOpen() ? "bg-green-400" : "bg-red-400"}`}></div>
+                  <div
+                    className={`w-2 h-2 rounded-full mr-2 ${isLibraryOpen() ? "bg-green-400" : "bg-red-400"}`}
+                  ></div>
                   {isLibraryOpen() ? "Currently Open" : "Currently Closed"}
                 </div>
 
@@ -130,11 +133,13 @@ export default function LibraryHours() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-center text-indigo-100">
                     <Phone className="h-4 w-4 mr-2" />
-                    <span className="text-sm">+234 (0) 2 810 1100</span>
+                    <span className="text-sm">08023256535</span>
                   </div>
                   <div className="flex items-center justify-center text-indigo-100">
                     <MapPin className="h-4 w-4 mr-2" />
-                    <span className="text-sm">Kenneth Dike Library University of Ibadan.</span>
+                    <span className="text-sm">
+                      Kenneth Dike Library University of Ibadan.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -164,10 +169,17 @@ export default function LibraryHours() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.02, backgroundColor: "rgba(99, 102, 241, 0.1)" }}
+                    whileHover={{
+                      scale: 1.02,
+                      backgroundColor: "rgba(99, 102, 241, 0.1)",
+                    }}
                   >
-                    <span className="font-semibold text-gray-900">{schedule.day}</span>
-                    <span className="text-indigo-600 font-medium">{schedule.hours}</span>
+                    <span className="font-semibold text-gray-900">
+                      {schedule.day}
+                    </span>
+                    <span className="text-indigo-600 font-medium">
+                      {schedule.hours}
+                    </span>
                   </motion.div>
                 ))}
               </div>
@@ -176,10 +188,13 @@ export default function LibraryHours() {
                 <div className="flex items-start">
                   <AlertCircle className="h-5 w-5 text-amber-600 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-amber-800 mb-1">Important Note</p>
+                    <p className="text-sm font-medium text-amber-800 mb-1">
+                      Important Note
+                    </p>
                     <p className="text-sm text-amber-700">
-                      Hours may vary during holidays, exam periods, and special events. Please check our website or call
-                      ahead for the most current information.
+                      Hours may vary during holidays, exam periods, and special
+                      events. Please check our website or call ahead for the
+                      most current information.
                     </p>
                   </div>
                 </div>
@@ -187,11 +202,7 @@ export default function LibraryHours() {
             </Card>
           </motion.div>
         </div>
-
-      
-
-       
       </div>
     </section>
-  )
+  );
 }

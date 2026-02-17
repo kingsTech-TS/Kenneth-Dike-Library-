@@ -1,12 +1,20 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, type LucideIcon } from "lucide-react"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import Link from "next/link";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
+  type LucideIcon,
+} from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   const footerLinks = {
     "Quick Links": [
@@ -18,8 +26,14 @@ export default function Footer() {
     Services: [
       { name: "Register", href: "http://41.184.122.87:8080/" },
       { name: "Search", href: "http://41.184.122.87:8080/record/opac" },
-      { name: "Institutional Repository", href: "https://repository.ui.edu.ng/home" },
-      { name: "SDI Form", href: "https://docs.google.com/forms/d/e/1FAIpQLSe1gvHauaOPO5NOm4PQ6WdDNnZqAdcv2agrrI7L3VetU3oi0w/viewform?usp=header" },
+      {
+        name: "Institutional Repository",
+        href: "https://repository.ui.edu.ng/home",
+      },
+      {
+        name: "SDI Form",
+        href: "https://docs.google.com/forms/d/e/1FAIpQLSe1gvHauaOPO5NOm4PQ6WdDNnZqAdcv2agrrI7L3VetU3oi0w/viewform?usp=header",
+      },
     ],
     About: [
       { name: "Library Hours", href: "#library-hours" },
@@ -27,20 +41,28 @@ export default function Footer() {
       { name: "Print Resources", href: "/print-resources" },
       { name: "Staff Directory", href: "#staff" },
     ],
-  }
+  };
 
   // ✅ Define a proper type for social links
   type SocialLink = {
-    name: string
-    icon: LucideIcon
-    href: string
-  }
+    name: string;
+    icon: LucideIcon;
+    href: string;
+  };
 
   const socialLinks: SocialLink[] = [
-    { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/LibraryKDLUI" },
+    {
+      name: "Facebook",
+      icon: Facebook,
+      href: "https://www.facebook.com/LibraryKDLUI",
+    },
     { name: "Twitter", icon: Twitter, href: "https://x.com/LibraryKDLUI" },
-    { name: "Instagram", icon: Instagram, href: "https://instagram.com/ui.library" },
-  ]
+    {
+      name: "Instagram",
+      icon: Instagram,
+      href: "https://instagram.com/ui.library",
+    },
+  ];
 
   return (
     <footer className="bg-gradient-to-br from-indigo-900 to-blue-900 text-white">
@@ -61,8 +83,20 @@ export default function Footer() {
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <div className="flex items-center space-x-1">
-                  <Image src="/logo/Ui_logo.png" alt="UI Logo" width={32} height={32} className="w-8 h-8 object-contain" />
-                  <Image src="/logo/Kdl_logo.png" alt="KDL Logo" width={24} height={24} className="w-6 h-6 object-contain" />
+                  <Image
+                    src="/logo/Ui_logo.png"
+                    alt="UI Logo"
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 object-contain"
+                  />
+                  <Image
+                    src="/logo/Kdl_logo.png"
+                    alt="KDL Logo"
+                    width={24}
+                    height={24}
+                    className="w-6 h-6 object-contain"
+                  />
                 </div>
                 <span className="ml-2 text-sm sm:text-lg font-bold text-white">
                   Kenneth Dike Library
@@ -73,20 +107,20 @@ export default function Footer() {
             <div className="space-y-4 mb-6">
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-white flex-shrink-0" />
-                <span className="text-gray-100">Kenneth Dike Library
-                  University of Ibadan
-                  Ibadan, Oyo State Nigeria.</span>
+                <span className="text-gray-100">
+                  Kenneth Dike Library University of Ibadan Ibadan, Oyo State
+                  Nigeria.
+                </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-white flex-shrink-0" />
-                <span className="text-gray-100">(555) 123-4567</span>
+                <span className="text-gray-100">08023256535</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-white flex-shrink-0" />
                 <span className="text-gray-100">librarykdl@mail.ui.edu.ng</span>
               </div>
             </div>
-
           </motion.div>
 
           {/* Footer Links */}
@@ -98,7 +132,9 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-lg font-semibold mb-4 text-indigo-400">{category}</h3>
+              <h3 className="text-lg font-semibold mb-4 text-indigo-400">
+                {category}
+              </h3>
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.name}>
@@ -106,7 +142,11 @@ export default function Footer() {
                       href={link.href}
                       className="text-white hover:text-blue-500 transition-colors duration-300"
                       whileHover={{ x: 5 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 10,
+                      }}
                     >
                       {link.name}
                     </motion.a>
@@ -150,5 +190,5 @@ export default function Footer() {
         </motion.div>
       </div>
     </footer>
-  )
+  );
 }
