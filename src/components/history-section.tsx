@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ArrowRight, Calendar, Users, Award } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import { ArrowRight, Calendar, Users, Award } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function HistorySection() {
   return (
@@ -53,8 +53,10 @@ export default function HistorySection() {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              When John Harris, a New Zealander, arrived at the University of Ibadan in 1948 to serve as the Pioneer
-              Librarian, he described what he found as "a librarian's nightmare and a scene of book chaos."
+              When John Harris, a New Zealander, arrived at the University of
+              Ibadan in 1948 to serve as the Pioneer Librarian, he described
+              what he found as "a librarian's nightmare and a scene of book
+              chaos."
             </motion.p>
 
             <motion.p
@@ -64,8 +66,9 @@ export default function HistorySection() {
               transition={{ duration: 0.8, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              From this beginning, the Kenneth Dike Library has grown into one of Africa's premier academic libraries,
-              with over 2 million printed volumes and more than 10 million digital resources.
+              From this beginning, the Kenneth Dike Library has grown into one
+              of Africa's premier academic libraries, with over 2 million
+              printed volumes and more than 10 million digital resources.
             </motion.p>
 
             {/* Stats */}
@@ -78,17 +81,23 @@ export default function HistorySection() {
             >
               {[
                 {
-                  icon: <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-2" />,
+                  icon: (
+                    <Calendar className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                  ),
                   value: "59",
                   label: "Years of Excellence",
                 },
                 {
-                  icon: <Users className="w-8 h-8 text-amber-600 mx-auto mb-2" />,
+                  icon: (
+                    <Users className="w-8 h-8 text-amber-600 mx-auto mb-2" />
+                  ),
                   value: "4",
                   label: "Distinguished Leaders",
                 },
                 {
-                  icon: <Award className="w-8 h-8 text-indigo-600 mx-auto mb-2" />,
+                  icon: (
+                    <Award className="w-8 h-8 text-indigo-600 mx-auto mb-2" />
+                  ),
                   value: "250x",
                   label: "Collection Growth",
                 },
@@ -98,7 +107,9 @@ export default function HistorySection() {
                   className="text-center p-4 bg-white/60 rounded-2xl backdrop-blur-sm shadow-sm"
                 >
                   {item.icon}
-                  <div className="text-xl font-bold text-gray-900">{item.value}</div>
+                  <div className="text-xl font-bold text-gray-900">
+                    {item.value}
+                  </div>
                   <div className="text-sm text-gray-600">{item.label}</div>
                 </div>
               ))}
@@ -133,14 +144,18 @@ export default function HistorySection() {
           >
             <div className="relative aspect-[3/4] w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto lg:mx-0 rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="img4.jpg"
+                src="history/img11.png"
                 alt="UI Library Heritage Building"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 text-white">
-                <h3 className="text-xl sm:text-2xl font-bold mb-1">77 Years of Excellence</h3>
-                <p className="text-sm opacity-90">From 10,000 to 2.5M+ resources</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-1">
+                  77 Years of Excellence
+                </h3>
+                <p className="text-sm opacity-90">
+                  From 10,000 to 2.5M+ resources
+                </p>
               </div>
 
               {/* Floating Stat */}
@@ -189,5 +204,5 @@ export default function HistorySection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

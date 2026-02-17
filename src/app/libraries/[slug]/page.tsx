@@ -13,12 +13,12 @@ import {
   Globe,
   Phone,
   Mail,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../lib/firebase";
-
 
 interface LibraryData {
   name: string;
@@ -107,203 +107,265 @@ export default function LibraryDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50">
+    <div className="min-h-screen bg-gray-50/50">
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-600 to-indigo-600 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 origin-left z-50 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
         style={{ scaleX }}
       />
 
       {/* Header */}
       <motion.header
-        className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40"
+        className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.8)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(255,255,255,0.3)",
+        }}
       >
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Link href="/libraries">
-            <Button variant="ghost" size="lg" className="flex items-center gap-2">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Back to Libraries</span>
-              <span className="sm:hidden">Back</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex items-center gap-2 hover:bg-amber-50 hover:text-amber-700 transition-colors rounded-full px-4"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="font-medium">All Libraries</span>
             </Button>
           </Link>
-          <span className="text-sm text-gray-500 italic">Library Details</span>
+          <span className="text-sm font-semibold text-gray-500 tracking-wide uppercase">
+            Kenneth Dike Library System
+          </span>
         </div>
       </motion.header>
 
-      {/* Hero */}
-      <section className="relative">
-        <motion.img
-          src={library.libraryImageURL || "/placeholder.svg"}
-          alt={library.name}
-          className="w-full h-[45vh] sm:h-[55vh] object-cover"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        />
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <motion.h1
-            className="text-white text-3xl sm:text-5xl font-bold text-center px-4"
-            initial={{ y: 30, opacity: 0 }}
+      {/* Hero Section */}
+      <section className="relative h-[60vh] lg:h-[70vh] w-full overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        >
+          <img
+            src={library.libraryImageURL || "/placeholder.svg"}
+            alt={library.name}
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent" />
+        </motion.div>
+
+        <div className="absolute inset-0 flex items-end justify-center pb-20 lg:pb-32 px-6">
+          <motion.div
+            className="text-center max-w-4xl mx-auto space-y-4"
+            initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {library.name}
-          </motion.h1>
+            <span className="inline-block py-1 px-3 rounded-full bg-amber-500/20 backdrop-blur-md border border-amber-500/30 text-amber-300 text-sm font-medium mb-4">
+              {library.faculty || "University Library"}
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-2xl">
+              {library.name}
+            </h1>
+            <div className="flex flex-wrap items-center justify-center gap-6 text-gray-200 mt-6">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-amber-400" />
+                <span>{library.location}</span>
+              </div>
+              <div className="hidden sm:block w-1 h-1 bg-gray-500 rounded-full" />
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5 text-amber-400" />
+                <span>{library.openingHours}</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12 grid xl:grid-cols-3 gap-10">
-        {/* Left Column */}
-        <motion.div
-          className="xl:col-span-2 space-y-8"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.2 } },
-          }}
-        >
-          {/* Description */}
-          <motion.section
-            className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all"
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+      <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-10 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Left Column (Main Info) */}
+          <motion.div
+            className="lg:col-span-8 space-y-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-2xl font-semibold text-amber-700 mb-4">
-              About the Library
-            </h2>
-            <p className="text-gray-700 leading-relaxed">{library.description}</p>
-          </motion.section>
-
-          {/* Quick Stats */}
-          <motion.section
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-          >
-            {[
-              { icon: BookOpen, label: "Books", value: library.books },
-              { icon: Database, label: "Journals", value: library.journals },
-              { icon: Globe, label: "Articles", value: library.articles },
-              { icon: Users, label: "Seating Capacity", value: library.seatingCapacity },
-              { icon: Clock, label: "Hours", value: library.openingHours },
-              { icon: MapPin, label: "Location", value: library.location },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                className="bg-white rounded-xl shadow-sm p-4 flex flex-col items-center text-center hover:shadow-md transition-all"
-                whileHover={{ scale: 1.05 }}
-              >
-                <item.icon className="h-8 w-8 text-amber-700 mb-2" />
-                <div className="text-gray-800 font-medium">{item.label}</div>
-                <div className="text-lg font-bold text-gray-900">
-                  {item.value || "—"}
+            {/* Quick Stats Bar */}
+            <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 p-6 flex flex-wrap justify-around gap-6 border border-gray-100">
+              {[
+                { icon: BookOpen, label: "Volumes", value: library.books },
+                { icon: Database, label: "Journals", value: library.journals },
+                {
+                  icon: Users,
+                  label: "Capacity",
+                  value: library.seatingCapacity,
+                },
+              ].map((stat, i) => (
+                <div key={i} className="flex flex-col items-center text-center">
+                  <div className="p-3 bg-amber-50 rounded-full mb-2 text-amber-600">
+                    <stat.icon className="h-6 w-6" />
+                  </div>
+                  <span className="text-2xl font-bold text-gray-900">
+                    {stat.value || "—"}
+                  </span>
+                  <span className="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                    {stat.label}
+                  </span>
                 </div>
-              </motion.div>
-            ))}
-          </motion.section>
+              ))}
+            </div>
 
-          {/* Services */}
-          <motion.section
-            className="bg-white p-8 rounded-2xl shadow-md"
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-          >
-            <h2 className="text-2xl font-semibold mb-4 text-amber-700">
-              Services Offered
-            </h2>
-            <ul className="grid sm:grid-cols-2 gap-3 text-gray-700">
-              {library.services?.length ? (
-                library.services.map((service, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center gap-2 bg-amber-50 px-3 py-2 rounded-lg"
-                  >
-                    <span className="h-2 w-2 bg-amber-600 rounded-full" />
-                    {service}
-                  </li>
-                ))
-              ) : (
-                <p className="text-gray-500 italic">No services listed.</p>
-              )}
-            </ul>
-          </motion.section>
+            {/* Description */}
+            <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-sm border border-gray-100">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <span className="w-8 h-1 bg-amber-500 rounded-full" />
+                About the Library
+              </h2>
+              <p className="text-lg text-gray-700 leading-relaxed text-justify">
+                {library.description}
+              </p>
+            </div>
 
-          {/* Facilities */}
-          <motion.section
-            className="bg-white p-8 rounded-2xl shadow-md"
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-          >
-            <h2 className="text-2xl font-semibold mb-4 text-amber-700">
-              Facilities Available
-            </h2>
-            <ul className="grid sm:grid-cols-2 gap-3 text-gray-700">
-              {library.facilities?.length ? (
-                library.facilities.map((facility, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center gap-2 bg-indigo-50 px-3 py-2 rounded-lg"
-                  >
-                    <span className="h-2 w-2 bg-indigo-600 rounded-full" />
-                    {facility}
-                  </li>
-                ))
-              ) : (
-                <p className="text-gray-500 italic">No facilities listed.</p>
-              )}
-            </ul>
-          </motion.section>
-        </motion.div>
-
-        {/* Right Sidebar */}
-        <motion.div
-          className="space-y-8"
-          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-        >
-          {/* Librarian Info */}
-          <div className="bg-white p-8 rounded-2xl shadow-md text-center">
-            <img
-              src={library.librarianImageURL || "/placeholder.svg"}
-              alt={library.librarian || "Librarian"}
-              className="w-28 h-28 rounded-full mx-auto mb-4 object-cover border-4 border-amber-100"
-            />
-            <h3 className="text-lg font-semibold text-gray-900">
-              {library.librarian || "Unknown Librarian"}
-            </h3>
-            <p className="text-gray-500 mb-4">Chief Librarian</p>
-            <div className="flex flex-col gap-2 text-gray-700 text-sm">
-              <div className="flex items-center justify-center gap-2">
-                <Phone className="h-4 w-4 text-amber-600" />
-                {library.phoneNumber || "N/A"}
+            {/* Services & Facilities Grid */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Services */}
+              <div className="bg-gradient-to-br from-white to-amber-50/30 rounded-3xl p-8 border border-gray-100 shadow-sm">
+                <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <Database className="h-5 w-5 text-amber-600" />
+                  Key Services
+                </h3>
+                <ul className="space-y-3">
+                  {library.services?.length ? (
+                    library.services.map((service, i) => (
+                      <li key={i} className="flex items-start gap-3 group">
+                        <div className="mt-1.5 min-w-[6px] h-[6px] rounded-full bg-amber-400 group-hover:bg-amber-600 transition-colors" />
+                        <span className="text-gray-700 font-medium">
+                          {service}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <p className="text-gray-400 italic">
+                      Information unavailable
+                    </p>
+                  )}
+                </ul>
               </div>
-              <div className="flex items-center justify-center gap-2">
-                <Mail className="h-4 w-4 text-amber-600" />
-                {library.email || "N/A"}
+
+              {/* Facilities */}
+              <div className="bg-gradient-to-br from-white to-indigo-50/30 rounded-3xl p-8 border border-gray-100 shadow-sm">
+                <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <Users className="h-5 w-5 text-indigo-600" />
+                  Facilities
+                </h3>
+                <ul className="space-y-3">
+                  {library.facilities?.length ? (
+                    library.facilities.map((fitness, i) => (
+                      <li key={i} className="flex items-start gap-3 group">
+                        <div className="mt-1.5 min-w-[6px] h-[6px] rounded-full bg-indigo-400 group-hover:bg-indigo-600 transition-colors" />
+                        <span className="text-gray-700 font-medium">
+                          {fitness}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <p className="text-gray-400 italic">
+                      Information unavailable
+                    </p>
+                  )}
+                </ul>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Departments */}
-          <div className="bg-white p-8 rounded-2xl shadow-md">
-            <h2 className="text-xl font-semibold mb-4 text-amber-700">Departments</h2>
-            <ul className="space-y-2 text-gray-700">
-              {library.departments?.length ? (
-                library.departments.map((dept, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg"
+          {/* Right Column (Sidebar) */}
+          <motion.div
+            className="lg:col-span-4 space-y-8"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            {/* Librarian Card */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-xl shadow-indigo-100/50 border border-gray-100 sticky top-24">
+              <div className="bg-gradient-to-br from-indigo-600 to-blue-700 h-24 relative p-6">
+                <h3 className="text-white font-bold text-lg relative z-10">
+                  Head Librarian
+                </h3>
+                <div className="absolute right-0 bottom-0 opacity-10">
+                  <User className="h-32 w-32 -mb-8 -mr-8 text-white" />
+                </div>
+              </div>
+              <div className="px-8 pb-8 -mt-10 relative z-10">
+                <div className="w-24 h-24 rounded-2xl bg-white p-1.5 shadow-md mb-4">
+                  <img
+                    src={library.librarianImageURL || "/placeholder.svg"}
+                    alt={library.librarian}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                </div>
+
+                <h4 className="text-xl font-bold text-gray-900">
+                  {library.librarian || "N/A"}
+                </h4>
+                <p className="text-indigo-600 font-medium text-sm mb-6">
+                  Chief Librarian
+                </p>
+
+                <div className="space-y-4">
+                  <a
+                    href={`tel:${library.phoneNumber}`}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-indigo-50 transition-colors group"
                   >
-                    <span className="h-2 w-2 bg-amber-600 rounded-full" />
-                    {dept}
-                  </li>
-                ))
-              ) : (
-                <p className="text-gray-500 italic">No departments listed.</p>
-              )}
-            </ul>
-          </div>
-        </motion.div>
+                    <div className="p-2 bg-white rounded-lg shadow-sm text-gray-500 group-hover:text-indigo-600 transition-colors">
+                      <Phone className="h-4 w-4" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">
+                      {library.phoneNumber || "N/A"}
+                    </span>
+                  </a>
+
+                  <a
+                    href={`mailto:${library.email}`}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-indigo-50 transition-colors group"
+                  >
+                    <div className="p-2 bg-white rounded-lg shadow-sm text-gray-500 group-hover:text-indigo-600 transition-colors">
+                      <Mail className="h-4 w-4" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-700 truncate">
+                      {library.email || "N/A"}
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Departments / Extra Info */}
+            {library.departments && library.departments.length > 0 && (
+              <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-4">
+                  Departments Served
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {library.departments.map((dept, i) => (
+                    <span
+                      key={i}
+                      className="bg-gray-100 hover:bg-gray-200 transition-colors text-gray-600 px-3 py-1.5 rounded-lg text-xs font-medium"
+                    >
+                      {dept}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </div>
       </div>
     </div>
   );

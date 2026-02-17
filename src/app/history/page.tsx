@@ -1,15 +1,25 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useScroll, useSpring, useInView } from "framer-motion"
-import { ArrowLeft, Calendar, User, Award, BookOpen, Clock, ChevronUp, Database, Globe } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import Header from "@/components/header"
-import Moving from "@/components/moving"
-import ScrollToTop from "@/components/scroll-to-top"
-import Footer from "@/components/footer"
-import ChatBotTemplate from "@/components/ChatBotTemplate"
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import {
+  ArrowLeft,
+  Calendar,
+  User,
+  Award,
+  BookOpen,
+  Clock,
+  ChevronUp,
+  Database,
+  Globe,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Header from "@/components/header";
+import Moving from "@/components/moving";
+import ScrollToTop from "@/components/scroll-to-top";
+import Footer from "@/components/footer";
+import ChatBotTemplate from "@/components/ChatBotTemplate";
 
 const librarians = [
   {
@@ -18,7 +28,7 @@ const librarians = [
     section: "",
     image: "/librarians/Liba.jpg",
   },
-   {
+  {
     name: "DR. HELEN O. KOMOLAFE-OPADEJI",
     title: "Former University Librarian",
     section: "",
@@ -63,15 +73,49 @@ const librarians = [
 ];
 
 const milestones = [
-  { year: "1948", event: "Kenneth Dike Library established with University of Ibadan", icon: BookOpen },
-  { year: "1948", event: "24 staff members including University Librarian and Chief Cataloguer", icon: User },
-  { year: "1970s", event: "Considerable numerical growth in staff strength", icon: Award },
-  { year: "1980s", event: "Continued expansion and collection development", icon: Calendar },
-  { year: "1990s", event: "Early automation and modernization efforts", icon: Database },
-  { year: "2000s", event: "Introduction of electronic databases and digital resources", icon: Globe },
-  { year: "2014", event: "Launch of University of Ibadan Institutional Repository (UIIR)", icon: Award },
-  { year: "Present", event: "Over 2 million printed volumes and 10+ million electronic resources", icon: BookOpen },
-]
+  {
+    year: "1948",
+    event: "Kenneth Dike Library established with University of Ibadan",
+    icon: BookOpen,
+  },
+  {
+    year: "1948",
+    event:
+      "24 staff members including University Librarian and Chief Cataloguer",
+    icon: User,
+  },
+  {
+    year: "1970s",
+    event: "Considerable numerical growth in staff strength",
+    icon: Award,
+  },
+  {
+    year: "1980s",
+    event: "Continued expansion and collection development",
+    icon: Calendar,
+  },
+  {
+    year: "1990s",
+    event: "Early automation and modernization efforts",
+    icon: Database,
+  },
+  {
+    year: "2000s",
+    event: "Introduction of electronic databases and digital resources",
+    icon: Globe,
+  },
+  {
+    year: "2014",
+    event: "Launch of University of Ibadan Institutional Repository (UIIR)",
+    icon: Award,
+  },
+  {
+    year: "Present",
+    event:
+      "Over 2 million printed volumes and 10+ million electronic resources",
+    icon: BookOpen,
+  },
+];
 
 const eras = [
   {
@@ -79,9 +123,11 @@ const eras = [
     period: "1948-1968",
     description:
       "The Kenneth Dike Library was established in 1948 alongside the University of Ibadan itself, making the library as old as the university. The Pioneer Librarian, John Harris, a New Zealander, responded to Professor Kenneth Mellanby's vision: 'Whatever else we do I am determined that we have at least a good library'. Harris described the situation he found on arrival as 'a librarian's nightmare and a scene of book chaos'. Starting with 24 staff members including the University Librarian, Chief Cataloguer, six library assistants, four messengers, one porter, and five student assistants, Harris transformed the chaotic situation into a functional academic library that would serve as the foundation for decades of growth.",
-    image: "img1.jpg",
-    quote: "Whatever else we do I am determined that we have at least a good library.",
-    quoteAuthor: "Professor Kenneth Mellanby, First Principal of University College, Ibadan",
+    image: "history/img10.png",
+    quote:
+      "Whatever else we do I am determined that we have at least a good library.",
+    quoteAuthor:
+      "Professor Kenneth Mellanby, First Principal of University College, Ibadan",
     stats: [
       { value: "1948", label: "Year Established" },
       { value: "24", label: "Initial Staff" },
@@ -93,7 +139,7 @@ const eras = [
     period: "1968-1987",
     description:
       "Under the successive leadership of Mr. Khalil Mahmud and Mrs. T.O. Oderinde, the library experienced its most significant period of expansion. The 1970s and 1980s witnessed considerable numerical growth in staff strength and collection development. This era established the library as a central and conspicuous entity on the University of Ibadan campus, following the global pattern of academic libraries occupying crucial positions in university systems. The library's collections grew substantially during this period, laying the groundwork for what would eventually become over two million volumes of printed materials including books, journals, dissertations, technical reports, and monographs.",
-    image: "img2.jpg",
+    image: "history/img11.png",
     quote:
       "Libraries are crucial and important entities in University systems because they occupy central and conspicuous locations on campuses.",
     quoteAuthor: "Kenneth Dike Library Historical Records",
@@ -108,7 +154,7 @@ const eras = [
     period: "1988-2003",
     description:
       "The leadership of Mrs. Grace Olufunmilayo Tamuno and Mr. J.E. Ikem marked the beginning of the library's modernization journey. This period saw the early stages of automation and the introduction of modern library management practices. The library began to adapt to changing technological landscapes while maintaining its core mission of supporting teaching, learning, and research mandates of the University. Economic challenges led to some reduction in staff strength due to adherence to National University Commission (NUC) norms, but the library's commitment to excellence remained unwavering. This era set the stage for the digital transformation that would follow.",
-    image: "img3.jpg",
+    image: "history/img9.png",
     quote:
       "The library provides information resources aimed at supporting and enhancing teaching, learning, and research mandates.",
     quoteAuthor: "Kenneth Dike Library Mission Statement",
@@ -123,7 +169,7 @@ const eras = [
     period: "2004-Present",
     description:
       "The modern era of Kenneth Dike Library has been characterized by unprecedented digital transformation. Under the leadership of Dr. B.A. Oladele, Dr. Helen Komolafe-Opadeji, and current University Librarian DR. Mercy Ariomerebi Iroaganachi, the library has embraced the global shift from printed to electronic formats. The library now provides access to over 10 million electronic volumes through databases like JSTOR, RESEARCH4LIFE, and PROQUEST/Ebrary. The implementation of the University of Ibadan Integrated Library Software (UI-ILS) has enabled web-based access and inter-operability. The launch of the University of Ibadan Institutional Repository (UIIR) in 2014 has provided wider visibility to the university's intellectual outputs, raising its profile in global web metric rankings.",
-    image: "img4.jpg",
+    image: "history/img12.png",
     quote:
       "Digitisation serves two major purposes: Preservation for posterity and delivery of virtual library services.",
     quoteAuthor: "Kenneth Dike Library Digital Initiative",
@@ -133,22 +179,22 @@ const eras = [
       { value: "24/7", label: "Digital Access" },
     ],
   },
-]
+];
 
 export default function HistoryPage() {
-  const { scrollYProgress } = useScroll()
+  const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
-  })
+  });
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    })
-  }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-serif">
@@ -165,7 +211,7 @@ export default function HistoryPage() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-      <Header />
+        <Header />
       </motion.header>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -177,22 +223,30 @@ export default function HistoryPage() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight leading-tight">
-            The <span className="text-indigo-600">Chronicle</span> of Kenneth Dike Library
+            The <span className="text-indigo-600">Chronicle</span> of Kenneth
+            Dike Library
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light italic px-4">
-            Seven and a half decades of academic excellence at the University of Ibadan
+            Seven and a half decades of academic excellence at the University of
+            Ibadan
           </p>
         </motion.div>
 
         {/* Newspaper-style Masthead */}
         <div className="border-y-2 sm:border-y-4 border-gray-900 py-3 sm:py-4 mb-8 sm:mb-12">
           <div className="flex flex-col sm:flex-row justify-between items-center text-center gap-2 sm:gap-0">
-            <div className="text-xs sm:text-sm uppercase tracking-widest">Vol. 76, No. 1</div>
-            <div className="text-xs sm:text-sm uppercase tracking-widest">Est. 1948</div>
+            <div className="text-xs sm:text-sm uppercase tracking-widest">
+              Vol. 76, No. 1
+            </div>
+            <div className="text-xs sm:text-sm uppercase tracking-widest">
+              Est. 1948
+            </div>
             <div className="text-xs sm:text-sm uppercase tracking-widest hidden sm:block">
               University of Ibadan Historical Society
             </div>
-            <div className="text-xs sm:text-sm uppercase tracking-widest sm:hidden">UI Historical Society</div>
+            <div className="text-xs sm:text-sm uppercase tracking-widest sm:hidden">
+              UI Historical Society
+            </div>
           </div>
         </div>
 
@@ -205,20 +259,26 @@ export default function HistoryPage() {
         >
           <div className="lg:col-span-2 order-2 lg:order-1">
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6 leading-tight">
-              From "Librarian's Nightmare" to Digital Excellence: The Remarkable Journey of Kenneth Dike Library
+              From "Librarian's Nightmare" to Digital Excellence: The Remarkable
+              Journey of Kenneth Dike Library
             </h2>
             <div className="text-sm sm:text-base lg:text-lg leading-relaxed space-y-3 sm:space-y-4">
               <p className="first-letter:text-3xl sm:first-letter:text-4xl lg:first-letter:text-5xl first-letter:font-bold first-letter:text-indigo-600 first-letter:mr-1 sm:first-letter:mr-2 first-letter:float-left">
-                When John Harris, a New Zealander, arrived at the University of Ibadan in 1948 to serve as the Pioneer
-                Librarian, he described what he found as "a librarian's nightmare and a scene of book chaos."
+                When John Harris, a New Zealander, arrived at the University of
+                Ibadan in 1948 to serve as the Pioneer Librarian, he described
+                what he found as "a librarian's nightmare and a scene of book
+                chaos."
               </p>
               <p>
-                Yet from this chaotic beginning, the Kenneth Dike Library has grown into one of Africa's premier
-                academic libraries, with over 2 million printed volumes and more than 10 million digital resources.
+                Yet from this chaotic beginning, the Kenneth Dike Library has
+                grown into one of Africa's premier academic libraries, with over
+                2 million printed volumes and more than 10 million digital
+                resources.
               </p>
               <p>
-                The story of Kenneth Dike Library is one of transformation, resilience, and commitment to the academic
-                mission of the University of Ibadan.
+                The story of Kenneth Dike Library is one of transformation,
+                resilience, and commitment to the academic mission of the
+                University of Ibadan.
               </p>
             </div>
           </div>
@@ -229,12 +289,13 @@ export default function HistoryPage() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <img
-                src="img2.jpg"
+                src="history/ph1.png"
                 alt="Kenneth Dike Library Building 1948"
                 className="w-full h-full object-cover rounded-lg shadow-lg"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-2 sm:p-3 text-xs sm:text-sm rounded-b-lg">
-                The Kenneth Dike Library as it appeared in its early years at University of Ibadan
+                The Kenneth Dike Library as it appeared in its early years at
+                University of Ibadan
               </div>
             </motion.div>
           </div>
@@ -270,7 +331,9 @@ export default function HistoryPage() {
                 >
                   {/* Year Label */}
                   <div className="w-full sm:w-20 lg:w-24 text-left sm:text-right sm:mr-4 lg:mr-6">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-600">{milestone.year}</span>
+                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-600">
+                      {milestone.year}
+                    </span>
                   </div>
 
                   {/* Icon */}
@@ -280,7 +343,9 @@ export default function HistoryPage() {
 
                   {/* Description Box */}
                   <div className="flex-1 bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-6 shadow-md">
-                    <p className="text-gray-800 font-medium text-sm sm:text-base">{milestone.event}</p>
+                    <p className="text-gray-800 font-medium text-sm sm:text-base">
+                      {milestone.event}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -296,7 +361,7 @@ export default function HistoryPage() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-         <Moving / >
+          <Moving />
         </motion.section>
 
         {/* Current Services Section */}
@@ -319,9 +384,12 @@ export default function HistoryPage() {
               >
                 <Link href="/e-resources" className="block">
                   <Database className="h-10 w-10 sm:h-12 sm:w-12 text-indigo-600 mb-3 sm:mb-4" />
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Electronic Databases</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
+                    Electronic Databases
+                  </h3>
                   <p className="text-gray-600 text-sm sm:text-base">
-                    Access to JSTOR, RESEARCH4LIFE, PROQUEST/Ebrary and over 10 million electronic volumes
+                    Access to JSTOR, RESEARCH4LIFE, PROQUEST/Ebrary and over 10
+                    million electronic volumes
                   </p>
                 </Link>
               </motion.div>
@@ -331,11 +399,19 @@ export default function HistoryPage() {
                 whileHover={{ y: -5, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <a href="http://41.184.122.87:8080/" target="_blank" rel="noopener noreferrer" className="block">
+                <a
+                  href="http://41.184.122.87:8080/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
                   <Globe className="h-10 w-10 sm:h-12 sm:w-12 text-amber-600 mb-3 sm:mb-4" />
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">UI-ILS System</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
+                    UI-ILS System
+                  </h3>
                   <p className="text-gray-600 text-sm sm:text-base">
-                    University of Ibadan Integrated Library Software with web interface and OPAC access
+                    University of Ibadan Integrated Library Software with web
+                    interface and OPAC access
                   </p>
                 </a>
               </motion.div>
@@ -345,11 +421,19 @@ export default function HistoryPage() {
                 whileHover={{ y: -5, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <a href="https://repository.ui.edu.ng/home" target="_blank" rel="noopener noreferrer" className="block">
+                <a
+                  href="https://repository.ui.edu.ng/home"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
                   <Award className="h-10 w-10 sm:h-12 sm:w-12 text-blue-600 mb-3 sm:mb-4" />
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Institutional Repository</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
+                    Institutional Repository
+                  </h3>
                   <p className="text-gray-600 text-sm sm:text-base">
-                    UIIR launched in 2014 to showcase University of Ibadan's intellectual outputs globally
+                    UIIR launched in 2014 to showcase University of Ibadan's
+                    intellectual outputs globally
                   </p>
                 </a>
               </motion.div>
@@ -365,26 +449,32 @@ export default function HistoryPage() {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <div className="text-4xl sm:text-5xl lg:text-6xl text-indigo-600 mb-4 sm:mb-6">"</div>
+          <div className="text-4xl sm:text-5xl lg:text-6xl text-indigo-600 mb-4 sm:mb-6">
+            "
+          </div>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl italic text-gray-700 mb-4 sm:mb-6 leading-relaxed">
-            The Kenneth Dike Library stands as a testament to our enduring commitment to providing timely, current and
-            accurate information in support of the teaching, learning, and research mandate of the University of Ibadan.
+            The Kenneth Dike Library stands as a testament to our enduring
+            commitment to providing timely, current and accurate information in
+            support of the teaching, learning, and research mandate of the
+            University of Ibadan.
           </p>
-          <p className="text-sm sm:text-base font-semibold text-gray-900">— Kenneth Dike Library Legacy Statement</p>
+          <p className="text-sm sm:text-base font-semibold text-gray-900">
+            — Kenneth Dike Library Legacy Statement
+          </p>
         </motion.div>
       </div>
 
-       {/* Footer and ScrollToTop */}
-           <Footer />
-           <ChatBotTemplate />
-           <ScrollToTop />
+      {/* Footer and ScrollToTop */}
+      <Footer />
+      <ChatBotTemplate />
+      <ScrollToTop />
     </div>
-  )
+  );
 }
 
 function EraArticle({ era, index }: { era: any; index: number }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px 0px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
 
   return (
     <motion.article
@@ -397,7 +487,9 @@ function EraArticle({ era, index }: { era: any; index: number }) {
       transition={{ duration: 0.8 }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
-        <div className={`space-y-4 sm:space-y-6 ${index % 2 === 1 ? "lg:pl-8 xl:pl-12" : "lg:pr-8 xl:pr-12"}`}>
+        <div
+          className={`space-y-4 sm:space-y-6 ${index % 2 === 1 ? "lg:pl-8 xl:pl-12" : "lg:pr-8 xl:pr-12"}`}
+        >
           <div>
             <motion.div
               className="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 text-xs sm:text-sm font-medium rounded-full mb-3 sm:mb-4"
@@ -424,7 +516,10 @@ function EraArticle({ era, index }: { era: any; index: number }) {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             {era.description.split(". ").map((sentence: string, i: number) => (
-              <p key={i}>{sentence + (i < era.description.split(". ").length - 1 ? "." : "")}</p>
+              <p key={i}>
+                {sentence +
+                  (i < era.description.split(". ").length - 1 ? "." : "")}
+              </p>
             ))}
           </motion.div>
 
@@ -435,7 +530,9 @@ function EraArticle({ era, index }: { era: any; index: number }) {
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <p className="mb-2 text-sm sm:text-base">"{era.quote}"</p>
-            <p className="text-xs sm:text-sm font-medium text-gray-600">— {era.quoteAuthor}</p>
+            <p className="text-xs sm:text-sm font-medium text-gray-600">
+              — {era.quoteAuthor}
+            </p>
           </motion.div>
 
           <motion.div
@@ -445,9 +542,16 @@ function EraArticle({ era, index }: { era: any; index: number }) {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             {era.stats.map((stat: any, i: number) => (
-              <div key={i} className="text-center p-3 sm:p-4 bg-white rounded-lg shadow-sm">
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-600">{stat.value}</div>
-                <div className="text-xs text-gray-600 uppercase tracking-wider">{stat.label}</div>
+              <div
+                key={i}
+                className="text-center p-3 sm:p-4 bg-white rounded-lg shadow-sm"
+              >
+                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-600">
+                  {stat.value}
+                </div>
+                <div className="text-xs text-gray-600 uppercase tracking-wider">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </motion.div>
@@ -456,7 +560,9 @@ function EraArticle({ era, index }: { era: any; index: number }) {
         <motion.div
           className="relative order-first lg:order-none"
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+          animate={
+            isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }
+          }
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <div className="relative">
@@ -491,10 +597,16 @@ function EraArticle({ era, index }: { era: any; index: number }) {
         </motion.div>
       </div>
     </motion.article>
-  )
+  );
 }
 
-function LibrarianCard({ librarian, index }: { librarian: any; index: number }) {
+function LibrarianCard({
+  librarian,
+  index,
+}: {
+  librarian: any;
+  index: number;
+}) {
   return (
     <>
       <motion.div
@@ -505,15 +617,19 @@ function LibrarianCard({ librarian, index }: { librarian: any; index: number }) 
           transition: { type: "spring", stiffness: 300, damping: 20 },
         }}
         onHoverStart={() => {
-          const scrollContainer = document.querySelector("[data-scroll-container]") as HTMLElement
+          const scrollContainer = document.querySelector(
+            "[data-scroll-container]",
+          ) as HTMLElement;
           if (scrollContainer) {
-            scrollContainer.style.animationPlayState = "paused"
+            scrollContainer.style.animationPlayState = "paused";
           }
         }}
         onHoverEnd={() => {
-          const scrollContainer = document.querySelector("[data-scroll-container]") as HTMLElement
+          const scrollContainer = document.querySelector(
+            "[data-scroll-container]",
+          ) as HTMLElement;
           if (scrollContainer) {
-            scrollContainer.style.animationPlayState = "running"
+            scrollContainer.style.animationPlayState = "running";
           }
         }}
       >
@@ -535,10 +651,18 @@ function LibrarianCard({ librarian, index }: { librarian: any; index: number }) 
           <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300 leading-tight">
             {librarian.name}
           </h3>
-          <p className="text-indigo-600 font-semibold mb-1 text-xs sm:text-sm">{librarian.title}</p>
-          {librarian.section && <p className="text-xs text-gray-500 mb-2">{librarian.section}</p>}
-          <p className="text-xs text-gray-500 mb-2 font-medium">{librarian.period}</p>
-          <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">{librarian.achievement}</p>
+          <p className="text-indigo-600 font-semibold mb-1 text-xs sm:text-sm">
+            {librarian.title}
+          </p>
+          {librarian.section && (
+            <p className="text-xs text-gray-500 mb-2">{librarian.section}</p>
+          )}
+          <p className="text-xs text-gray-500 mb-2 font-medium">
+            {librarian.period}
+          </p>
+          <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
+            {librarian.achievement}
+          </p>
 
           {/* Floating badge */}
           <motion.div
@@ -556,8 +680,6 @@ function LibrarianCard({ librarian, index }: { librarian: any; index: number }) 
           </motion.div>
         </div>
       </motion.div>
-
-    
     </>
   );
 }

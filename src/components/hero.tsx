@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react"
-import Link from "next/link"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
+import Link from "next/link";
 
 const heroSlides = [
   {
@@ -11,63 +11,69 @@ const heroSlides = [
     image: "hero-image/img5.jpg",
     title: "Discover Knowledge Beyond Limits",
     subtitle: "Step into a world where tradition meets innovation",
-    description: "Our library is more than books—it's your gateway to endless possibilities and academic excellence.",
-    stats: {  },
+    description:
+      "Our library is more than books—it's your gateway to endless possibilities and academic excellence.",
+    stats: {},
   },
   {
     id: 2,
-    image: "img2.jpg",
+    image: "hero-image/id16.jpeg",
     title: "Modern Learning Spaces",
     subtitle: "Where comfort meets productivity",
-    description: "Experience state-of-the-art study environments designed for collaboration, focus, and innovation.",
-    stats: {  },
+    description:
+      "Experience state-of-the-art study environments designed for collaboration, focus, and innovation.",
+    stats: {},
   },
   {
     id: 3,
-    image: "img3.jpg",
+    image: "hero-image/id14.jpeg",
     title: "Digital Excellence",
     subtitle: "Access the world's knowledge",
-    description: "Explore millions of digital resources, databases, and e-books from anywhere, anytime.",
-    stats: {  },
+    description:
+      "Explore millions of digital resources, databases, and e-books from anywhere, anytime.",
+    stats: {},
   },
   {
     id: 4,
     image: "Img675.jpg",
     title: "Research Support",
     subtitle: "Expert guidance for your journey",
-    description: "Get personalized research assistance from our expert librarians and subject specialists.",
-    stats: {  },
+    description:
+      "Get personalized research assistance from our expert librarians and subject specialists.",
+    stats: {},
   },
-]
+];
 
 export default function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    if (!isAutoPlaying) return
+    if (!isAutoPlaying) return;
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [isAutoPlaying])
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    setIsAutoPlaying(false)
-  }
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    setIsAutoPlaying(false);
+  };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
-    setIsAutoPlaying(false)
-  }
+    setCurrentSlide(
+      (prev) => (prev - 1 + heroSlides.length) % heroSlides.length,
+    );
+    setIsAutoPlaying(false);
+  };
 
   const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-    setIsAutoPlaying(false)
-  }
+    setCurrentSlide(index);
+    setIsAutoPlaying(false);
+  };
 
-  const currentSlideData = heroSlides[currentSlide]
+  const currentSlideData = heroSlides[currentSlide];
 
   return (
     <section className="relative min-h-[92vh] overflow-hidden group">
@@ -210,7 +216,9 @@ export default function Hero() {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all cursor-pointer duration-300 ${
-                  index === currentSlide ? "bg-white scale-125" : "bg-white/40 hover:bg-white/60"
+                  index === currentSlide
+                    ? "bg-white scale-125"
+                    : "bg-white/40 hover:bg-white/60"
                 }`}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
@@ -235,7 +243,9 @@ export default function Hero() {
           className="h-full bg-gradient-to-r from-indigo-500 via-blue-500 to-yellow-400"
           initial={{ width: "0%" }}
           animate={{
-            width: isAutoPlaying ? "100%" : `${((currentSlide + 1) / heroSlides.length) * 100}%`,
+            width: isAutoPlaying
+              ? "100%"
+              : `${((currentSlide + 1) / heroSlides.length) * 100}%`,
           }}
           transition={{ duration: isAutoPlaying ? 6 : 0.5, ease: "linear" }}
         />
@@ -252,5 +262,5 @@ export default function Hero() {
         </Link>
       </motion.div>
     </section>
-  )
+  );
 }
