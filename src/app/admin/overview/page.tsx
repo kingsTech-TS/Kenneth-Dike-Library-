@@ -107,7 +107,12 @@ export default function AdminDashboard() {
           .slice(0, 3)
           .map((d) => ({
             id: d.id,
-            name: (d.data() as any).name || (d.data() as any).title || "Item",
+            name:
+              (d.data() as any).name ||
+              (d.data() as any).title ||
+              (d.data() as any).fullName ||
+              (d.data() as any).caption ||
+              "Item",
           }));
 
         setData((prev) => {

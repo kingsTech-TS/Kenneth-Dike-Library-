@@ -14,10 +14,12 @@ type Librarian = {
   department: string;
   imageURL: string;
   position?: number;
+  slug?: string;
 };
 
 const generateSlug = (name: string) =>
   name
+    .trim()
     .toLowerCase()
     .replace(/\./g, "")
     .replace(/\s+/g, "-")
@@ -31,7 +33,7 @@ const Moving = () => {
     const q = query(collection(db, "librarians"), orderBy("position", "asc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(
-        (doc) => ({ id: doc.id, ...doc.data() } as Librarian)
+        (doc) => ({ id: doc.id, ...doc.data() }) as Librarian,
       );
       setLibrarians(data);
     });
@@ -64,7 +66,7 @@ const Moving = () => {
           }
         >
           {librarians.map((librarian, index) => {
-            const slug = generateSlug(librarian.fullName);
+            const slug = librarian.slug || generateSlug(librarian.fullName);
             return (
               <Link key={librarian.id || index} href={`/history/${slug}`}>
                 <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 flex-shrink-0 w-72 cursor-pointer hover:shadow-xl transition">

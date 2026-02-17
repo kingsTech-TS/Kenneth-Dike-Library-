@@ -114,13 +114,17 @@ export default function LibrarianPage() {
   }
 
   // ✅ Parse multi-line fields (from Firestore textareas)
-  const educationList = librarian.education
-    ? librarian.education.split("\n").filter((e) => e.trim() !== "")
-    : [];
+  const educationList = Array.isArray(librarian.education)
+    ? librarian.education
+    : librarian.education
+      ? librarian.education.split("\n").filter((e) => e.trim() !== "")
+      : [];
 
-  const researchInterestsList = librarian.researchInterests
-    ? librarian.researchInterests.split("\n").filter((r) => r.trim() !== "")
-    : [];
+  const researchInterestsList = Array.isArray(librarian.researchInterests)
+    ? librarian.researchInterests
+    : librarian.researchInterests
+      ? librarian.researchInterests.split("\n").filter((r) => r.trim() !== "")
+      : [];
 
   return (
     <div className="min-h-screen bg-gray-50/50">
@@ -333,30 +337,32 @@ export default function LibrarianPage() {
           {/* Sidebar Column */}
           <div className="space-y-6">
             {/* Education Card */}
-            <motion.section
-              className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 sticky top-24"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <div className="p-2 bg-amber-50 rounded-lg text-amber-600">
-                  <LibraryBig className="w-5 h-5" />
-                </div>
-                Education
-              </h3>
-
-              <div className="relative border-l-2 border-gray-100 ml-3 space-y-8 py-2">
-                {educationList.map((edu, i) => (
-                  <div key={i} className="relative pl-6">
-                    <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 border-white bg-amber-400 shadow-sm" />
-                    <p className="text-gray-700 font-medium leading-snug">
-                      {edu}
-                    </p>
+            {educationList.length > 0 && (
+              <motion.section
+                className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 sticky top-24"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <div className="p-2 bg-amber-50 rounded-lg text-amber-600">
+                    <LibraryBig className="w-5 h-5" />
                   </div>
-                ))}
-              </div>
-            </motion.section>
+                  Education
+                </h3>
+
+                <div className="relative border-l-2 border-gray-100 ml-3 space-y-8 py-2">
+                  {educationList.map((edu, i) => (
+                    <div key={i} className="relative pl-6">
+                      <div className="absolute -left-[7px] top-1.5 w-4 h-4 rounded-full border-4 border-white bg-amber-400 shadow-sm" />
+                      <p className="text-gray-700 font-medium leading-snug">
+                        {edu}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </motion.section>
+            )}
 
             {/* Contact Mini Card */}
             <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl p-6 text-white text-center shadow-lg shadow-indigo-200">
