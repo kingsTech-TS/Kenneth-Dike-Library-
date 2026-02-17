@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
         className="relative w-full max-w-md"
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "out" }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <Card className="p-8 shadow-2xl border border-white/10 bg-white/10 backdrop-blur-md text-center">
           <motion.div
