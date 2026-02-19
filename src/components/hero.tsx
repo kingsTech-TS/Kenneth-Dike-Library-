@@ -12,7 +12,7 @@ const heroSlides = [
     title: "Discover Knowledge Beyond Limits",
     subtitle: "Step into a world where tradition meets innovation",
     description:
-      "Our library is more than books—it's your gateway to endless possibilities and academic excellence.",
+      "Our library is more than books—it's your gateway to endless possibilities and academic excellence. From timeless literary classics to cutting-edge research materials, we provide the resources and environment you need to learn, explore, and achieve your full potential.",
     stats: {},
   },
   {
@@ -21,7 +21,7 @@ const heroSlides = [
     title: "Modern Learning Spaces",
     subtitle: "Where comfort meets productivity",
     description:
-      "Experience state-of-the-art study environments designed for collaboration, focus, and innovation.",
+      "Experience state-of-the-art study environments thoughtfully designed for collaboration, focus, and innovation. Whether you prefer quiet individual study zones or dynamic group discussion areas, our modern spaces support every style of learning and creativity.",
     stats: {},
   },
   {
@@ -30,7 +30,7 @@ const heroSlides = [
     title: "Digital Excellence",
     subtitle: "Access the world's knowledge",
     description:
-      "Explore millions of digital resources, databases, and e-books from anywhere, anytime.",
+      "Explore millions of digital resources, academic databases, and e-books from anywhere, anytime. With seamless online access and powerful research tools, you can stay connected to global knowledge and continue learning beyond physical boundaries.",
     stats: {},
   },
   {
@@ -39,7 +39,7 @@ const heroSlides = [
     title: "Research Support",
     subtitle: "Expert guidance for your journey",
     description:
-      "Get personalized research assistance from our expert librarians and subject specialists.",
+      "Get personalized research assistance from our expert librarians and subject specialists who are committed to your success. From refining research topics to navigating complex databases, we provide the support you need at every stage of your academic journey.",
     stats: {},
   },
 ];
@@ -76,7 +76,7 @@ export default function Hero() {
   const currentSlideData = heroSlides[currentSlide];
 
   return (
-    <section className="relative min-h-[92vh] overflow-hidden group">
+    <section className="relative min-h-[85vh] md:min-h-[92vh] overflow-hidden group">
       {/* Background */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
@@ -115,7 +115,7 @@ export default function Hero() {
 
       {/* Slide Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 min-h-[80vh] flex items-center">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -123,11 +123,11 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-white space-y-8"
+              className="text-white space-y-4 md:space-y-8 text-center md:text-left"
             >
               {/* Title */}
               <motion.h1
-                className="text-5xl md:text-7xl lg:text-6xl font-bold leading-tight"
+                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.4 }}
@@ -151,7 +151,7 @@ export default function Hero() {
 
               {/* Subtitle */}
               <motion.p
-                className="text-xl md:text-2xl text-gray-200 font-light"
+                className="text-base md:text-xl lg:text-2xl text-gray-200 font-light"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -161,7 +161,7 @@ export default function Hero() {
 
               {/* Description */}
               <motion.p
-                className="text-xl md:text-sm text-gray-300 leading-relaxed max-w-2xl"
+                className="text-sm md:text-base text-gray-300 leading-relaxed max-w-2xl line-clamp-3 sm:line-clamp-none"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1 }}
@@ -171,7 +171,7 @@ export default function Hero() {
 
               {/* Stats */}
               <motion.div
-                className="flex gap-12 pt-8"
+                className="flex gap-6 md:gap-12 pt-4 md:pt-8 justify-center md:justify-start"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.4 }}
@@ -199,7 +199,7 @@ export default function Hero() {
       </div>
 
       {/* Navigation Controls */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
         <div className="flex items-center space-x-4">
           <motion.button
             onClick={prevSlide}
@@ -238,7 +238,7 @@ export default function Hero() {
       </div>
 
       {/* Progress Bar */}
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-20 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
         <motion.div
           className="h-full bg-gradient-to-r from-indigo-500 via-blue-500 to-yellow-400"
           initial={{ width: "0%" }}
