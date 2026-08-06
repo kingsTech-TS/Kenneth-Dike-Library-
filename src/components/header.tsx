@@ -32,8 +32,8 @@ const homeDropdownItems = [
 ]
 
 const getStartedItems = [// make the links here open in another tab
-  { name: "Register", href: "http://41.184.122.87:8080/patron/add" },
-  { name: "Search", href: "http://41.184.122.87:8080/record/opac" },
+  { name: "Register", href: "http://uiils.ui.edu.ng/patron/add" },
+  { name: "Search", href: "http://uiils.ui.edu.ng/record/opac" },
   { name: "Institutional Repository", href: "https://repository.ui.edu.ng/home" },
 ]
 
