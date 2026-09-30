@@ -133,7 +133,7 @@ export default function LibraryHours() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-center text-indigo-100">
                     <Phone className="h-4 w-4 mr-2" />
-                    <span className="text-sm">08023256535</span>
+                    <span className="text-sm">07031668993</span>
                   </div>
                   <div className="flex items-center justify-center text-indigo-100">
                     <MapPin className="h-4 w-4 mr-2" />
